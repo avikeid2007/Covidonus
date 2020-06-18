@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="MSBuild.Sdk.Extras/2.0.54">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;xamarinios10;monoandroid90;uap10.0.17763</TargetFrameworks>
+    <!-- Ensures the .xr.xml files are generated in a proper layout folder -->
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+    <DefineConstants>$(DefineConstants);__WASM__</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="nventive.Nimue.TargetFrameworks.Filtering" Version="0.1.0-alpha.55">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Uno.UI" Version="3.0.0-dev.514" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="**\*.xaml" Exclude="bin\**\*.xaml;obj\**\*.xaml" />
+    <Compile Update="**\*.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <UpToDateCheckInput Include="**\*.xaml" Exclude="bin\**\*.xaml;obj\**\*.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+		<None Remove="Styles\Application\AnimationConstants.xaml" />
+		<None Remove="Styles\Application\Colors.xaml" />
+		<None Remove="Styles\Application\Converters.xaml" />
+		<None Remove="Styles\Application\NavigationDrawerColors.xaml" />
+    <None Remove="Styles\Application\SelectionControlColors.xaml" />
+    <None Remove="Styles\Controls\ComboBox.xaml" />
+    <None Remove="Styles\Controls\Snackbar.xaml" />
+    <None Remove="Styles\Controls\NavigationView.xaml" />
+    <None Remove="Styles\Controls\TextBlock.xaml" />
+    <None Remove="Styles\Controls\ToggleButton.xaml" />
+    <None Remove="Styles\Controls\ToggleSwitch.xaml" />
+    <None Remove="Themes\Generic.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Styles\Application\AnimationConstants.xaml" />
+    <UpToDateCheckInput Remove="Styles\Application\Colors.xaml" />
+    <UpToDateCheckInput Remove="Styles\Application\Converters.xaml" />
+    <UpToDateCheckInput Remove="Styles\Application\NavigationDrawerColors.xaml" />
+    <UpToDateCheckInput Remove="Styles\Application\SelectionControlColors.xaml" />
+    <UpToDateCheckInput Remove="Styles\Controls\ComboBox.xaml" />
+    <UpToDateCheckInput Remove="Styles\Controls\Snackbar.xaml" />
+    <UpToDateCheckInput Remove="Styles\Controls\NavigationView.xaml" />
+    <UpToDateCheckInput Remove="Styles\Controls\TextBlock.xaml" />
+    <UpToDateCheckInput Remove="Styles\Controls\ToggleButton.xaml" />
+    <UpToDateCheckInput Remove="Styles\Controls\ToggleSwitch.xaml" />
+    <UpToDateCheckInput Remove="Themes\Generic.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Styles\Controls\Button.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Styles\Controls\Card.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Styles\Controls\CheckBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Styles\Controls\CommandBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Styles\Controls\RadioButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Styles\Controls\TextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+  </ItemGroup>
+</Project>

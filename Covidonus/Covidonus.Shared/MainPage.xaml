@@ -1,0 +1,57 @@
+﻿<Page
+    x:Class="Covidonus.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Covidonus"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="using:Uno.UI.Toolkit"
+    RequestedTheme="Light"
+    mc:Ignorable="d">
+
+    <Grid toolkit:VisibleBoundsPadding.PaddingMask="All" Background="{StaticResource BackgroundBrush}">
+        <NavigationView
+            x:Name="NavView"
+            Margin="0,12,0,0"
+            Header="Component: NavigationView with MaterialNavigationViewStyle"
+            IsBackButtonVisible="Collapsed"
+            IsTabStop="False"
+            ItemInvoked="NavView_ItemInvoked"
+            Loaded="NavView_Loaded"
+            PaneDisplayMode="Auto"
+            PaneTitle="Covidonus"
+            Style="{StaticResource MaterialNavigationViewStyle}">
+            <NavigationView.PaneHeader>
+                <StackPanel Orientation="Horizontal">
+                    <Image
+                        Width="30"
+                        Height="30"
+                        Margin="16,50,16,30"
+                        HorizontalAlignment="Left"
+                        Source="ms-appx:///Assets/Logo.png"
+                        Stretch="Uniform" />
+
+                    <TextBlock
+                        Margin="16,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource Headline6}"
+                        Text="{Binding PaneTitle, ElementName=NavView}" />
+                </StackPanel>
+            </NavigationView.PaneHeader>
+
+            <!--  NavigationView Items  -->
+            <Frame x:Name="ContentFrame">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition>
+                            <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                <EntranceNavigationTransitionInfo />
+                            </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                        </NavigationThemeTransition>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+        </NavigationView>
+    </Grid>
+</Page>
