@@ -1,5 +1,5 @@
 ﻿using CovidonusApi.Models;
-using CovidonusApi.Repositories;
+using CovidonusApi.Scheduler;
 using NSwag.AspNet.Owin;
 using System.Data.Entity;
 using System.Web.Http;
@@ -18,6 +18,7 @@ namespace CovidonusApi
                 app.UseSwaggerUi3(typeof(WebApiApplication).Assembly, settings =>
                 {
                     settings.MiddlewareBasePath = "/swagger";
+                    settings.DocumentTitle = "Covidonus api";
                     //settings.GeneratorSettings.DefaultUrlTemplate = "api/{controller}/{id}";  //this is the default one
                     settings.GeneratorSettings.DefaultUrlTemplate = "api/{controller}/{action}/{id}";
                 });
@@ -28,9 +29,9 @@ namespace CovidonusApi
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Database.SetInitializer<CovidonusContext>(new DropCreateDatabaseIfModelChanges<CovidonusContext>());
-            //JobScheduler.StartAsync();
-            SeedDataRepository repo = new SeedDataRepository();
-            _ = repo.SeedCovidDataAsync();
+            JobScheduler.StartAsync();
+            //SeedDataRepository repo = new SeedDataRepository();
+            //_ = repo.SeedCovidDataAsync();
         }
     }
 }
