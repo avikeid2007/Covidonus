@@ -1,5 +1,5 @@
 ﻿using CovidonusApi.Models;
-using CovidonusApi.Scheduler;
+using CovidonusApi.Repositories;
 using System.Data.Entity;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -18,7 +18,9 @@ namespace CovidonusApi
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Database.SetInitializer<CovidonusContext>(new DropCreateDatabaseIfModelChanges<CovidonusContext>());
-            JobScheduler.StartAsync();
+            //JobScheduler.StartAsync();
+            SeedDataRepository repo = new SeedDataRepository();
+            _ = repo.SeedCovidDataAsync();
         }
     }
 }

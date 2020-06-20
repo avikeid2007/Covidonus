@@ -13,7 +13,7 @@ namespace CovidonusApi.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202006181001485_CreateDb"; }
+            get { return "202006200901525_CreateDb"; }
         }
         
         string IMigrationMetadata.Source

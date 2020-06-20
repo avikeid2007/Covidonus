@@ -46,6 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.3.1\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
@@ -170,6 +173,15 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Z.EntityFramework.Extensions, Version=4.0.78.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.EntityFramework.Extensions.4.0.78\lib\net45\Z.EntityFramework.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Z.EntityFramework.Plus.EF6, Version=1.12.22.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.EntityFramework.Plus.EF6.1.12.23\lib\net45\Z.EntityFramework.Plus.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="Z.Expressions.Eval, Version=4.0.1.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.Expressions.Eval.4.0.1\lib\net45\Z.Expressions.Eval.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -209,20 +221,33 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\CovidController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StateController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202006181001485_CreateDb.cs" />
-    <Compile Include="Migrations\202006181001485_CreateDb.designer.cs">
-      <DependentUpon>202006181001485_CreateDb.cs</DependentUpon>
+    <Compile Include="Helpers\AuditorHelper.cs" />
+    <Compile Include="Helpers\CovidonusMapper.cs" />
+    <Compile Include="Migrations\202006200901525_CreateDb.cs" />
+    <Compile Include="Migrations\202006200901525_CreateDb.designer.cs">
+      <DependentUpon>202006200901525_CreateDb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Auditor.cs" />
+    <Compile Include="Models\CasesTimeSeries.cs" />
+    <Compile Include="Models\CovidonusContext.cs" />
+    <Compile Include="Models\DailyCovidUpdate.cs" />
     <Compile Include="Models\DeltaData.cs" />
     <Compile Include="Models\DistrictWiseData.cs" />
-    <Compile Include="Models\StateData.cs" />
+    <Compile Include="Models\DTOs\StateData.cs" />
+    <Compile Include="Models\StateWiseData.cs" />
+    <Compile Include="Models\Tested.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CoreRepository.cs" />
+    <Compile Include="Repositories\SeedDataRepository.cs" />
+    <Compile Include="Repositories\CovidRepository.cs" />
     <Compile Include="Scheduler\CovidJob.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -312,8 +337,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006181001485_CreateDb.resx">
-      <DependentUpon>202006181001485_CreateDb.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202006200901525_CreateDb.resx">
+      <DependentUpon>202006200901525_CreateDb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

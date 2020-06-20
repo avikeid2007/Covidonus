@@ -11,7 +11,5 @@ namespace CovidonusApi.Models
         public int Confirmed { get; set; }
         public int Deceased { get; set; }
         public int Recovered { get; set; }
-
-
     }
 }
