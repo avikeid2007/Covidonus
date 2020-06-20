@@ -1,4 +1,4 @@
-﻿using Covidonus.Shared.Repositories;
+﻿using Covidonus.Swag;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,17 +35,24 @@ namespace Covidonus
 
         private async Task InitializeNavigationViewItemsAsync()
         {
-            StateClient stateClient = new StateClient();
-            var menu = await stateClient.GetAsync();
-            menu.ToList().ForEach(m =>
+            try
             {
-                NavView.MenuItems.Add(new NavigationViewItem()
+                StateClient stateClient = new StateClient();
+                var menu = await stateClient.GetAsync();
+                menu.ToList().ForEach(m =>
                 {
-                    Content = m.State,
-                    Icon = new SymbolIcon(Symbol.Next),
-                    Tag = m.StateCode,
+                    NavView.MenuItems.Add(new NavigationViewItem()
+                    {
+                        Content = m.State,
+                        Icon = new SymbolIcon(Symbol.Next),
+                        Tag = m.StateCode,
+                    });
                 });
-            });
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)

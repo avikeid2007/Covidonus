@@ -10,7 +10,7 @@
 #pragma warning disable 1573 // Disable "CS1573 Parameter '...' has no matching param tag in the XML comment for ...
 #pragma warning disable 1591 // Disable "CS1591 Missing XML comment for publicly visible type or member ..."
 
-namespace Covidonus.Shared.Repositories
+namespace Covidonus.Swag
 {
     using System = global::System;
     
@@ -24,7 +24,7 @@ namespace Covidonus.Shared.Repositories
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.6.1.0 (NJsonSchema v10.1.21.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class StateClient : Covidonus.Shared.Repositories.CovidBaseClient, IStateClient
+    public partial class StateClient : Covidonus.Swag.CovidBaseClient, IStateClient
     {
         private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
     
@@ -230,7 +230,7 @@ namespace Covidonus.Shared.Repositories
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.6.1.0 (NJsonSchema v10.1.21.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class ValuesClient : Covidonus.Shared.Repositories.CovidBaseClient, IValuesClient
+    public partial class ValuesClient : Covidonus.Swag.CovidBaseClient, IValuesClient
     {
         private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
     

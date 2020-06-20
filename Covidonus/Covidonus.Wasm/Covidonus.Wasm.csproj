@@ -39,12 +39,14 @@
     <PackageReference Include="BasicMvvm" Version="1.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Uno.UI" Version="3.0.0-dev.514" />
-    <PackageReference Include="Uno.UI.RemoteControl" Version="2.4.0" Condition="'$(Configuration)'=='Debug'" />
+    <PackageReference Include="Uno.UI.RemoteControl" Version="3.0.0-dev.514" Condition="'$(Configuration)'=='Debug'" />
     <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.2.0" />
     <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="1.2.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Covidonus.Swag\Covidonus.Swag.csproj" />
     <ProjectReference Include="..\library\Uno.Material\Uno.Material.csproj" />
   </ItemGroup>
   <Import Project="..\Covidonus.Shared\Covidonus.Shared.projitems" Label="Shared" Condition="Exists('..\Covidonus.Shared\Covidonus.Shared.projitems')" />
