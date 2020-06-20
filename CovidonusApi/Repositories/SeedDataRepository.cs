@@ -1,5 +1,6 @@
 ﻿using CovidonusApi.Helpers;
 using CovidonusApi.Models;
+using CovidonusApi.Repositories.Abstraction;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CovidonusApi.Repositories
 {
-    public class SeedDataRepository : CoreRepository
+    public class SeedDataRepository : CoreRepository, ISeedDataRepository
     {
         public async Task SeedCovidDataAsync()
         {

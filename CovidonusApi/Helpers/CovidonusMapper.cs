@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CovidonusApi.Models;
+using CovidonusApi.Models.DTOs;
 using System;
 using System.Globalization;
 
@@ -29,6 +30,7 @@ namespace CovidonusApi.Helpers
                 cfg.CreateMap<DeltaData, DeltaData>()
                 .ForMember(s => s.Id, t => t.Ignore());
                 cfg.CreateMap<Tested, Tested>();
+                cfg.CreateMap<StateWiseData, StateData>();
                 //cfg.CreateMap<DTOs.User, User>()
                 //.ForMember(s => s.Created, t => t.Ignore())
                 //.ForMember(s => s.CreatedBy, t => t.Ignore())

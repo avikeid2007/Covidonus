@@ -1,14 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using CovidonusApi.Models.DTOs;
+using CovidonusApi.Repositories.Abstraction;
+using System.Collections.Generic;
 using System.Web.Http;
 
 namespace CovidonusApi.Controllers
 {
     public class StateController : ApiController
     {
-        // GET api/State
-        public IEnumerable<string> Get()
+        ICovidRepository _covidRepository;
+        public StateController(ICovidRepository covidRepository)
         {
-            return new string[] { "value1", "value2" };
+            _covidRepository = covidRepository;
+        }
+        // GET api/State
+        public IEnumerable<StateData> Get()
+        {
+            return _covidRepository.GetStates();
         }
     }
 }
