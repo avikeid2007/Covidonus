@@ -6,5 +6,6 @@ namespace CovidonusApi.Repositories.Abstraction
     public interface ICovidRepository
     {
         IEnumerable<StateData> GetStates();
+
     }
 }

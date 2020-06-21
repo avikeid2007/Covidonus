@@ -1,6 +1,6 @@
 ﻿using Covidonus.Swag;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Uno.Extensions.Specialized;
 using Windows.UI.Xaml;
@@ -35,11 +35,15 @@ namespace Covidonus
 
         private async Task InitializeNavigationViewItemsAsync()
         {
+
             try
             {
-                StateClient stateClient = new StateClient();
-                var menu = await stateClient.GetAsync();
-                menu.ToList().ForEach(m =>
+                if (App.Menuitems == null || App.Menuitems.Count <= 0)
+                {
+                    StateClient stateClient = new StateClient();
+                    App.Menuitems = new List<StateData>(await stateClient.GetAsync());
+                }
+                App.Menuitems.ForEach(m =>
                 {
                     NavView.MenuItems.Add(new NavigationViewItem()
                     {

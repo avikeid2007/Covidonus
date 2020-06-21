@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using CovidonusApi.Helpers;
 using CovidonusApi.Models;
+using CovidonusApi.Models.DTOs;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CovidonusApi.Repositories
 {
@@ -9,6 +12,7 @@ namespace CovidonusApi.Repositories
     {
         protected IMapper mapper;
         protected CovidonusContext db = new CovidonusContext();
+        protected static IEnumerable<StateData> MenuList;
 
         protected IMapper GetMapper()
         {
@@ -42,7 +46,10 @@ namespace CovidonusApi.Repositories
                 obj.IsActive = true;
             }
         }
-
+        protected void SetUpdatedMenu()
+        {
+            MenuList = db.StateWiseDatas.Include("DistrictData.Delta").Select(ConvertModels<StateData, StateWiseData>).ToList();
+        }
         public static void MapModified<T>(T obj, string userName = null) where T : Auditor
         {
             if (obj != null)

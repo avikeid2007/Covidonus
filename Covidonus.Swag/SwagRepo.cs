@@ -667,7 +667,7 @@ namespace Covidonus.Swag
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class StateData : Auditor, System.ComponentModel.INotifyPropertyChanged
+    public partial class StateData : System.ComponentModel.INotifyPropertyChanged
     {
         private int _id;
         private string _state;
@@ -920,6 +920,7 @@ namespace Covidonus.Swag
         private int _deltaId;
         private string _stateCode;
         private int _stateWiseDataId;
+        private Delta _delta;
     
         [Newtonsoft.Json.JsonProperty("Id", Required = Newtonsoft.Json.Required.Always)]
         public int Id
@@ -1061,6 +1062,20 @@ namespace Covidonus.Swag
             }
         }
     
+        [Newtonsoft.Json.JsonProperty("Delta", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Delta Delta
+        {
+            get { return _delta; }
+            set 
+            {
+                if (_delta != value)
+                {
+                    _delta = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
     
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
@@ -1074,79 +1089,64 @@ namespace Covidonus.Swag
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v11.0.0.0)")]
-    public abstract partial class Auditor : System.ComponentModel.INotifyPropertyChanged
+    public partial class Delta : System.ComponentModel.INotifyPropertyChanged
     {
-        private System.DateTimeOffset _created;
-        private string _createdBy;
-        private System.DateTimeOffset? _modified;
-        private string _modifiedBy;
-        private bool _isActive;
+        private int _id;
+        private int _confirmed;
+        private int _deceased;
+        private int _recovered;
     
-        [Newtonsoft.Json.JsonProperty("Created", Required = Newtonsoft.Json.Required.Always)]
-        public System.DateTimeOffset Created
+        [Newtonsoft.Json.JsonProperty("Id", Required = Newtonsoft.Json.Required.Always)]
+        public int Id
         {
-            get { return _created; }
+            get { return _id; }
             set 
             {
-                if (_created != value)
+                if (_id != value)
                 {
-                    _created = value; 
+                    _id = value; 
                     RaisePropertyChanged();
                 }
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("CreatedBy", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CreatedBy
+        [Newtonsoft.Json.JsonProperty("Confirmed", Required = Newtonsoft.Json.Required.Always)]
+        public int Confirmed
         {
-            get { return _createdBy; }
+            get { return _confirmed; }
             set 
             {
-                if (_createdBy != value)
+                if (_confirmed != value)
                 {
-                    _createdBy = value; 
+                    _confirmed = value; 
                     RaisePropertyChanged();
                 }
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("Modified", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset? Modified
+        [Newtonsoft.Json.JsonProperty("Deceased", Required = Newtonsoft.Json.Required.Always)]
+        public int Deceased
         {
-            get { return _modified; }
+            get { return _deceased; }
             set 
             {
-                if (_modified != value)
+                if (_deceased != value)
                 {
-                    _modified = value; 
+                    _deceased = value; 
                     RaisePropertyChanged();
                 }
             }
         }
     
-        [Newtonsoft.Json.JsonProperty("ModifiedBy", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string ModifiedBy
+        [Newtonsoft.Json.JsonProperty("Recovered", Required = Newtonsoft.Json.Required.Always)]
+        public int Recovered
         {
-            get { return _modifiedBy; }
+            get { return _recovered; }
             set 
             {
-                if (_modifiedBy != value)
+                if (_recovered != value)
                 {
-                    _modifiedBy = value; 
-                    RaisePropertyChanged();
-                }
-            }
-        }
-    
-        [Newtonsoft.Json.JsonProperty("IsActive", Required = Newtonsoft.Json.Required.Always)]
-        public bool IsActive
-        {
-            get { return _isActive; }
-            set 
-            {
-                if (_isActive != value)
-                {
-                    _isActive = value; 
+                    _recovered = value; 
                     RaisePropertyChanged();
                 }
             }

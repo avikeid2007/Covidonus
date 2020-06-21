@@ -1,5 +1,4 @@
-﻿using CovidonusApi.Models;
-using CovidonusApi.Models.DTOs;
+﻿using CovidonusApi.Models.DTOs;
 using CovidonusApi.Repositories.Abstraction;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,12 @@ namespace CovidonusApi.Repositories
     {
         public IEnumerable<StateData> GetStates()
         {
-            return db.StateWiseDatas.AsNoTracking().Select(ConvertModels<StateData, StateWiseData>).ToList();
+            if (CoreRepository.MenuList == null || CoreRepository.MenuList?.Count() <= 0)
+            {
+                SetUpdatedMenu();
+            }
+            return CoreRepository.MenuList;
+
         }
     }
 }

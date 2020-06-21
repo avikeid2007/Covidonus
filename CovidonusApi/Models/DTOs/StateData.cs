@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CovidonusApi.Models.DTOs
 {
-    public class StateData : Auditor
+    public class StateData
     {
         [Key]
         public int Id { get; set; }
@@ -22,5 +22,6 @@ namespace CovidonusApi.Models.DTOs
         public DateTime? LastUpdatedtime { get; set; }
         public string StateLogo { get; set; }
         public ICollection<DistrictData> DistrictData { get; set; }
+
     }
 }

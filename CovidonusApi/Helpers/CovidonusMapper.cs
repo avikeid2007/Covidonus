@@ -26,17 +26,14 @@ namespace CovidonusApi.Helpers
                 .ForMember(s => s.IsActive, t => t.Ignore())
                 .ForMember(s => s.DeltaId, t => t.Ignore())
                 .ForMember(s => s.Id, t => t.Ignore())
-                .ForMember(s => s.StateCode, t => t.Ignore());
+                .ForMember(s => s.StateCode, t => t.Ignore())
+                 .ForMember(s => s.Delta, t => t.Ignore());
                 cfg.CreateMap<DeltaData, DeltaData>()
                 .ForMember(s => s.Id, t => t.Ignore());
                 cfg.CreateMap<Tested, Tested>();
                 cfg.CreateMap<StateWiseData, StateData>();
-                //cfg.CreateMap<DTOs.User, User>()
-                //.ForMember(s => s.Created, t => t.Ignore())
-                //.ForMember(s => s.CreatedBy, t => t.Ignore())
-                //.ForMember(s => s.IsActive, t => t.Ignore())
-                //.ForMember(s => s.Properties, t => t.Ignore());
-                //cfg.CreateMap<User, DTOs.User>();
+                cfg.CreateMap<DeltaData, Delta>();
+                cfg.CreateMap<DistrictWiseData, DistrictData>();
             });
             return new Mapper(configuration);
         }

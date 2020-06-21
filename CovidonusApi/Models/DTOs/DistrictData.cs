@@ -13,6 +13,14 @@
         public int DeltaId { get; set; }
         public string StateCode { get; set; }
         public int StateWiseDataId { get; set; }
+        public Delta Delta { get; set; }
 
+    }
+    public class Delta
+    {
+        public int Id { get; set; }
+        public int Confirmed { get; set; }
+        public int Deceased { get; set; }
+        public int Recovered { get; set; }
     }
 }
