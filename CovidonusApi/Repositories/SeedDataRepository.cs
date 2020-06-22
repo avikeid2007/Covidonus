@@ -1,5 +1,6 @@
 ﻿using CovidonusApi.Helpers;
 using CovidonusApi.Models;
+using CovidonusApi.Models.DTOs;
 using CovidonusApi.Repositories.Abstraction;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -78,7 +79,9 @@ namespace CovidonusApi.Repositories
                 logger.Info("SeedDataRepository: Start Refreshing data");
                 var dailyNewData = await GetDailyDataAsync();
                 await UpdateDailyStateAndDistrictAsync(dailyNewData);
+                await UpdateTodayStateAndDistrictAsync();
                 await UpdateDailyTimeSeriesAndTestedAsync(dailyNewData);
+
                 logger.Info("SeedDataRepository: Start Fetching Menu Items");
                 SetUpdatedMenu();
                 logger.Info("SeedDataRepository: End Fetching Menu Items");
@@ -135,6 +138,7 @@ namespace CovidonusApi.Repositories
             }
         }
 
+
         private async Task UpdateCaseSeriesAsync(DailyCovidUpdate dailyData)
         {
             logger.Info("SeedDataRepository:UpdateCaseSeriesAsync=> Start update CasesTimeSeries");
@@ -147,6 +151,17 @@ namespace CovidonusApi.Repositories
                     db.CasesTimeSeries.AddRange(newCaseList);
                     await db.SaveChangesAsync();
                 }
+            }
+            logger.Info("SeedDataRepository:UpdateCaseSeriesAsync=> End update CasesTimeSeries");
+        }
+        private async Task UpdateTodayStateAndDistrictAsync()
+        {
+            logger.Info("SeedDataRepository:UpdateCaseSeriesAsync=> Start update CasesTimeSeries");
+            var todayData = await GetTodayStateAndDistrictDataAsync();
+            if (todayData?.Count > 0)
+            {
+                db.DailyStateWiseDatas.AddRange(todayData);
+                await db.SaveChangesAsync();
             }
             logger.Info("SeedDataRepository:UpdateCaseSeriesAsync=> End update CasesTimeSeries");
         }
@@ -209,25 +224,105 @@ namespace CovidonusApi.Repositories
             logger.Info("SeedDataRepository:UpdateDistrictDataAsync=> End update DistrictWiseDatas");
         }
 
-        private static async Task<List<StateWiseData>> GetStateAndDistrictDataAsync()
+        private async Task<List<StateWiseData>> GetStateAndDistrictDataAsync()
         {
-            logger.Info("SeedDataRepository: GetStateAndDistrictDataAsync()=> Start fetching https://api.covid19india.org/v2/state_district_wise.json");
+            logger.Info("SeedDataRepository: GetStateAndDistrictDataAsync()=> Start fetching state Wise data https://api.covid19india.org/v2/state_district_wise.json");
             using (var client = new HttpClient())
             {
                 var response = await client.GetStringAsync("https://api.covid19india.org/v2/state_district_wise.json");
-                logger.Info("SeedDataRepository: GetStateAndDistrictDataAsync()=> End fetching state_district_wise.json");
+                logger.Info("SeedDataRepository: GetStateAndDistrictDataAsync()=> End fetching state Wise data https://api.covid19india.org/v2/state_district_wise.json");
                 return JsonConvert.DeserializeObject<List<StateWiseData>>(response);
             }
-
         }
+        private async Task<List<DailyStateWiseData>> GetTodayStateAndDistrictDataAsync()
+        {
+            try
+            {
+                logger.Info("SeedDataRepository: GetTodayStateAndDistrictDataAsync()=> Start fetching Daily Data state and district wise from https://api.covid19india.org/v3/data.json");
+                Dictionary<string, Daily> result;
+                using (var client = new HttpClient())
+                {
+                    var response = await client.GetStringAsync("https://api.covid19india.org/v3/data.json");
+                    result = JsonConvert.DeserializeObject<Dictionary<string, Daily>>(response);
+                }
+                logger.Info("SeedDataRepository: GetTodayStateAndDistrictDataAsync()=> Start fetching Daily Data state and district wise from https://api.covid19india.org/v3/data.json");
+                if (result?.Count > 0)
+                {
+                    int i = 0, j = 0;
+                    logger.Info("SeedDataRepository: GetTodayStateAndDistrictDataAsync()=> Start Mapping Daily Data state and district wise");
+                    List<DailyStateWiseData> dailyStateList = new List<DailyStateWiseData>();
+                    foreach (var item in result)
+                    {
+                        var validData = await db.DailyStateWiseDatas.AnyAsync(x => x.StateCode == item.Key && x.LastUpdatedtime == item.Value.Meta.LastUpdated);
+                        if (!validData)
+                        {
+                            DailyStateWiseData dailyState;
+                            var CurrentState = await db.StateWiseDatas.FirstOrDefaultAsync(x => x.StateCode == item.Key);
+                            if (CurrentState != null)
+                            {
+                                dailyState = new DailyStateWiseData()
+                                {
+                                    State = CurrentState.State,
+                                    StateCode = CurrentState.StateCode,
+                                    StateNotes = item.Value?.Meta?.Notes,
+                                    LastUpdatedtime = item.Value?.Meta?.LastUpdated,
+                                    Confirmed = Convert.ToInt32(item.Value?.Total?.Confirmed),
+                                    Recovered = Convert.ToInt32(item.Value?.Total?.Recovered),
+                                    Deaths = Convert.ToInt32(item.Value?.Total?.Deceased),
+                                    Tested = Convert.ToInt32(item.Value?.Total?.Tested),
+                                    StateLogo = CurrentState.StateLogo
+                                };
+                                i += 1;
+                                MapCreated(dailyState, "CovidJob");
+                                var newDistricts = item.Value?.Districts;
+                                if (newDistricts?.Count > 0)
+                                {
+                                    foreach (var ditem in newDistricts)
+                                    {
+                                        var CurrentDistrict = await db.DistrictWiseDatas.FirstOrDefaultAsync(x => x.District == ditem.Key);
+                                        if (CurrentDistrict != null)
+                                        {
+                                            var dailyDist = new DailyDistrictWiseData()
+                                            {
+                                                District = CurrentDistrict.District,
+                                                StateCode = CurrentDistrict.StateCode,
+                                                Confirmed = Convert.ToInt32(ditem.Value?.Total?.Confirmed),
+                                                Recovered = Convert.ToInt32(ditem.Value?.Total?.Recovered),
+                                                Deceased = Convert.ToInt32(ditem.Value?.Total?.Deceased),
+                                                Tested = Convert.ToInt32(ditem.Value?.Total?.Tested),
+                                            };
+                                            MapCreated(dailyDist, "CovidJob");
+                                            if (dailyState.DailyDistrictData == null)
+                                            {
+                                                dailyState.DailyDistrictData = new List<DailyDistrictWiseData>();
+                                            }
+                                            dailyState.DailyDistrictData.Add(dailyDist);
+                                            j += 1;
+                                        }
 
+                                    }
+                                    dailyStateList.Add(dailyState);
+                                }
+                            }
+                        }
+                    }
+                    logger.Info($"SeedDataRepository: GetTodayStateAndDistrictDataAsync()=> End Mapping Daily Data state {i} and district wise {j}");
+                    return dailyStateList;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         private static async Task<DailyCovidUpdate> GetDailyDataAsync()
         {
-            logger.Info("SeedDataRepository: GetDailyDataAsync()=> Start fetching https://api.covid19india.org/data.json");
+            logger.Info("SeedDataRepository: GetDailyDataAsync()=> Start fetching daily total and grand total https://api.covid19india.org/data.json");
             using (var client = new HttpClient())
             {
                 var response = await client.GetStringAsync("https://api.covid19india.org/data.json");
-                logger.Info("SeedDataRepository: GetDailyDataAsync()=> Start fetching https://api.covid19india.org/data.json");
+                logger.Info("SeedDataRepository: GetDailyDataAsync()=> Start fetching daily total and grand total https://api.covid19india.org/data.json");
                 return JsonConvert.DeserializeObject<DailyCovidUpdate>(response, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy HH:mm:ss" });
             }
         }

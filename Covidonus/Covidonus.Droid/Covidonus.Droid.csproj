@@ -91,9 +91,6 @@
     <AndroidResource Include="Resources\values\Strings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon2.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\drawable\Icon.png" />
+    <AndroidResource Include="Resources\drawable\splash.xml" />
   </ItemGroup>
   <Import Project="..\Covidonus.Shared\Covidonus.Shared.projitems" Label="Shared" Condition="Exists('..\Covidonus.Shared\Covidonus.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

@@ -1,6 +1,5 @@
 ﻿using Quartz;
 using Quartz.Impl;
-using System.Threading.Tasks;
 
 namespace CovidonusApi.Scheduler
 {
