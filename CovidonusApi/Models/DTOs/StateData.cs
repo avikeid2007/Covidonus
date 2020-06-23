@@ -21,6 +21,11 @@ namespace CovidonusApi.Models.DTOs
         public string StateNotes { get; set; }
         public DateTime? LastUpdatedtime { get; set; }
         public string StateLogo { get; set; }
+        public int TodayConfirmed { get; set; }
+        public int TodayDeaths { get; set; }
+        public int TodayRecovered { get; set; }
+        public int TodayTested { get; set; }
+        public DateTime? TodayUpdatedtime { get; set; }
         public ICollection<DistrictData> DistrictData { get; set; }
 
     }

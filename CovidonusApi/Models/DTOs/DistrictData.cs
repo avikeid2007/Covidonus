@@ -18,7 +18,11 @@ namespace CovidonusApi.Models.DTOs
         public string StateCode { get; set; }
         public int StateWiseDataId { get; set; }
         public Delta Delta { get; set; }
-
+        public int TodayConfirmed { get; set; }
+        public int TodayDeaths { get; set; }
+        public int TodayRecovered { get; set; }
+        public int TodayTested { get; set; }
+        public DateTime? TodayUpdatedtime { get; set; }
     }
     public class Delta
     {

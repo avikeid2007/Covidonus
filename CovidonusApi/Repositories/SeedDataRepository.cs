@@ -83,8 +83,11 @@ namespace CovidonusApi.Repositories
                 await UpdateDailyTimeSeriesAndTestedAsync(dailyNewData);
 
                 logger.Info("SeedDataRepository: Start Fetching Menu Items");
-                SetUpdatedMenu();
+                await SetUpdatedMenuAsync();
                 logger.Info("SeedDataRepository: End Fetching Menu Items");
+                logger.Info("SeedDataRepository: Start Fetching Daily total count");
+                SetDailyCount();
+                logger.Info("SeedDataRepository: End Fetching Daily total count");
             }
             catch (Exception ex)
             {
@@ -257,7 +260,7 @@ namespace CovidonusApi.Repositories
                         if (!validData)
                         {
                             DailyStateWiseData dailyState;
-                            var CurrentState = await db.StateWiseDatas.FirstOrDefaultAsync(x => x.StateCode == item.Key);
+                            var CurrentState = await db.StateWiseDatas.FirstOrDefaultAsync(x => x.StateCode.Trim().ToUpper() == item.Key.Trim().ToUpper());
                             if (CurrentState != null)
                             {
                                 dailyState = new DailyStateWiseData()
@@ -279,7 +282,7 @@ namespace CovidonusApi.Repositories
                                 {
                                     foreach (var ditem in newDistricts)
                                     {
-                                        var CurrentDistrict = await db.DistrictWiseDatas.FirstOrDefaultAsync(x => x.District == ditem.Key);
+                                        var CurrentDistrict = await db.DistrictWiseDatas.FirstOrDefaultAsync(x => x.District.Trim().ToUpper() == ditem.Key.Trim().ToUpper());
                                         if (CurrentDistrict != null)
                                         {
                                             var dailyDist = new DailyDistrictWiseData()

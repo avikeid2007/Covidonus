@@ -9,18 +9,14 @@ namespace CovidonusApi.Scheduler
         {
             IScheduler scheduler = await StdSchedulerFactory.GetDefaultScheduler();
             await scheduler.Start();
-
             IJobDetail job = JobBuilder.Create<CovidJob>().Build();
-
             ITrigger trigger = TriggerBuilder.Create()
-                .WithDailyTimeIntervalSchedule
-                  (s =>
-                     s.WithIntervalInHours(2)
-                    .OnEveryDay()
-                    .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(0, 0))
-                  )
-                .Build();
-
+            .WithIdentity("CovidJob", "group1")
+            .StartNow()
+            .WithSimpleSchedule(x => x
+            .WithIntervalInHours(2)
+            .RepeatForever())
+            .Build();
             await scheduler.ScheduleJob(job, trigger);
         }
     }

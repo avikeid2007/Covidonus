@@ -34,6 +34,7 @@ namespace CovidonusApi.Helpers
                 cfg.CreateMap<StateWiseData, StateData>();
                 cfg.CreateMap<DeltaData, Delta>();
                 cfg.CreateMap<DistrictWiseData, DistrictData>();
+                cfg.CreateMap<CasesTimeSeries, DailyTotalCount>();
             });
             return new Mapper(configuration);
         }

@@ -1,11 +1,13 @@
 ﻿using CovidonusApi.Models.DTOs;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CovidonusApi.Repositories.Abstraction
 {
     public interface ICovidRepository
     {
-        IEnumerable<StateData> GetStates();
+        Task<IEnumerable<StateData>> GetStatesAsync();
+        IEnumerable<DailyTotalCount> GetDailyTotals();
 
     }
 }

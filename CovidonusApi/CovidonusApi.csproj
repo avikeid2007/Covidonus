@@ -292,6 +292,7 @@
     <Compile Include="Models\DailyStateWiseData.cs" />
     <Compile Include="Models\DeltaData.cs" />
     <Compile Include="Models\DistrictWiseData.cs" />
+    <Compile Include="Models\DTOs\DailyTotalCount.cs" />
     <Compile Include="Models\DTOs\DistrictData.cs" />
     <Compile Include="Models\DTOs\StateData.cs" />
     <Compile Include="Models\StateWiseData.cs" />
