@@ -10,21 +10,22 @@ namespace CovidonusApi.Repositories
     {
         public async Task<IEnumerable<StateData>> GetStatesAsync()
         {
-            if (CoreRepository.MenuList == null || CoreRepository.MenuList?.Count() <= 0)
+            if (MenuList == null || MenuList?.Count() <= 0)
             {
                 await SetUpdatedMenuAsync();
             }
-            return CoreRepository.MenuList;
+            return MenuList;
 
         }
-        public IEnumerable<DailyTotalCount> GetDailyTotals()
+        public async Task<DailyTotalCount> GetDailyTotalsAsync()
         {
-            if (CoreRepository.DailyTotalCounts == null || CoreRepository.DailyTotalCounts?.Count() <= 0)
+            if (DailyTotalCounts == null)
             {
-                SetDailyCount();
+                await SetDailyCountAsync();
             }
-            return CoreRepository.DailyTotalCounts;
+            return DailyTotalCounts;
 
         }
+
     }
 }

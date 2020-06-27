@@ -32,6 +32,14 @@
             <x:Double x:Key="NarrowMinWidth">0</x:Double>
             <x:Double x:Key="NormalMinWidth">521</x:Double>
             <x:Double x:Key="WideMinWidth">1200</x:Double>
+            <Style
+                x:Key="NewSubheaderTextBlockStyle"
+                BasedOn="{StaticResource BaseTextBlockStyle}"
+                TargetType="TextBlock">
+                <Setter Property="FontSize" Value="28" />
+                <Setter Property="FontWeight" Value="Light" />
+                <Setter Property="OpticalMarginAlignment" Value="TrimSideBearings" />
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

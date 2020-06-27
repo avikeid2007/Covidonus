@@ -34,9 +34,37 @@ namespace CovidonusApi.Helpers
                 cfg.CreateMap<StateWiseData, StateData>();
                 cfg.CreateMap<DeltaData, Delta>();
                 cfg.CreateMap<DistrictWiseData, DistrictData>();
-                cfg.CreateMap<CasesTimeSeries, DailyTotalCount>();
+                cfg.CreateMap<CasesTimeSeries, DailyTotalCount>()
+                   .ForMember(s => s.TotalActive, t => t.MapFrom(x => GetTotalActive(x)))
+                   .ForMember(s => s.RecoverRatio, t => t.MapFrom(x => GetRecoverRation(x)))
+                   .ForMember(s => s.DeathRatio, t => t.MapFrom(x => GetDeathRation(x)));
+                ;
             });
             return new Mapper(configuration);
+        }
+
+        private static string GetDeathRation(CasesTimeSeries x)
+        {
+            if (x.TotalConfirmed == 0)
+            {
+                return string.Empty;
+            }
+            double per = (double)x.TotalDeceased / (double)x.TotalConfirmed * 100;
+            return Convert.ToString(Math.Round(per, 2));
+        }
+        private static string GetRecoverRation(CasesTimeSeries x)
+        {
+            if (x.TotalConfirmed == 0)
+            {
+                return string.Empty;
+            }
+            double per = (double)x.TotalRecovered / (double)x.TotalConfirmed * 100;
+            return Convert.ToString(Math.Round(per, 2));
+        }
+
+        private static int GetTotalActive(CasesTimeSeries x)
+        {
+            return x.TotalConfirmed - (x.TotalDeceased + x.TotalRecovered);
         }
 
         private static DateTime ConvertDate(string date)

@@ -15,7 +15,7 @@ namespace CovidonusApi.Repositories
         protected IMapper mapper;
         protected CovidonusContext db = new CovidonusContext();
         protected static IEnumerable<StateData> MenuList;
-        protected static IEnumerable<DailyTotalCount> DailyTotalCounts;
+        protected static DailyTotalCount DailyTotalCounts;
 
         protected IMapper GetMapper()
         {
@@ -49,9 +49,17 @@ namespace CovidonusApi.Repositories
                 obj.IsActive = true;
             }
         }
-        protected void SetDailyCount()
+        protected async Task SetDailyCountAsync()
         {
-            DailyTotalCounts = db.CasesTimeSeries.AsEnumerable().Select(ConvertModels<DailyTotalCount, CasesTimeSeries>).ToList();
+
+            var daily = await db.CasesTimeSeries.OrderByDescending(x => x.DateFull).FirstOrDefaultAsync();
+            if (daily != null)
+            {
+                DailyTotalCounts = ConvertModels<DailyTotalCount, CasesTimeSeries>(daily);
+                var Tested = await db.Testeds.OrderByDescending(x => x.UpdateTimeStamp).FirstOrDefaultAsync();
+                DailyTotalCounts.TestedToday = Tested?.SampleReportedToday;
+                DailyTotalCounts.TestedTotal = Tested?.TotalSamplesTested;
+            }
         }
         protected async Task SetUpdatedMenuAsync()
         {

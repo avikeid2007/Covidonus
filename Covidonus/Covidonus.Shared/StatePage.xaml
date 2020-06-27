@@ -12,8 +12,10 @@
     xmlns:not_win="http://uno.ui/not_win"
     xmlns:wasm="http://uno.ui/wasm"
     xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="not_win android ios wasm">
+    <Page.Background>
+        <ImageBrush ImageSource="/Assets/bg.png" Stretch="UniformToFill" />
+    </Page.Background>
 
     <Grid Margin="8,0,0,0">
         <Grid.RowDefinitions>
@@ -22,7 +24,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
@@ -30,8 +32,6 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -94,6 +94,9 @@
                     Grid.ColumnSpan="2"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
+                    android:Margin="0,4"
+                    BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                    BorderThickness="0,0,0,2"
                     Orientation="Horizontal">
                     <TextBlock
                         x:Name="txtStateName"
@@ -127,7 +130,10 @@
                     Grid.Row="1"
                     Grid.Column="2"
                     HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch">
+                    VerticalAlignment="Stretch"
+                    android:Margin="0,4,0,8"
+                    BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                    BorderThickness="0,0,0,2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
@@ -183,8 +189,422 @@
                     </StackPanel>
                 </Grid>
             </Grid>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*" />
+                    <RowDefinition Height="8*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid
+                    x:Name="gridCounts"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                    BorderThickness="0,0,0,2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <!--  Total states  -->
+                    <TextBlock
+                        x:Name="txtAcross"
+                        Grid.Row="0"
+                        Grid.ColumnSpan="5"
+                        Margin="8,0"
+                        FontWeight="Normal"
+                        Style="{StaticResource SubheaderTextBlockStyle}"
+                        Text="Across State:"
+                        Visibility="Collapsed" />
+                    <StackPanel
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Visibility="Collapsed">
+                        <TextBlock
+                            x:Name="txtTotalConf"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Confirm" />
+                        <TextBlock
+                            x:Name="txtTotalConfCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource PrimaryVariantDarkBrush}"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="1250" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Visibility="Collapsed">
+                        <TextBlock
+                            x:Name="txtTotalActive"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Active" />
+                        <TextBlock
+                            x:Name="txtTotalActiveCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource SecondaryVariantDarkBrush}"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="1250" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Visibility="Collapsed">
+                        <TextBlock
+                            x:Name="txtTotalRecover"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Cured" />
+                        <TextBlock
+                            x:Name="txtTotalRecoverCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="Orange"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="1250" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="1"
+                        Grid.Column="3"
+                        Visibility="Collapsed">
+                        <TextBlock
+                            x:Name="txtTotalDeath"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Deaths" />
+                        <TextBlock
+                            x:Name="txtTotalDeathCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource ErrorBrush}"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="1250" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Visibility="Collapsed">
+                        <TextBlock
+                            x:Name="txtTotalTested"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Tested" />
+                        <TextBlock
+                            x:Name="txtTotalTestedCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource OverlayBrush}"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="1250" />
+                    </StackPanel>
+
+                    <!--  today states  -->
+                    <TextBlock
+                        x:Name="txtToday"
+                        Grid.Row="2"
+                        Grid.ColumnSpan="4"
+                        Margin="8,0"
+                        FontWeight="Normal"
+                        Style="{StaticResource SubheaderTextBlockStyle}"
+                        Text="Today in State:"
+                        Visibility="Collapsed" />
+                    <StackPanel
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Visibility="Collapsed">
+                        <TextBlock
+                            x:Name="txtTodayConf"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Confirm" />
+                        <TextBlock
+                            x:Name="txtTodayConfCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource PrimaryVariantDarkBrush}"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="1250" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Visibility="Collapsed">
+                        <TextBlock
+                            x:Name="txtTodayActive"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Active" />
+                        <TextBlock
+                            x:Name="txtTodayActiveCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource SecondaryVariantDarkBrush}"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="1250" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        Visibility="Collapsed">
+                        <TextBlock
+                            x:Name="txtTodayRecover"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Cured" />
+                        <TextBlock
+                            x:Name="txtTodayRecoverCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="Orange"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="1250" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="3"
+                        Grid.Column="3"
+                        Visibility="Collapsed">
+                        <TextBlock
+                            x:Name="txtTodayDeath"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Deaths" />
+                        <TextBlock
+                            x:Name="txtTodayDeathCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource ErrorBrush}"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="1250" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="3"
+                        Grid.Column="4"
+                        Visibility="Collapsed">
+                        <TextBlock
+                            x:Name="txtTodayTested"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Tested" />
+                        <TextBlock
+                            x:Name="txtTodayTestedCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource OverlayBrush}"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="1250" />
+                    </StackPanel>
+
+
+                    <!--  Total India  -->
+                    <TextBlock
+                        x:Name="txtIndAcross"
+                        Grid.Row="0"
+                        Grid.ColumnSpan="4"
+                        Margin="8,0"
+                        FontWeight="Normal"
+                        Style="{StaticResource SubheaderTextBlockStyle}"
+                        Text="Across India:" />
+                    <StackPanel Grid.Row="1" Grid.Column="0">
+                        <TextBlock
+                            x:Name="txtIndTotalConf"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Confirm" />
+                        <TextBlock
+                            x:Name="txtIndTotalConfCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource PrimaryVariantDarkBrush}"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="471000" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="1">
+                        <TextBlock
+                            x:Name="txtIndTotalActive"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Active" />
+                        <TextBlock
+                            x:Name="txtIndTotalActiveCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource SecondaryVariantDarkBrush}"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="280541" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="2">
+                        <TextBlock
+                            x:Name="txtIndTotalRecover"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Cured" />
+                        <TextBlock
+                            x:Name="txtIndTotalRecoverCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="Orange"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="1250" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="3">
+                        <TextBlock
+                            x:Name="txtIndTotalDeath"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Deaths" />
+                        <TextBlock
+                            x:Name="txtIndTotalDeathCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource ErrorBrush}"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="8522" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="4">
+                        <TextBlock
+                            x:Name="txtIndTotalTested"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Tested" />
+                        <TextBlock
+                            x:Name="txtIndTotalTestedCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource OverlayBrush}"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="7402150" />
+                    </StackPanel>
+                    <TextBlock
+                        x:Name="txtIndToday"
+                        Grid.Row="2"
+                        Grid.ColumnSpan="2"
+                        Margin="8,0"
+                        FontWeight="Normal"
+                        Style="{StaticResource SubheaderTextBlockStyle}"
+                        Text="Today" />
+                    <TextBlock
+                        x:Name="txtIndRatio"
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        Grid.ColumnSpan="2"
+                        Margin="8,0"
+                        FontWeight="Normal"
+                        Style="{StaticResource SubheaderTextBlockStyle}"
+                        Text="Ratio" />
+                    <StackPanel Grid.Row="3" Grid.Column="0">
+                        <TextBlock
+                            x:Name="txtIndTodayConf"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Cured" />
+                        <TextBlock
+                            x:Name="txtIndTodayConfCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource PrimaryVariantDarkBrush}"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="1250" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="1">
+                        <TextBlock
+                            x:Name="txtIndTodayActive"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Tested" />
+                        <TextBlock
+                            x:Name="txtIndTodayActiveCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource SecondaryVariantDarkBrush}"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="1250" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="2">
+                        <TextBlock
+                            x:Name="txtIndTodayDeath"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Cure" />
+                        <TextBlock
+                            x:Name="txtIndTodayDeathCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="Orange"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="57.50%" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="3">
+                        <TextBlock
+                            x:Name="txtIndTodayTested"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Death" />
+                        <TextBlock
+                            x:Name="txtIndTodayTestedCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource ErrorBrush}"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="3.87%" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="4">
+                        <TextBlock
+                            x:Name="txtIndTodayRecover"
+                            HorizontalAlignment="Center"
+                            FontWeight="Medium"
+                            Style="{StaticResource NewSubheaderTextBlockStyle}"
+                            Text="Source" />
+                        <TextBlock
+                            x:Name="txtIndTodayRecoverCount"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource OverlayBrush}"
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="3.87%" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
         </Grid>
-        <!--<controls:BottomNavigationBar x:Name="BottomNavBar">
+        <controls:BottomNavigationBar x:Name="BottomNavBar">
             <controls:BottomNavigationBar.Items>
                 <controls:BottomNavigationBarItem Label="Favorites">
                     <controls:BottomNavigationBarItem.Icon>
@@ -218,7 +638,7 @@
                     </controls:BottomNavigationBarItem.Icon>
                 </controls:BottomNavigationBarItem>
             </controls:BottomNavigationBar.Items>
-        </controls:BottomNavigationBar>-->
+        </controls:BottomNavigationBar>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
@@ -234,9 +654,76 @@
                         <Setter Target="gridNewCaseDeath.(Grid.Column)" Value="0" />
                         <Setter Target="gridNewCaseDeath.(Grid.ColumnSpan)" Value="3" />
                         <Setter Target="txtNewCaseCount.Style" Value="{StaticResource TitleTextBlockStyle}" />
-                        <Setter Target="txtNewCase.Style" Value="{StaticResource CaptionTextBlockStyle}" />
+                        <Setter Target="txtNewCase.Style" Value="{StaticResource BodyTextBlockStyle}" />
                         <Setter Target="txtNewDeathCount.Style" Value="{StaticResource TitleTextBlockStyle}" />
-                        <Setter Target="txtNewDeath.Style" Value="{StaticResource CaptionTextBlockStyle}" />
+                        <Setter Target="txtNewDeath.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="gridCounts.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="txtTotalConf.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtTotalConfCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTotalConfCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtTotalActive.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtTotalActiveCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtTotalActiveCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTotalDeath.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtTotalDeathCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTotalDeathCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtTotalTested.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtTotalTestedCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTotalTestedCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtTotalRecover.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtTotalRecoverCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTotalRecoverCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtAcross.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtTodayConf.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtTodayConfCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTodayConfCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtTodayActive.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtTodayActiveCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtTodayActiveCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTodayDeath.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtTodayDeathCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTodayDeathCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtTodayTested.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtTodayTestedCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTodayTestedCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtTodayRecover.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtTodayRecoverCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTodayRecoverCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtToday.Style" Value="{StaticResource TitleTextBlockStyle}" />
+
+                        <Setter Target="txtIndTotalConf.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtIndTotalConfCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTotalConfCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTotalActive.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtIndTotalActiveCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTotalActiveCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTotalDeath.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtIndTotalDeathCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTotalDeathCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTotalTested.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtIndTotalTestedCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTotalTestedCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTotalRecover.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtIndTotalRecoverCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTotalRecoverCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndAcross.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtIndTodayConf.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtIndTodayConfCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTodayConfCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTodayActive.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtIndTodayActiveCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTodayActiveCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTodayDeath.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtIndTodayDeathCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTodayDeathCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTodayTested.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtIndTodayTestedCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTodayTestedCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTodayRecover.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
+                        <Setter Target="txtIndTodayRecoverCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTodayRecoverCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndToday.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtIndRatio.Style" Value="{StaticResource TitleTextBlockStyle}" />
                         <!--<Setter Target="CurrentTimeTxt.FontSize" Value="16" />
                         <Setter Target="SettingIcon.Width" Value="32" />
                         <Setter Target="SettingIcon.Height" Value="32" />
@@ -258,7 +745,78 @@
                     <VisualState.Setters>
 
                         <Setter Target="Fabpanal.Margin" Value="4,0,0,0" />
-                        <Setter Target="txtStateName.Style" Value="{StaticResource Headline2}" />
+                        <Setter Target="txtStateName.Style" Value="{StaticResource SubheaderTextBlockStyle}" />
+                        <Setter Target="txtNewCaseCount.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtNewCase.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtNewDeathCount.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtNewDeath.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="gridCounts.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="txtTotalConf.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtTotalConfCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTotalConfCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtTotalActive.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtTotalActiveCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTotalActiveCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtTotalDeath.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtTotalDeathCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTotalDeathCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtTotalTested.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtTotalTestedCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTotalTestedCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtTotalRecover.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtTotalRecoverCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTotalRecoverCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtAcross.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtTodayConf.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtTodayConfCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTodayConfCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtTodayActive.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtTodayActiveCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtTodayActiveCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTodayDeath.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtTodayDeathCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTodayDeathCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtTodayTested.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtTodayTestedCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTodayTestedCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtTodayRecover.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtTodayRecoverCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtTodayRecoverCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtToday.Style" Value="{StaticResource TitleTextBlockStyle}" />
+
+                        <Setter Target="txtIndTotalConf.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtIndTotalConfCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTotalConfCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTotalActive.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtIndTotalActiveCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTotalActiveCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTotalDeath.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtIndTotalDeathCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTotalDeathCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTotalTested.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtIndTotalTestedCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTotalTestedCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTotalRecover.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtIndTotalRecoverCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTotalRecoverCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndAcross.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtIndTodayConf.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtIndTodayConfCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTodayConfCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTodayActive.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtIndTodayActiveCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTodayActiveCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTodayDeath.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtIndTodayDeathCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTodayDeathCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTodayTested.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtIndTodayTestedCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTodayTestedCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTodayRecover.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtIndTodayRecoverCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
+                        <Setter Target="txtIndTodayRecoverCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndToday.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="txtIndRatio.Style" Value="{StaticResource TitleTextBlockStyle}" />
                         <!--<Setter Target="TaskTxt.FontSize" Value="24" />
                         <Setter Target="CurrentTimeTxt.FontSize" Value="24" />
                         <Setter Target="SettingIcon.Width" Value="48" />
@@ -282,6 +840,7 @@
                     <VisualState.Setters>
                         <Setter Target="Fabpanal.Margin" Value="4,0,0,0" />
                         <Setter Target="txtStateName.Style" Value="{StaticResource Headline1}" />
+                        <Setter Target="gridCounts.(Grid.ColumnSpan)" Value="1" />
                         <!--<Setter Target="TaskTxt.FontSize" Value="32" />
                         <Setter Target="CurrentTimeTxt.FontSize" Value="32" />
                         <Setter Target="SettingIcon.Width" Value="52" />

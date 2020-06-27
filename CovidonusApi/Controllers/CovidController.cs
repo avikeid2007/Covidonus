@@ -1,6 +1,6 @@
 ﻿using CovidonusApi.Models.DTOs;
 using CovidonusApi.Repositories.Abstraction;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace CovidonusApi.Controllers
@@ -13,10 +13,10 @@ namespace CovidonusApi.Controllers
         {
             _covidRepository = covidRepository;
         }
-        [Route(nameof(GetDailyTotals))]
-        public IEnumerable<DailyTotalCount> GetDailyTotals()
+        [Route(nameof(GetDailyTotalsAsync))]
+        public async Task<DailyTotalCount> GetDailyTotalsAsync()
         {
-            return _covidRepository.GetDailyTotals();
+            return await _covidRepository.GetDailyTotalsAsync();
         }
     }
 }

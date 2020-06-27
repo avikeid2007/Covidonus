@@ -86,7 +86,7 @@ namespace CovidonusApi.Repositories
                 await SetUpdatedMenuAsync();
                 logger.Info("SeedDataRepository: End Fetching Menu Items");
                 logger.Info("SeedDataRepository: Start Fetching Daily total count");
-                SetDailyCount();
+                await SetDailyCountAsync();
                 logger.Info("SeedDataRepository: End Fetching Daily total count");
             }
             catch (Exception ex)
