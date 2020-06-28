@@ -1,4 +1,4 @@
-﻿using Covidonus.Shared;
+﻿using Covidonus.Shared.ViewModels;
 using Covidonus.Swag;
 using System;
 using System.Collections.Generic;
@@ -20,18 +20,19 @@ namespace Covidonus
         public MainPage()
         {
             this.InitializeComponent();
+            this.DataContext = new MainViewModel();
         }
         private void NavView_Loaded(object sender, RoutedEventArgs e)
         {
-#if WINDOWS_UWP
-            NavView.IsSettingsVisible = true;
-            // Change the settings text to toggle the theme
-            var settingsItem = (NavigationViewItem)NavView.SettingsItem;
-            settingsItem.Content = "Toggle Light/Dark theme";
-#else
-            NavView.IsSettingsVisible = false;
-#endif
-            _ = InitializeNavigationViewItemsAsync();
+            //#if WINDOWS_UWP
+            //            NavView.IsSettingsVisible = true;
+            //            // Change the settings text to toggle the theme
+            //            var settingsItem = (NavigationViewItem)NavView.SettingsItem;
+            //            settingsItem.Content = "Toggle Light/Dark theme";
+            //#else
+            //            NavView.IsSettingsVisible = false;
+            //#endif
+            //            _ = InitializeNavigationViewItemsAsync();
 
         }
 
@@ -77,14 +78,14 @@ namespace Covidonus
 
         private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
-            if (args.IsSettingsInvoked)
-            {
-                ToggleTheme();
-            }
-            else if (args.InvokedItemContainer is NavigationViewItem item)
-            {
-                ContentFrame.Navigate(typeof(StatePage), Convert.ToString(item.Tag));
-            }
+            //if (args.IsSettingsInvoked)
+            //{
+            //    ToggleTheme();
+            //}
+            //else if (args.InvokedItemContainer is NavigationViewItem item)
+            //{
+            //    ContentFrame.Navigate(typeof(StatePage), Convert.ToString(item.Tag));
+            //}
         }
 
         void ToggleTheme()

@@ -31,14 +31,14 @@ namespace CovidonusApi.Helpers
                 cfg.CreateMap<DeltaData, DeltaData>()
                 .ForMember(s => s.Id, t => t.Ignore());
                 cfg.CreateMap<Tested, Tested>();
-                cfg.CreateMap<StateWiseData, StateData>();
+                //cfg.CreateMap<StateWiseData, StateData>();
                 cfg.CreateMap<DeltaData, Delta>();
-                cfg.CreateMap<DistrictWiseData, DistrictData>();
-                cfg.CreateMap<CasesTimeSeries, DailyTotalCount>()
-                   .ForMember(s => s.TotalActive, t => t.MapFrom(x => GetTotalActive(x)))
-                   .ForMember(s => s.RecoverRatio, t => t.MapFrom(x => GetRecoverRation(x)))
-                   .ForMember(s => s.DeathRatio, t => t.MapFrom(x => GetDeathRation(x)));
-                ;
+                //cfg.CreateMap<DistrictWiseData, DistrictData>();
+                //cfg.CreateMap<CasesTimeSeries, DailyTotalCount>()
+                //   .ForMember(s => s.TotalActive, t => t.MapFrom(x => GetTotalActive(x)))
+                //   .ForMember(s => s.RecoverRatio, t => t.MapFrom(x => GetRecoverRation(x)))
+                //   .ForMember(s => s.DeathRatio, t => t.MapFrom(x => GetDeathRation(x)));
+                //;
             });
             return new Mapper(configuration);
         }

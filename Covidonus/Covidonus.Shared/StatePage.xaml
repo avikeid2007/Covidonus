@@ -17,7 +17,7 @@
         <ImageBrush ImageSource="/Assets/bg.png" Stretch="UniformToFill" />
     </Page.Background>
 
-    <Grid Margin="8,0,0,0">
+    <Grid win:Margin="8,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
@@ -70,7 +70,10 @@
                                 Text="India" />
                         </StackPanel>
                     </Button>
-                    <Button Margin="4,0" Style="{StaticResource FabLabelMaterialButtonStyle}">
+                    <Button
+                        Margin="4,0"
+                        Style="{StaticResource FabLabelMaterialButtonStyle}"
+                        Visibility="{Binding IsFabStateVisible}">
                         <StackPanel Orientation="Horizontal">
                             <Image
                                 Height="18"
@@ -83,7 +86,7 @@
                                 win:Margin="8,0,16,0"
                                 FontWeight="SemiBold"
                                 Foreground="{StaticResource FabLabelColor}"
-                                Text="Uttar Pradesh" />
+                                Text="{Binding SelectedState.State}" />
 
                         </StackPanel>
                     </Button>
@@ -103,7 +106,7 @@
                         Margin="4,0,0,0"
                         VerticalAlignment="Center"
                         Style="{StaticResource Headline1}"
-                        Text="Uttar Pradesh" />
+                        Text="{Binding SelectedState.State}" />
                     <Button
                         Margin="4,0"
                         HorizontalAlignment="Right"
@@ -151,7 +154,7 @@
                             VerticalAlignment="Bottom"
                             Foreground="White"
                             Style="{StaticResource HeaderTextBlockStyle}"
-                            Text="+15852" />
+                            Text="{Binding DailyCounts.DailyConfirmed}" />
 
                         <TextBlock
                             x:Name="txtNewCase"
@@ -176,7 +179,7 @@
                             VerticalAlignment="Center"
                             Foreground="White"
                             Style="{StaticResource HeaderTextBlockStyle}"
-                            Text="+5211" />
+                            Text="{Binding DailyCounts.DailyDeceased}" />
 
                         <TextBlock
                             x:Name="txtNewDeath"
@@ -191,8 +194,8 @@
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="4*" />
-                    <RowDefinition Height="8*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -206,7 +209,8 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     BorderBrush="{StaticResource OnSurfaceHoverBrush}"
-                    BorderThickness="0,0,0,2">
+                    BorderThickness="0,0,0,2"
+                    Visibility="{Binding IsVisibleStateCounts}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="auto" />
@@ -230,12 +234,8 @@
                         Margin="8,0"
                         FontWeight="Normal"
                         Style="{StaticResource SubheaderTextBlockStyle}"
-                        Text="Across State:"
-                        Visibility="Collapsed" />
-                    <StackPanel
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Visibility="Collapsed">
+                        Text="Across State:" />
+                    <StackPanel Grid.Row="1" Grid.Column="0">
                         <TextBlock
                             x:Name="txtTotalConf"
                             HorizontalAlignment="Center"
@@ -248,12 +248,9 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource PrimaryVariantDarkBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="1250" />
+                            Text="{Binding SelectedState.Confirmed}" />
                     </StackPanel>
-                    <StackPanel
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Visibility="Collapsed">
+                    <StackPanel Grid.Row="1" Grid.Column="1">
                         <TextBlock
                             x:Name="txtTotalActive"
                             HorizontalAlignment="Center"
@@ -266,12 +263,9 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource SecondaryVariantDarkBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="1250" />
+                            Text="{Binding SelectedState.Active}" />
                     </StackPanel>
-                    <StackPanel
-                        Grid.Row="1"
-                        Grid.Column="2"
-                        Visibility="Collapsed">
+                    <StackPanel Grid.Row="1" Grid.Column="2">
                         <TextBlock
                             x:Name="txtTotalRecover"
                             HorizontalAlignment="Center"
@@ -284,12 +278,9 @@
                             FontWeight="Normal"
                             Foreground="Orange"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="1250" />
+                            Text="{Binding SelectedState.Recovered}" />
                     </StackPanel>
-                    <StackPanel
-                        Grid.Row="1"
-                        Grid.Column="3"
-                        Visibility="Collapsed">
+                    <StackPanel Grid.Row="1" Grid.Column="3">
                         <TextBlock
                             x:Name="txtTotalDeath"
                             HorizontalAlignment="Center"
@@ -302,12 +293,9 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource ErrorBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="1250" />
+                            Text="{Binding SelectedState.Deaths}" />
                     </StackPanel>
-                    <StackPanel
-                        Grid.Row="1"
-                        Grid.Column="4"
-                        Visibility="Collapsed">
+                    <StackPanel Grid.Row="1" Grid.Column="4">
                         <TextBlock
                             x:Name="txtTotalTested"
                             HorizontalAlignment="Center"
@@ -320,7 +308,7 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource OverlayBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="1250" />
+                            Text="NA" />
                     </StackPanel>
 
                     <!--  today states  -->
@@ -331,12 +319,8 @@
                         Margin="8,0"
                         FontWeight="Normal"
                         Style="{StaticResource SubheaderTextBlockStyle}"
-                        Text="Today in State:"
-                        Visibility="Collapsed" />
-                    <StackPanel
-                        Grid.Row="3"
-                        Grid.Column="0"
-                        Visibility="Collapsed">
+                        Text="Today in State:" />
+                    <StackPanel Grid.Row="3" Grid.Column="0">
                         <TextBlock
                             x:Name="txtTodayConf"
                             HorizontalAlignment="Center"
@@ -349,12 +333,9 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource PrimaryVariantDarkBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="1250" />
+                            Text="{Binding SelectedState.TodayConfirmed}" />
                     </StackPanel>
-                    <StackPanel
-                        Grid.Row="3"
-                        Grid.Column="1"
-                        Visibility="Collapsed">
+                    <StackPanel Grid.Row="3" Grid.Column="1">
                         <TextBlock
                             x:Name="txtTodayActive"
                             HorizontalAlignment="Center"
@@ -367,12 +348,9 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource SecondaryVariantDarkBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="1250" />
+                            Text="NA" />
                     </StackPanel>
-                    <StackPanel
-                        Grid.Row="3"
-                        Grid.Column="2"
-                        Visibility="Collapsed">
+                    <StackPanel Grid.Row="3" Grid.Column="2">
                         <TextBlock
                             x:Name="txtTodayRecover"
                             HorizontalAlignment="Center"
@@ -385,12 +363,9 @@
                             FontWeight="Normal"
                             Foreground="Orange"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="1250" />
+                            Text="{Binding SelectedState.TodayRecovered}" />
                     </StackPanel>
-                    <StackPanel
-                        Grid.Row="3"
-                        Grid.Column="3"
-                        Visibility="Collapsed">
+                    <StackPanel Grid.Row="3" Grid.Column="3">
                         <TextBlock
                             x:Name="txtTodayDeath"
                             HorizontalAlignment="Center"
@@ -403,12 +378,9 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource ErrorBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="1250" />
+                            Text="{Binding SelectedState.TodayDeaths}" />
                     </StackPanel>
-                    <StackPanel
-                        Grid.Row="3"
-                        Grid.Column="4"
-                        Visibility="Collapsed">
+                    <StackPanel Grid.Row="3" Grid.Column="4">
                         <TextBlock
                             x:Name="txtTodayTested"
                             HorizontalAlignment="Center"
@@ -421,10 +393,38 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource OverlayBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="1250" />
+                            Text="NA" />
                     </StackPanel>
 
 
+
+
+                </Grid>
+                <Grid
+                    x:Name="gridIndCounts"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                    BorderThickness="0,0,0,2"
+                    Visibility="{Binding IsVisibleIndiaCounts}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
                     <!--  Total India  -->
                     <TextBlock
                         x:Name="txtIndAcross"
@@ -447,7 +447,7 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource PrimaryVariantDarkBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="471000" />
+                            Text="{Binding SelectedState.Confirmed}" />
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1">
                         <TextBlock
@@ -462,7 +462,7 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource SecondaryVariantDarkBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="280541" />
+                            Text="{Binding SelectedState.Active}" />
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="2">
                         <TextBlock
@@ -477,7 +477,7 @@
                             FontWeight="Normal"
                             Foreground="Orange"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="1250" />
+                            Text="{Binding SelectedState.Recovered}" />
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="3">
                         <TextBlock
@@ -492,7 +492,7 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource ErrorBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="8522" />
+                            Text="{Binding SelectedState.Deaths}" />
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="4">
                         <TextBlock
@@ -507,7 +507,7 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource OverlayBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="7402150" />
+                            Text="NA" />
                     </StackPanel>
                     <TextBlock
                         x:Name="txtIndToday"
@@ -539,7 +539,7 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource PrimaryVariantDarkBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="1250" />
+                            Text="{Binding SelectedState.Confirmed}" />
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="1">
                         <TextBlock
@@ -554,7 +554,7 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource SecondaryVariantDarkBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="1250" />
+                            Text="NA" />
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="2">
                         <TextBlock
@@ -569,7 +569,7 @@
                             FontWeight="Normal"
                             Foreground="Orange"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="57.50%" />
+                            Text="NA%" />
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="3">
                         <TextBlock
@@ -584,7 +584,7 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource ErrorBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="3.87%" />
+                            Text="NA%" />
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="4">
                         <TextBlock
@@ -599,7 +599,7 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource OverlayBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="3.87%" />
+                            Text="NA%" />
                     </StackPanel>
                 </Grid>
             </Grid>
@@ -658,6 +658,7 @@
                         <Setter Target="txtNewDeathCount.Style" Value="{StaticResource TitleTextBlockStyle}" />
                         <Setter Target="txtNewDeath.Style" Value="{StaticResource BodyTextBlockStyle}" />
                         <Setter Target="gridCounts.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="gridIndCounts.(Grid.ColumnSpan)" Value="2" />
                         <Setter Target="txtTotalConf.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
                         <Setter Target="txtTotalConfCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
                         <Setter Target="txtTotalConfCount.FontWeight" Value="SemiBold" />
@@ -751,6 +752,7 @@
                         <Setter Target="txtNewDeathCount.Style" Value="{StaticResource TitleTextBlockStyle}" />
                         <Setter Target="txtNewDeath.Style" Value="{StaticResource BodyTextBlockStyle}" />
                         <Setter Target="gridCounts.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="gridIndCounts.(Grid.ColumnSpan)" Value="2" />
                         <Setter Target="txtTotalConf.Style" Value="{StaticResource TitleTextBlockStyle}" />
                         <Setter Target="txtTotalConfCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
                         <Setter Target="txtTotalConfCount.FontWeight" Value="SemiBold" />

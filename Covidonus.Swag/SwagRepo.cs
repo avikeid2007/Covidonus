@@ -15,6 +15,196 @@ namespace Covidonus.Swag
     using System = global::System;
     
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.6.1.0 (NJsonSchema v10.1.21.0 (Newtonsoft.Json v11.0.0.0))")]
+    public partial interface ICovidClient
+    {
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<DailyTotalCount> GetDailyTotalsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.6.1.0 (NJsonSchema v10.1.21.0 (Newtonsoft.Json v11.0.0.0))")]
+    public partial class CovidClient : Covidonus.Swag.CovidBaseClient, ICovidClient
+    {
+        private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
+    
+        public CovidClient()
+        {
+            _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings);
+        }
+    
+        private Newtonsoft.Json.JsonSerializerSettings CreateSerializerSettings()
+        {
+            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            UpdateJsonSerializerSettings(settings);
+            return settings;
+        }
+    
+        protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _settings.Value; } }
+    
+        partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<DailyTotalCount> GetDailyTotalsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Covid/GetDailyTotalsAsync");
+    
+            var client_ = new System.Net.Http.HttpClient();
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+    
+                        ProcessResponse(client_, response_);
+    
+                        var status_ = ((int)response_.StatusCode).ToString();
+                        if (status_ == "200") 
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<DailyTotalCount>(response_, headers_).ConfigureAwait(false);
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ != "200" && status_ != "204")
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false); 
+                            throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
+                        }
+            
+                        return default(DailyTotalCount);
+                    }
+                    finally
+                    {
+                        if (response_ != null)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (client_ != null)
+                    client_.Dispose();
+            }
+        }
+    
+        protected struct ObjectResponseResult<T>
+        {
+            public ObjectResponseResult(T responseObject, string responseText)
+            {
+                this.Object = responseObject;
+                this.Text = responseText;
+            }
+    
+            public T Object { get; }
+    
+            public string Text { get; }
+        }
+    
+        public bool ReadResponseAsString { get; set; }
+        
+        protected virtual async System.Threading.Tasks.Task<ObjectResponseResult<T>> ReadObjectResponseAsync<T>(System.Net.Http.HttpResponseMessage response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers)
+        {
+            if (response == null || response.Content == null)
+            {
+                return new ObjectResponseResult<T>(default(T), string.Empty);
+            }
+        
+            if (ReadResponseAsString)
+            {
+                var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    var typedBody = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseText, JsonSerializerSettings);
+                    return new ObjectResponseResult<T>(typedBody, responseText);
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
+                    throw new ApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                }
+            }
+            else
+            {
+                try
+                {
+                    using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                    using (var streamReader = new System.IO.StreamReader(responseStream))
+                    using (var jsonTextReader = new Newtonsoft.Json.JsonTextReader(streamReader))
+                    {
+                        var serializer = Newtonsoft.Json.JsonSerializer.Create(JsonSerializerSettings);
+                        var typedBody = serializer.Deserialize<T>(jsonTextReader);
+                        return new ObjectResponseResult<T>(typedBody, string.Empty);
+                    }
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
+                    throw new ApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                }
+            }
+        }
+    
+        private string ConvertToString(object value, System.Globalization.CultureInfo cultureInfo)
+        {
+            if (value is System.Enum)
+            {
+                string name = System.Enum.GetName(value.GetType(), value);
+                if (name != null)
+                {
+                    var field = System.Reflection.IntrospectionExtensions.GetTypeInfo(value.GetType()).GetDeclaredField(name);
+                    if (field != null)
+                    {
+                        var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute(field, typeof(System.Runtime.Serialization.EnumMemberAttribute)) 
+                            as System.Runtime.Serialization.EnumMemberAttribute;
+                        if (attribute != null)
+                        {
+                            return attribute.Value != null ? attribute.Value : name;
+                        }
+                    }
+        
+                    return System.Convert.ToString(System.Convert.ChangeType(value, System.Enum.GetUnderlyingType(value.GetType()), cultureInfo));
+                }
+            }
+            else if (value is bool) 
+            {
+                return System.Convert.ToString(value, cultureInfo).ToLowerInvariant();
+            }
+            else if (value is byte[])
+            {
+                return System.Convert.ToBase64String((byte[]) value);
+            }
+            else if (value != null && value.GetType().IsArray)
+            {
+                var array = System.Linq.Enumerable.OfType<object>((System.Array) value);
+                return string.Join(",", System.Linq.Enumerable.Select(array, o => ConvertToString(o, cultureInfo)));
+            }
+        
+            return System.Convert.ToString(value, cultureInfo);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.6.1.0 (NJsonSchema v10.1.21.0 (Newtonsoft.Json v11.0.0.0))")]
     public partial interface IStateClient
     {
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -667,6 +857,232 @@ namespace Covidonus.Swag
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class DailyTotalCount : System.ComponentModel.INotifyPropertyChanged
+    {
+        private int _id;
+        private int _dailyConfirmed;
+        private int _dailyDeceased;
+        private int _dailyRecovered;
+        private int _totalConfirmed;
+        private int _totalActive;
+        private int _totalDeceased;
+        private int _totalRecovered;
+        private System.DateTimeOffset _dateFull;
+        private string _recoverRatio;
+        private string _deathRatio;
+        private string _testedToday;
+        private string _testedTotal;
+        private string _testedSource;
+    
+        [Newtonsoft.Json.JsonProperty("Id", Required = Newtonsoft.Json.Required.Always)]
+        public int Id
+        {
+            get { return _id; }
+            set 
+            {
+                if (_id != value)
+                {
+                    _id = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("DailyConfirmed", Required = Newtonsoft.Json.Required.Always)]
+        public int DailyConfirmed
+        {
+            get { return _dailyConfirmed; }
+            set 
+            {
+                if (_dailyConfirmed != value)
+                {
+                    _dailyConfirmed = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("DailyDeceased", Required = Newtonsoft.Json.Required.Always)]
+        public int DailyDeceased
+        {
+            get { return _dailyDeceased; }
+            set 
+            {
+                if (_dailyDeceased != value)
+                {
+                    _dailyDeceased = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("DailyRecovered", Required = Newtonsoft.Json.Required.Always)]
+        public int DailyRecovered
+        {
+            get { return _dailyRecovered; }
+            set 
+            {
+                if (_dailyRecovered != value)
+                {
+                    _dailyRecovered = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("TotalConfirmed", Required = Newtonsoft.Json.Required.Always)]
+        public int TotalConfirmed
+        {
+            get { return _totalConfirmed; }
+            set 
+            {
+                if (_totalConfirmed != value)
+                {
+                    _totalConfirmed = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("TotalActive", Required = Newtonsoft.Json.Required.Always)]
+        public int TotalActive
+        {
+            get { return _totalActive; }
+            set 
+            {
+                if (_totalActive != value)
+                {
+                    _totalActive = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("TotalDeceased", Required = Newtonsoft.Json.Required.Always)]
+        public int TotalDeceased
+        {
+            get { return _totalDeceased; }
+            set 
+            {
+                if (_totalDeceased != value)
+                {
+                    _totalDeceased = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("TotalRecovered", Required = Newtonsoft.Json.Required.Always)]
+        public int TotalRecovered
+        {
+            get { return _totalRecovered; }
+            set 
+            {
+                if (_totalRecovered != value)
+                {
+                    _totalRecovered = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("DateFull", Required = Newtonsoft.Json.Required.Always)]
+        public System.DateTimeOffset DateFull
+        {
+            get { return _dateFull; }
+            set 
+            {
+                if (_dateFull != value)
+                {
+                    _dateFull = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("RecoverRatio", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string RecoverRatio
+        {
+            get { return _recoverRatio; }
+            set 
+            {
+                if (_recoverRatio != value)
+                {
+                    _recoverRatio = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("DeathRatio", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string DeathRatio
+        {
+            get { return _deathRatio; }
+            set 
+            {
+                if (_deathRatio != value)
+                {
+                    _deathRatio = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("TestedToday", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string TestedToday
+        {
+            get { return _testedToday; }
+            set 
+            {
+                if (_testedToday != value)
+                {
+                    _testedToday = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("TestedTotal", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string TestedTotal
+        {
+            get { return _testedTotal; }
+            set 
+            {
+                if (_testedTotal != value)
+                {
+                    _testedTotal = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("TestedSource", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string TestedSource
+        {
+            get { return _testedSource; }
+            set 
+            {
+                if (_testedSource != value)
+                {
+                    _testedSource = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+    
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null) 
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v11.0.0.0)")]
     public partial class StateData : System.ComponentModel.INotifyPropertyChanged
     {
         private int _id;
@@ -683,6 +1099,11 @@ namespace Covidonus.Swag
         private string _stateNotes;
         private System.DateTimeOffset? _lastUpdatedtime;
         private string _stateLogo;
+        private int _todayConfirmed;
+        private int _todayDeaths;
+        private int _todayRecovered;
+        private int _todayTested;
+        private System.DateTimeOffset? _todayUpdatedtime;
         private System.Collections.Generic.ICollection<DistrictData> _districtData;
     
         [Newtonsoft.Json.JsonProperty("Id", Required = Newtonsoft.Json.Required.Always)]
@@ -881,6 +1302,76 @@ namespace Covidonus.Swag
             }
         }
     
+        [Newtonsoft.Json.JsonProperty("TodayConfirmed", Required = Newtonsoft.Json.Required.Always)]
+        public int TodayConfirmed
+        {
+            get { return _todayConfirmed; }
+            set 
+            {
+                if (_todayConfirmed != value)
+                {
+                    _todayConfirmed = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("TodayDeaths", Required = Newtonsoft.Json.Required.Always)]
+        public int TodayDeaths
+        {
+            get { return _todayDeaths; }
+            set 
+            {
+                if (_todayDeaths != value)
+                {
+                    _todayDeaths = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("TodayRecovered", Required = Newtonsoft.Json.Required.Always)]
+        public int TodayRecovered
+        {
+            get { return _todayRecovered; }
+            set 
+            {
+                if (_todayRecovered != value)
+                {
+                    _todayRecovered = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("TodayTested", Required = Newtonsoft.Json.Required.Always)]
+        public int TodayTested
+        {
+            get { return _todayTested; }
+            set 
+            {
+                if (_todayTested != value)
+                {
+                    _todayTested = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("TodayUpdatedtime", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset? TodayUpdatedtime
+        {
+            get { return _todayUpdatedtime; }
+            set 
+            {
+                if (_todayUpdatedtime != value)
+                {
+                    _todayUpdatedtime = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
         [Newtonsoft.Json.JsonProperty("DistrictData", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<DistrictData> DistrictData
         {
@@ -921,6 +1412,11 @@ namespace Covidonus.Swag
         private string _stateCode;
         private int _stateWiseDataId;
         private Delta _delta;
+        private int _todayConfirmed;
+        private int _todayDeaths;
+        private int _todayRecovered;
+        private int _todayTested;
+        private System.DateTimeOffset? _todayUpdatedtime;
     
         [Newtonsoft.Json.JsonProperty("Id", Required = Newtonsoft.Json.Required.Always)]
         public int Id
@@ -1071,6 +1567,76 @@ namespace Covidonus.Swag
                 if (_delta != value)
                 {
                     _delta = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("TodayConfirmed", Required = Newtonsoft.Json.Required.Always)]
+        public int TodayConfirmed
+        {
+            get { return _todayConfirmed; }
+            set 
+            {
+                if (_todayConfirmed != value)
+                {
+                    _todayConfirmed = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("TodayDeaths", Required = Newtonsoft.Json.Required.Always)]
+        public int TodayDeaths
+        {
+            get { return _todayDeaths; }
+            set 
+            {
+                if (_todayDeaths != value)
+                {
+                    _todayDeaths = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("TodayRecovered", Required = Newtonsoft.Json.Required.Always)]
+        public int TodayRecovered
+        {
+            get { return _todayRecovered; }
+            set 
+            {
+                if (_todayRecovered != value)
+                {
+                    _todayRecovered = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("TodayTested", Required = Newtonsoft.Json.Required.Always)]
+        public int TodayTested
+        {
+            get { return _todayTested; }
+            set 
+            {
+                if (_todayTested != value)
+                {
+                    _todayTested = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("TodayUpdatedtime", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset? TodayUpdatedtime
+        {
+            get { return _todayUpdatedtime; }
+            set 
+            {
+                if (_todayUpdatedtime != value)
+                {
+                    _todayUpdatedtime = value; 
                     RaisePropertyChanged();
                 }
             }

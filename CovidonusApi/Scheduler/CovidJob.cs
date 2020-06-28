@@ -9,7 +9,7 @@ namespace CovidonusApi.Scheduler
         public async Task Execute(IJobExecutionContext context)
         {
             SeedDataRepository repo = new SeedDataRepository();
-            await repo.SeedCovidDataAsync();
+            await repo.RefreshCovidDataAsync();
         }
     }
 }

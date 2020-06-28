@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -16,6 +17,10 @@ namespace Covidonus
     /// </summary>
     sealed partial class App : Application
     {
+        static StateClient stateClient;
+        static CovidClient covidClient;
+
+        public static DailyTotalCount DailyCounts { get; set; }
         public static List<StateData> Menuitems { get; set; }
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -24,18 +29,31 @@ namespace Covidonus
         public App()
         {
             ConfigureFilters(global::Uno.Extensions.LogExtensionPoint.AmbientLoggerFactory);
-            _ = LoadMenuAsync();
+            Task.WhenAll(LoadMenuAsync(), LoadDailyCountsAsync());
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-
         }
 
         private static async Task LoadMenuAsync()
         {
             try
             {
-                StateClient stateClient = new StateClient();
+                stateClient = new StateClient();
                 Menuitems = new List<StateData>(await stateClient.GetAsync());
+                var total = Menuitems.FirstOrDefault(x => x.StateCode == "TT");
+                if (total != null)
+                    total.State = "India";
+
+            }
+            catch
+            { }
+        }
+        private static async Task LoadDailyCountsAsync()
+        {
+            try
+            {
+                covidClient = new CovidClient();
+                DailyCounts = await covidClient.GetDailyTotalsAsync();
             }
             catch
             { }
