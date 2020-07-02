@@ -16,7 +16,8 @@ namespace Covidonus
     /// </summary>
     sealed partial class App : Application
     {
-        public static List<StateData> Menuitems { get; set; }
+        private static CovidClient _covidClient;
+        public static List<StateWiseData> Menuitems { get; set; }
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -24,20 +25,19 @@ namespace Covidonus
         public App()
         {
             ConfigureFilters(global::Uno.Extensions.LogExtensionPoint.AmbientLoggerFactory);
-            _ = LoadMenuAsync();
+            _ = LoadDailyCountsAsync();
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-
         }
 
-        private static async Task LoadMenuAsync()
+        private static async Task LoadDailyCountsAsync()
         {
             try
             {
-                StateClient stateClient = new StateClient();
-                Menuitems = new List<StateData>(await stateClient.GetAsync());
+                _covidClient = new CovidClient();
+                Menuitems = new List<StateWiseData>(await _covidClient.GetCovidCountsAsync());
             }
-            catch
+            catch (Exception ex)
             { }
         }
 

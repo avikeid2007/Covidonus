@@ -268,8 +268,6 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\CovidController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\StateController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -292,9 +290,7 @@
     <Compile Include="Models\DailyStateWiseData.cs" />
     <Compile Include="Models\DeltaData.cs" />
     <Compile Include="Models\DistrictWiseData.cs" />
-    <Compile Include="Models\DTOs\DailyTotalCount.cs" />
     <Compile Include="Models\DTOs\DistrictData.cs" />
-    <Compile Include="Models\DTOs\StateData.cs" />
     <Compile Include="Models\StateWiseData.cs" />
     <Compile Include="Models\Tested.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

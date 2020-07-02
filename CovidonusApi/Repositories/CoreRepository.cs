@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
 using CovidonusApi.Helpers;
 using CovidonusApi.Models;
-using CovidonusApi.Models.DTOs;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CovidonusApi.Repositories
 {
@@ -14,9 +10,7 @@ namespace CovidonusApi.Repositories
     {
         protected IMapper mapper;
         protected CovidonusContext db = new CovidonusContext();
-        protected static IEnumerable<StateData> MenuList;
-        protected static DailyTotalCount DailyTotalCounts;
-
+        protected static IEnumerable<StateWiseData> MenuList;
         protected IMapper GetMapper()
         {
             return CovidonusMapper.GetMapper();
@@ -48,44 +42,6 @@ namespace CovidonusApi.Repositories
                 obj.CreatedBy = userName;
                 obj.IsActive = true;
             }
-        }
-        protected async Task SetDailyCountAsync()
-        {
-
-            var daily = await db.CasesTimeSeries.OrderByDescending(x => x.DateFull).FirstOrDefaultAsync();
-            if (daily != null)
-            {
-                DailyTotalCounts = ConvertModels<DailyTotalCount, CasesTimeSeries>(daily);
-                var Tested = await db.Testeds.OrderByDescending(x => x.UpdateTimeStamp).FirstOrDefaultAsync();
-                DailyTotalCounts.TestedToday = Tested?.SampleReportedToday;
-                DailyTotalCounts.TestedTotal = Tested?.TotalSamplesTested;
-            }
-        }
-        protected async Task SetUpdatedMenuAsync()
-        {
-            var tempMenuList = db.StateWiseDatas.Include("DistrictData.Delta").Select(ConvertModels<StateData, StateWiseData>).ToList();
-            foreach (var item in tempMenuList)
-            {
-                var date = DateTime.Now.Date.AddDays(-1);
-                var stateTodayCount = await db.DailyStateWiseDatas.Where(x => x.StateCode == item.StateCode && x.LastUpdatedtime > date)
-                                        .OrderByDescending(x => x.LastUpdatedtime).FirstOrDefaultAsync();
-                item.TodayConfirmed = Convert.ToInt32(stateTodayCount?.Confirmed);
-                item.TodayDeaths = Convert.ToInt32(stateTodayCount?.Deaths);
-                item.TodayRecovered = Convert.ToInt32(stateTodayCount?.Recovered);
-                item.TodayTested = Convert.ToInt32(stateTodayCount?.Tested);
-                item.TodayUpdatedtime = stateTodayCount?.LastUpdatedtime;
-                foreach (var dist in item.DistrictData)
-                {
-                    var distTodayCount = await db.DailyDistrictWiseDatas.Where(x => x.StateCode == dist.StateCode && x.District.ToUpper() == dist.District.ToUpper() && x.Created > date)
-                                        .OrderByDescending(x => x.Created).FirstOrDefaultAsync();
-                    dist.TodayConfirmed = Convert.ToInt32(distTodayCount?.Confirmed);
-                    dist.TodayDeaths = Convert.ToInt32(distTodayCount?.Deceased);
-                    dist.TodayRecovered = Convert.ToInt32(distTodayCount?.Recovered);
-                    dist.TodayTested = Convert.ToInt32(distTodayCount?.Tested);
-                    dist.TodayUpdatedtime = stateTodayCount?.LastUpdatedtime;
-                }
-            }
-            MenuList = tempMenuList;
         }
         public static void MapModified<T>(T obj, string userName = null) where T : Auditor
         {
