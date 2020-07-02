@@ -127,6 +127,7 @@
                             Foreground="{StaticResource FabIconColor}"
                             Symbol="Cancel" />
                     </Button>
+
                 </StackPanel>
                 <Grid
                     x:Name="gridNewCaseDeath"
@@ -154,7 +155,7 @@
                             VerticalAlignment="Bottom"
                             Foreground="White"
                             Style="{StaticResource HeaderTextBlockStyle}"
-                            Text="{Binding DailyCounts.DailyConfirmed}" />
+                            Text="{Binding NewCases}" />
 
                         <TextBlock
                             x:Name="txtNewCase"
@@ -179,7 +180,7 @@
                             VerticalAlignment="Center"
                             Foreground="White"
                             Style="{StaticResource HeaderTextBlockStyle}"
-                            Text="{Binding DailyCounts.DailyDeceased}" />
+                            Text="{Binding NewDeaths}" />
 
                         <TextBlock
                             x:Name="txtNewDeath"
@@ -194,8 +195,8 @@
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="4*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -308,7 +309,7 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource OverlayBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="NA" />
+                            Text="{Binding SelectedState.Tested}" />
                     </StackPanel>
 
                     <!--  today states  -->
@@ -393,12 +394,8 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource OverlayBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="NA" />
+                            Text="{Binding SelectedState.TodayTested}" />
                     </StackPanel>
-
-
-
-
                 </Grid>
                 <Grid
                     x:Name="gridIndCounts"
@@ -507,7 +504,7 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource OverlayBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="NA" />
+                            Text="{Binding SelectedState.Tested}" />
                     </StackPanel>
                     <TextBlock
                         x:Name="txtIndToday"
@@ -539,7 +536,7 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource PrimaryVariantDarkBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="{Binding SelectedState.Confirmed}" />
+                            Text="{Binding SelectedState.Recovered}" />
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="1">
                         <TextBlock
@@ -554,7 +551,7 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource SecondaryVariantDarkBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="NA" />
+                            Text="{Binding SelectedState.TodayTested}" />
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="2">
                         <TextBlock
@@ -602,43 +599,124 @@
                             Text="NA%" />
                     </StackPanel>
                 </Grid>
+                <TextBlock
+                    x:Name="SetFontSize"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    FontSize="24"
+                    Visibility="Collapsed" />
+
+                <ListView
+                    x:Name="scrollIndList"
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    FontSize="30"
+                    ItemsSource="{Binding StateCollection}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Grid.Column="0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                    Text="{Binding District}"
+                                    TextAlignment="Left" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                    Text="{Binding Confirmed}"
+                                    TextAlignment="Left" />
+                                <TextBlock
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                    Text="{Binding Active}"
+                                    TextAlignment="Left" />
+                                <TextBlock
+                                    Grid.Column="3"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                    Text="{Binding Recovered}"
+                                    TextAlignment="Left" />
+                                <TextBlock
+                                    Grid.Column="4"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                    Text="{Binding Deaths}"
+                                    TextAlignment="Left" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+
+                <Image
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Source="ms-appx:///Assets/States/AP.svg"
+                    Stretch="Uniform" />
             </Grid>
+            <controls:BottomNavigationBar x:Name="BottomNavBar" Grid.Row="1">
+                <controls:BottomNavigationBar.Items>
+                    <controls:BottomNavigationBarItem Label="Favorites">
+                        <controls:BottomNavigationBarItem.Icon>
+                            <SymbolIcon Symbol="Favorite" />
+                        </controls:BottomNavigationBarItem.Icon>
+                    </controls:BottomNavigationBarItem>
+                    <controls:BottomNavigationBarItem Label="Search">
+                        <controls:BottomNavigationBarItem.Icon>
+                            <SymbolIcon Symbol="Find" />
+                        </controls:BottomNavigationBarItem.Icon>
+                    </controls:BottomNavigationBarItem>
+                    <controls:BottomNavigationBarItem>
+                        <controls:BottomNavigationBarItem.Icon>
+                            <SymbolIcon Symbol="Important" />
+                        </controls:BottomNavigationBarItem.Icon>
+                        <controls:BottomNavigationBarItem.Badge>
+                            <entities:BottomNavigationBarBadge IsVisible="True" />
+                        </controls:BottomNavigationBarItem.Badge>
+                    </controls:BottomNavigationBarItem>
+                    <controls:BottomNavigationBarItem Label="Notifications">
+                        <controls:BottomNavigationBarItem.Icon>
+                            <SymbolIcon Symbol="Flag" />
+                        </controls:BottomNavigationBarItem.Icon>
+                        <controls:BottomNavigationBarItem.Badge>
+                            <entities:BottomNavigationBarBadge IsVisible="True" Text="12" />
+                        </controls:BottomNavigationBarItem.Badge>
+                    </controls:BottomNavigationBarItem>
+                    <controls:BottomNavigationBarItem>
+                        <controls:BottomNavigationBarItem.Icon>
+                            <SymbolIcon Symbol="Setting" />
+                        </controls:BottomNavigationBarItem.Icon>
+                    </controls:BottomNavigationBarItem>
+                </controls:BottomNavigationBar.Items>
+            </controls:BottomNavigationBar>
         </Grid>
-        <controls:BottomNavigationBar x:Name="BottomNavBar">
-            <controls:BottomNavigationBar.Items>
-                <controls:BottomNavigationBarItem Label="Favorites">
-                    <controls:BottomNavigationBarItem.Icon>
-                        <SymbolIcon Symbol="Favorite" />
-                    </controls:BottomNavigationBarItem.Icon>
-                </controls:BottomNavigationBarItem>
-                <controls:BottomNavigationBarItem Label="Search">
-                    <controls:BottomNavigationBarItem.Icon>
-                        <SymbolIcon Symbol="Find" />
-                    </controls:BottomNavigationBarItem.Icon>
-                </controls:BottomNavigationBarItem>
-                <controls:BottomNavigationBarItem>
-                    <controls:BottomNavigationBarItem.Icon>
-                        <SymbolIcon Symbol="Important" />
-                    </controls:BottomNavigationBarItem.Icon>
-                    <controls:BottomNavigationBarItem.Badge>
-                        <entities:BottomNavigationBarBadge IsVisible="True" />
-                    </controls:BottomNavigationBarItem.Badge>
-                </controls:BottomNavigationBarItem>
-                <controls:BottomNavigationBarItem Label="Notifications">
-                    <controls:BottomNavigationBarItem.Icon>
-                        <SymbolIcon Symbol="Flag" />
-                    </controls:BottomNavigationBarItem.Icon>
-                    <controls:BottomNavigationBarItem.Badge>
-                        <entities:BottomNavigationBarBadge IsVisible="True" Text="12" />
-                    </controls:BottomNavigationBarItem.Badge>
-                </controls:BottomNavigationBarItem>
-                <controls:BottomNavigationBarItem>
-                    <controls:BottomNavigationBarItem.Icon>
-                        <SymbolIcon Symbol="Setting" />
-                    </controls:BottomNavigationBarItem.Icon>
-                </controls:BottomNavigationBarItem>
-            </controls:BottomNavigationBar.Items>
-        </controls:BottomNavigationBar>
+
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
@@ -725,18 +803,10 @@
                         <Setter Target="txtIndTodayRecoverCount.FontWeight" Value="SemiBold" />
                         <Setter Target="txtIndToday.Style" Value="{StaticResource TitleTextBlockStyle}" />
                         <Setter Target="txtIndRatio.Style" Value="{StaticResource TitleTextBlockStyle}" />
-                        <!--<Setter Target="CurrentTimeTxt.FontSize" Value="16" />
-                        <Setter Target="SettingIcon.Width" Value="32" />
-                        <Setter Target="SettingIcon.Height" Value="32" />
-                        <Setter Target="ClockIcon.Width" Value="16" />
-                        <Setter Target="ClockIcon.Height" Value="16" />
-                        <Setter Target="RemTxt.FontSize" Value="24" />
-                        <Setter Target="TimeTxt.FontSize" Value="32" />
-                        <Setter Target="ClockBtn.Width" Value="48" />
-
-                        <Setter Target="ClockBtn.Height" Value="48" />
-                        <Setter Target="KeyboardBtn.Width" Value="48" />
-                        <Setter Target="KeyboardBtn.Height" Value="48" />-->
+                        <Setter Target="SetFontSize.FontSize" Value="14" />
+                        <Setter Target="scrollIndList.(Grid.Row)" Value="1" />
+                        <Setter Target="scrollIndList.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="scrollIndList.(Grid.Column)" Value="0" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateNormal">
@@ -785,7 +855,6 @@
                         <Setter Target="txtTodayRecoverCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
                         <Setter Target="txtTodayRecoverCount.FontWeight" Value="SemiBold" />
                         <Setter Target="txtToday.Style" Value="{StaticResource TitleTextBlockStyle}" />
-
                         <Setter Target="txtIndTotalConf.Style" Value="{StaticResource TitleTextBlockStyle}" />
                         <Setter Target="txtIndTotalConfCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
                         <Setter Target="txtIndTotalConfCount.FontWeight" Value="SemiBold" />
@@ -819,6 +888,10 @@
                         <Setter Target="txtIndTodayRecoverCount.FontWeight" Value="SemiBold" />
                         <Setter Target="txtIndToday.Style" Value="{StaticResource TitleTextBlockStyle}" />
                         <Setter Target="txtIndRatio.Style" Value="{StaticResource TitleTextBlockStyle}" />
+                        <Setter Target="SetFontSize.FontSize" Value="20" />
+                        <Setter Target="scrollIndList.(Grid.Row)" Value="1" />
+                        <Setter Target="scrollIndList.(Grid.ColumnSpan)" Value="2" />
+                        <Setter Target="scrollIndList.(Grid.Column)" Value="0" />
                         <!--<Setter Target="TaskTxt.FontSize" Value="24" />
                         <Setter Target="CurrentTimeTxt.FontSize" Value="24" />
                         <Setter Target="SettingIcon.Width" Value="48" />
@@ -843,6 +916,7 @@
                         <Setter Target="Fabpanal.Margin" Value="4,0,0,0" />
                         <Setter Target="txtStateName.Style" Value="{StaticResource Headline1}" />
                         <Setter Target="gridCounts.(Grid.ColumnSpan)" Value="1" />
+                        <Setter Target="SetFontSize.FontSize" Value="24" />
                         <!--<Setter Target="TaskTxt.FontSize" Value="32" />
                         <Setter Target="CurrentTimeTxt.FontSize" Value="32" />
                         <Setter Target="SettingIcon.Width" Value="52" />

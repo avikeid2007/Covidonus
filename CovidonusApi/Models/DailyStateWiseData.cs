@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace CovidonusApi.Models
 {
 
-    public class DailyStateWiseData : Auditor
+    public class DailyStateWiseData
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

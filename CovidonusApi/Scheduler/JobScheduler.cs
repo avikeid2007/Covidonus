@@ -14,7 +14,7 @@ namespace CovidonusApi.Scheduler
             .WithIdentity("CovidJob", "group1")
             .StartNow()
             .WithSimpleSchedule(x => x
-            .WithIntervalInHours(2)
+            .WithIntervalInMinutes(15)
             .RepeatForever())
             .Build();
             await scheduler.ScheduleJob(job, trigger);

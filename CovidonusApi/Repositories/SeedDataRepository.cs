@@ -342,6 +342,13 @@ namespace CovidonusApi.Repositories
                 var dailyData = await GetDailyDataAsync();
                 if (stateData?.Count > 0 && dailyData != null && dailyData.Statewise?.Count > 0)
                 {
+                    stateData.ForEach(x =>
+                    {
+                        x.DistrictData.ToList().ForEach(d =>
+                        {
+                            d.StateCode = x.StateCode;
+                        });
+                    });
                     if (!stateData.Any(x => x.StateCode == "TT"))
                     {
                         logger.Info("RefreshCovidDataAsync: Start adding data in StateWiseData");
@@ -379,7 +386,7 @@ namespace CovidonusApi.Repositories
                     {
                         var updatedRecord = dailyData.Statewise.FirstOrDefault(x => x.StateCode == dbitem.StateCode);
                         MapModels(updatedRecord, dbitem);
-                        if (result?.ContainsKey(dbitem.StateCode) == true)
+                        if (result?.ContainsKey(dbitem.StateCode) == true && dbitem.StateCode != "TT")
                         {
                             dbitem.Population = result[dbitem.StateCode]?.Meta?.Population;
                             dbitem.Tested = Convert.ToInt32(result[dbitem.StateCode].Total?.Tested);
@@ -397,6 +404,7 @@ namespace CovidonusApi.Repositories
                                         {
                                             if (result[dbitem.StateCode].Districts[dist.District].Delta != null)
                                             {
+
                                                 dist.TodayConfirmed = result[dbitem.StateCode].Districts[dist.District].Delta.Confirmed;
                                                 dist.TodayDeaths = result[dbitem.StateCode].Districts[dist.District].Delta.Deceased;
                                                 dist.TodayRecovered = result[dbitem.StateCode].Districts[dist.District].Delta.Recovered;
@@ -413,7 +421,7 @@ namespace CovidonusApi.Repositories
                             }
                         }
                     }
-                    MenuList = stateData;
+                    MenuList = stateData.AsEnumerable();
                     logger.Info("SeedDataRepository:RefreshCovidDataAsync=> End update StateWiseDatas & district");
                 }
             }
