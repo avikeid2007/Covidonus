@@ -42,7 +42,17 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\india.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Logo.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\SharedAssets.md" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\States\OR.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\States\PB.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\States\PY.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\States\RJ.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\States\SK.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\States\TG.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\States\TN.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\States\TR.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\States\UP.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\States\UT.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\States\WB.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\UP.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\UPe.png" />
   </ItemGroup>
@@ -52,42 +62,5 @@
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Repositories\" />
     <Folder Include="$(MSBuildThisFileDirectory)Styles\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\AN.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\AP.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\AR.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\AS.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\BR.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\CH.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\CT.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\DL.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\DN.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\DN2.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\GA.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\GJ.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\HP.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\HR.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\JH.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\JK.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\KA.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\KL.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\LD.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\MH.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\ML.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\MN.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\MP.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\MZ.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\NL.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\OR.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\PB.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\PY.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\RJ.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\SK.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\TN.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\TR.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\UP.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\UT.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\WB.svg" />
   </ItemGroup>
 </Project>

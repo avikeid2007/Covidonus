@@ -677,7 +677,7 @@
                     Grid.Column="0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    Source="ms-appx:///Assets/States/AP.svg"
+                    Source="{Binding SelectedState.StateLogo}"
                     Stretch="Uniform" />
             </Grid>
             <controls:BottomNavigationBar x:Name="BottomNavBar" Grid.Row="1">
