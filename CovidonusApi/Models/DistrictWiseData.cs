@@ -30,6 +30,8 @@ namespace CovidonusApi.Models
         public int TodayRecovered { get; set; }
         public int TodayTested { get; set; }
         public string Population { get; set; }
+        public string RecoverRate { get; set; }
+        public string DeathRate { get; set; }
         public DateTime? TodayUpdatedtime { get; set; }
         public StateWiseData StateWiseData { get; set; }
         public virtual DeltaData Delta { get; set; }

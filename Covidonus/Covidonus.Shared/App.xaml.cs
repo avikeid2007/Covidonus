@@ -1,4 +1,5 @@
-﻿using Covidonus.Swag;
+﻿using Covidonus.Shared;
+using Covidonus.Swag;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,6 @@ namespace Covidonus
         public App()
         {
             ConfigureFilters(global::Uno.Extensions.LogExtensionPoint.AmbientLoggerFactory);
-            _ = LoadDailyCountsAsync();
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
@@ -35,7 +35,8 @@ namespace Covidonus
             try
             {
                 _covidClient = new CovidClient();
-                Menuitems = new List<StateWiseData>(await _covidClient.GetCovidCountsAsync());
+                var res = await _covidClient.GetCovidCountsAsync();
+                Menuitems = new List<StateWiseData>(res);
             }
             catch (Exception ex)
             { }
@@ -81,7 +82,7 @@ namespace Covidonus
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    rootFrame.Navigate(typeof(ExtendedSplashPage), e.Arguments);
                 }
                 // Ensure the current window is active
                 Windows.UI.Xaml.Window.Current.Activate();

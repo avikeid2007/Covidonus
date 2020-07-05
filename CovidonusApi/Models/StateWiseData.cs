@@ -37,6 +37,8 @@ namespace CovidonusApi.Models
         public string TestSource { get; set; }
         public int TestPerMillion { get; set; }
         public string TotalPositiveCases { get; set; }
+        public string RecoverRate { get; set; }
+        public string DeathRate { get; set; }
         public DateTime? TodayUpdatedtime { get; set; }
         public ICollection<DistrictWiseData> DistrictData { get; set; }
     }

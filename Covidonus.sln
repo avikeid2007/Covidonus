@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Uno.Material", "Covidonus\l
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CovidonusApi", "CovidonusApi\CovidonusApi.csproj", "{2497B804-D007-4C44-BC73-12F3EB4EAE98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Covidonus.Swag", "Covidonus.Swag\Covidonus.Swag.csproj", "{F9459079-9A8C-4E5B-BC15-7278E5D92D94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Covidonus.Swag", "Covidonus.Swag\Covidonus.Swag.csproj", "{F9459079-9A8C-4E5B-BC15-7278E5D92D94}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
