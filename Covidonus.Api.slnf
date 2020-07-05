@@ -1,0 +1,8 @@
+{
+  "solution": {
+    "path": "Covidonus.sln",
+    "projects": [
+      "CovidonusApi\\CovidonusApi.csproj"
+    ]
+  }
+}

@@ -1,19 +1,13 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Covidonus.Shared;
+using Covidonus.Swag;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace Covidonus
@@ -23,6 +17,8 @@ namespace Covidonus
     /// </summary>
     sealed partial class App : Application
     {
+        private static CovidClient _covidClient;
+        public static List<StateWiseData> Menuitems { get; set; }
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -30,9 +26,20 @@ namespace Covidonus
         public App()
         {
             ConfigureFilters(global::Uno.Extensions.LogExtensionPoint.AmbientLoggerFactory);
-
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+        }
+
+        private static async Task LoadDailyCountsAsync()
+        {
+            try
+            {
+                _covidClient = new CovidClient();
+                var res = await _covidClient.GetCovidCountsAsync();
+                Menuitems = new List<StateWiseData>(res);
+            }
+            catch (Exception ex)
+            { }
         }
 
         /// <summary>
@@ -43,10 +50,10 @@ namespace Covidonus
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
 #if DEBUG
-			if (System.Diagnostics.Debugger.IsAttached)
-			{
-				// this.DebugSettings.EnableFrameRateCounter = true;
-			}
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                // this.DebugSettings.EnableFrameRateCounter = true;
+            }
 #endif
             Frame rootFrame = Windows.UI.Xaml.Window.Current.Content as Frame;
 
@@ -75,7 +82,7 @@ namespace Covidonus
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    rootFrame.Navigate(typeof(ExtendedSplashPage), e.Arguments);
                 }
                 // Ensure the current window is active
                 Windows.UI.Xaml.Window.Current.Activate();
@@ -154,7 +161,7 @@ namespace Covidonus
 					}
                 )
 #if DEBUG
-				.AddConsole(LogLevel.Debug);
+                .AddConsole(LogLevel.Debug);
 #else
                 .AddConsole(LogLevel.Information);
 #endif

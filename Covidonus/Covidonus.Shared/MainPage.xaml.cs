@@ -1,4 +1,4 @@
-﻿using Windows.UI.Xaml;
+﻿using Covidonus.Shared.ViewModels;
 using Windows.UI.Xaml.Controls;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -13,10 +13,7 @@ namespace Covidonus
         public MainPage()
         {
             this.InitializeComponent();
+            this.DataContext = new MainViewModel();
         }
-        private void NavView_Loaded(object sender, RoutedEventArgs e)
-        { }
-        private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
-        { }
     }
 }
