@@ -195,8 +195,9 @@
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*" />
-                    <RowDefinition Height="4*" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -566,7 +567,7 @@
                             FontWeight="Normal"
                             Foreground="Orange"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="NA%" />
+                            Text="{Binding SelectedState.RecoverRate}" />
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="3">
                         <TextBlock
@@ -581,7 +582,7 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource ErrorBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="NA%" />
+                            Text="{Binding SelectedState.DeathRate}" />
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="4">
                         <TextBlock
@@ -605,7 +606,6 @@
                     Grid.Column="1"
                     FontSize="24"
                     Visibility="Collapsed" />
-
                 <ListView
                     x:Name="scrollIndList"
                     Grid.Row="0"
@@ -671,52 +671,52 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                 </ListView>
-
                 <Image
+                    x:Name="imgState"
                     Grid.Row="1"
                     Grid.Column="0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    Source="ms-appx:///Assets/States/AP.svg"
+                    Source="{Binding SelectedState.StateLogo}"
                     Stretch="Uniform" />
             </Grid>
-            <controls:BottomNavigationBar x:Name="BottomNavBar" Grid.Row="1">
-                <controls:BottomNavigationBar.Items>
-                    <controls:BottomNavigationBarItem Label="Favorites">
-                        <controls:BottomNavigationBarItem.Icon>
-                            <SymbolIcon Symbol="Favorite" />
-                        </controls:BottomNavigationBarItem.Icon>
-                    </controls:BottomNavigationBarItem>
-                    <controls:BottomNavigationBarItem Label="Search">
-                        <controls:BottomNavigationBarItem.Icon>
-                            <SymbolIcon Symbol="Find" />
-                        </controls:BottomNavigationBarItem.Icon>
-                    </controls:BottomNavigationBarItem>
-                    <controls:BottomNavigationBarItem>
-                        <controls:BottomNavigationBarItem.Icon>
-                            <SymbolIcon Symbol="Important" />
-                        </controls:BottomNavigationBarItem.Icon>
-                        <controls:BottomNavigationBarItem.Badge>
-                            <entities:BottomNavigationBarBadge IsVisible="True" />
-                        </controls:BottomNavigationBarItem.Badge>
-                    </controls:BottomNavigationBarItem>
-                    <controls:BottomNavigationBarItem Label="Notifications">
-                        <controls:BottomNavigationBarItem.Icon>
-                            <SymbolIcon Symbol="Flag" />
-                        </controls:BottomNavigationBarItem.Icon>
-                        <controls:BottomNavigationBarItem.Badge>
-                            <entities:BottomNavigationBarBadge IsVisible="True" Text="12" />
-                        </controls:BottomNavigationBarItem.Badge>
-                    </controls:BottomNavigationBarItem>
-                    <controls:BottomNavigationBarItem>
-                        <controls:BottomNavigationBarItem.Icon>
-                            <SymbolIcon Symbol="Setting" />
-                        </controls:BottomNavigationBarItem.Icon>
-                    </controls:BottomNavigationBarItem>
-                </controls:BottomNavigationBar.Items>
-            </controls:BottomNavigationBar>
-        </Grid>
 
+        </Grid>
+        <controls:BottomNavigationBar x:Name="BottomNavBar" Grid.Row="1">
+            <controls:BottomNavigationBar.Items>
+                <controls:BottomNavigationBarItem Label="Favorites">
+                    <controls:BottomNavigationBarItem.Icon>
+                        <SymbolIcon Symbol="Favorite" />
+                    </controls:BottomNavigationBarItem.Icon>
+                </controls:BottomNavigationBarItem>
+                <controls:BottomNavigationBarItem Label="Search">
+                    <controls:BottomNavigationBarItem.Icon>
+                        <SymbolIcon Symbol="Find" />
+                    </controls:BottomNavigationBarItem.Icon>
+                </controls:BottomNavigationBarItem>
+                <controls:BottomNavigationBarItem>
+                    <controls:BottomNavigationBarItem.Icon>
+                        <SymbolIcon Symbol="Important" />
+                    </controls:BottomNavigationBarItem.Icon>
+                    <controls:BottomNavigationBarItem.Badge>
+                        <entities:BottomNavigationBarBadge IsVisible="True" />
+                    </controls:BottomNavigationBarItem.Badge>
+                </controls:BottomNavigationBarItem>
+                <controls:BottomNavigationBarItem Label="Notifications">
+                    <controls:BottomNavigationBarItem.Icon>
+                        <SymbolIcon Symbol="Flag" />
+                    </controls:BottomNavigationBarItem.Icon>
+                    <controls:BottomNavigationBarItem.Badge>
+                        <entities:BottomNavigationBarBadge IsVisible="True" Text="12" />
+                    </controls:BottomNavigationBarItem.Badge>
+                </controls:BottomNavigationBarItem>
+                <controls:BottomNavigationBarItem>
+                    <controls:BottomNavigationBarItem.Icon>
+                        <SymbolIcon Symbol="Setting" />
+                    </controls:BottomNavigationBarItem.Icon>
+                </controls:BottomNavigationBarItem>
+            </controls:BottomNavigationBar.Items>
+        </controls:BottomNavigationBar>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
@@ -807,6 +807,8 @@
                         <Setter Target="scrollIndList.(Grid.Row)" Value="1" />
                         <Setter Target="scrollIndList.(Grid.ColumnSpan)" Value="2" />
                         <Setter Target="scrollIndList.(Grid.Column)" Value="0" />
+                        <Setter Target="imgState.Visibility" Value="Collapsed" />
+
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateNormal">
@@ -892,6 +894,7 @@
                         <Setter Target="scrollIndList.(Grid.Row)" Value="1" />
                         <Setter Target="scrollIndList.(Grid.ColumnSpan)" Value="2" />
                         <Setter Target="scrollIndList.(Grid.Column)" Value="0" />
+                        <Setter Target="imgState.Visibility" Value="Collapsed" />
                         <!--<Setter Target="TaskTxt.FontSize" Value="24" />
                         <Setter Target="CurrentTimeTxt.FontSize" Value="24" />
                         <Setter Target="SettingIcon.Width" Value="48" />
@@ -917,6 +920,7 @@
                         <Setter Target="txtStateName.Style" Value="{StaticResource Headline1}" />
                         <Setter Target="gridCounts.(Grid.ColumnSpan)" Value="1" />
                         <Setter Target="SetFontSize.FontSize" Value="24" />
+                        <Setter Target="imgState.Visibility" Value="Visible" />
                         <!--<Setter Target="TaskTxt.FontSize" Value="32" />
                         <Setter Target="CurrentTimeTxt.FontSize" Value="32" />
                         <Setter Target="SettingIcon.Width" Value="52" />

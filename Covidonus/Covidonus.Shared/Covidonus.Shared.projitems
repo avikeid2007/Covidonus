@@ -18,16 +18,24 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ExtendedSplashPage.xaml.cs">
+      <DependentUpon>ExtendedSplashPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)StatePage.xaml.cs">
       <DependentUpon>StatePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ExtendedSplashViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\StateViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)ExtendedSplashPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="$(MSBuildThisFileDirectory)MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -42,7 +50,6 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\india.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Logo.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\SharedAssets.md" />
-    <Content Include="$(MSBuildThisFileDirectory)Assets\States\TG.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\UP.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\UPe.png" />
   </ItemGroup>
@@ -52,42 +59,5 @@
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Repositories\" />
     <Folder Include="$(MSBuildThisFileDirectory)Styles\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\AN.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\AP.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\AR.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\AS.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\BR.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\CH.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\CT.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\DL.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\DN.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\DN2.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\GA.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\GJ.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\HP.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\HR.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\JH.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\JK.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\KA.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\KL.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\LD.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\MH.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\ML.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\MN.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\MP.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\MZ.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\NL.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\OR.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\PB.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\PY.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\RJ.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\SK.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\TN.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\TR.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\UP.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\UT.svg" />
-    <None Include="$(MSBuildThisFileDirectory)Assets\States\WB.svg" />
   </ItemGroup>
 </Project>

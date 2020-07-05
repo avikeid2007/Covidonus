@@ -20,6 +20,13 @@ namespace CovidonusApi.Repositories
             return MenuList;
 
         }
+        public async Task<IEnumerable<StateWiseData>> RefreshCovidCountsAsync()
+        {
+
+            await _seedDataRepository.RefreshCovidDataAsync();
+            return MenuList;
+
+        }
         //public async Task<DailyTotalCount> GetDailyTotalsAsync()
         //{
         //    if (DailyTotalCounts == null)

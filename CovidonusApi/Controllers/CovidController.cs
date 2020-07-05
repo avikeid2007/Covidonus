@@ -19,5 +19,10 @@ namespace CovidonusApi.Controllers
         {
             return await _covidRepository.GetCovidCountsAsync();
         }
+        [Route(nameof(RefreshCovidCountsAsync))]
+        public async Task<IEnumerable<StateWiseData>> RefreshCovidCountsAsync()
+        {
+            return await _covidRepository.RefreshCovidCountsAsync();
+        }
     }
 }
