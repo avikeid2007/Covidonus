@@ -39,6 +39,9 @@ namespace CovidonusApi.Models
         public string TotalPositiveCases { get; set; }
         public string RecoverRate { get; set; }
         public string DeathRate { get; set; }
+        public string WhatsAppBot { get; set; }
+        public string FacebookBot { get; set; }
+        public string EPassLink { get; set; }
         public DateTime? TodayUpdatedtime { get; set; }
         public ICollection<DistrictWiseData> DistrictData { get; set; }
     }

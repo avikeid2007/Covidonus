@@ -15,14 +15,9 @@ namespace CovidonusApi.Controllers
             _covidRepository = covidRepository;
         }
         [Route(nameof(GetCovidCountsAsync))]
-        public async Task<IEnumerable<StateWiseData>> GetCovidCountsAsync()
+        public async Task<IEnumerable<StateWiseData>> GetCovidCountsAsync(bool isRefresh = false)
         {
-            return await _covidRepository.GetCovidCountsAsync();
-        }
-        [Route(nameof(RefreshCovidCountsAsync))]
-        public async Task<IEnumerable<StateWiseData>> RefreshCovidCountsAsync()
-        {
-            return await _covidRepository.RefreshCovidCountsAsync();
+            return await _covidRepository.GetCovidCountsAsync(isRefresh);
         }
     }
 }

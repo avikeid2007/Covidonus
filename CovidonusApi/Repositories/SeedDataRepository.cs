@@ -53,6 +53,201 @@ namespace CovidonusApi.Repositories
             double per = (double)current / (double)total * 100;
             return Convert.ToString(Math.Round(per, 2)) + "%";
         }
+
+        private static void AddBotInfo(List<StateWiseData> states)
+        {
+            states.ForEach(x =>
+            {
+                switch (x.StateCode.ToUpper())
+                {
+                    case "AN":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.facebook.com/MyGovArunachalPradesh/";
+                        x.EPassLink = "https://southandaman.nic.in/whos-who/";
+                        break;
+                    case "AP":
+                        x.WhatsAppBot = "https://wa.me/918297104104?text=Hi";
+                        x.FacebookBot = "https://m.me/ArogyaAndhra";
+                        x.EPassLink = "https://www.spandana.ap.gov.in/";
+                        break;
+                    case "AR":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://eservice.arunachal.gov.in/";
+                        break;
+                    case "AS":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://eservices.assam.gov.in/directApply.do?serviceId=1533";
+                        break;
+                    case "BR":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://covid19.bihar.gov.in/";
+                        break;
+                    case "CH":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "http://admser.chd.nic.in/dpc/";
+                        break;
+                    case "CT":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://raipur.gov.in/cg-covid-19-epass/";
+                        break;
+                    case "DL":
+                        x.WhatsAppBot = "https://wa.me/918800007722?text=Hi";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://epass.jantasamvad.org/epass/relief/english/";
+                        break;
+                    case "DN":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://epass.dddcovid19.in/";
+                        break;
+                    case "GA":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://goaonline.gov.in/";
+                        break;
+                    case "GJ":
+                        x.WhatsAppBot = "https://wa.me/917433000104?text=Hi";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://www.digitalgujarat.gov.in/Citizen/CitizenService.aspx";
+                        break;
+                    case "HP":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "http://covid19epass.hp.gov.in/";
+                        break;
+                    case "HR":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://edisha.gov.in/eForms/MigrantService";
+                        break;
+                    case "JH":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://ranchi.nic.in/e-pass/";
+                        break;
+                    case "JK":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "http://jkmonitoring.nic.in/";
+                        break;
+                    case "KA":
+                        x.WhatsAppBot = "https://wa.me/918750971717?text=Hi";
+                        x.FacebookBot = "https://m.me/KarnatakaVarthe.Official";
+                        x.EPassLink = "https://sevasindhu.karnataka.gov.in/Sevasindhu/English";
+                        break;
+                    case "KL":
+                        x.WhatsAppBot = "https://wa.me/919072220183?text=Hi";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://covid19jagratha.kerala.nic.in/home/addDomestic";
+                        break;
+                    case "LA":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://leh.nic.in/epass/";
+                        break;
+                    case "LD":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://lakshadweep.gov.in/service/epass-covid19-interstate-movement-pass/";
+                        break;
+                    case "MH":
+                        x.WhatsAppBot = "https://wa.me/912026127394?text=Hi";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://covid19.mhpolice.in/";
+                        break;
+                    case "ML":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://megedistrict.gov.in/";
+                        break;
+                    case "MN":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://tengbang.in/";
+                        break;
+                    case "MP":
+                        x.WhatsAppBot = "https://wa.me/917834980000?text=Hi";
+                        x.FacebookBot = "https://m.me/jansampark.madhyapradesh";
+                        x.EPassLink = "https://mapit.gov.in/covid-19/";
+                        break;
+                    case "MZ":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://mcovid19.mizoram.gov.in/";
+                        break;
+                    case "NL":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://www.iamstranded.nagaland.gov.in/";
+                        break;
+                    case "OR":
+                        x.WhatsAppBot = "https://wa.me/919337929000?text=Hi";
+                        x.FacebookBot = "http://m.me/HFWOdisha";
+                        x.EPassLink = "https://covid19.odisha.gov.in/";
+                        break;
+                    case "PB":
+                        x.WhatsAppBot = "https://wa.me/917380173801?text=Hi";
+                        x.FacebookBot = "http://m.me/PunjabGovtIndia";
+                        x.EPassLink = "http://covidhelp.punjab.gov.in/";
+                        break;
+                    case "PY":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://epass.py.gov.in/";
+                        break;
+                    case "RJ":
+                        x.WhatsAppBot = "https://wa.me/911412225624?text=Hi";
+                        x.FacebookBot = "http://m.me/RajGovOfficial";
+                        x.EPassLink = "https://sso.rajasthan.gov.in/signin";
+                        break;
+                    case "SK":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://eservices.sikkim.gov.in/directApply.do?serviceId=1364";
+                        break;
+                    case "TG":
+                        x.WhatsAppBot = "https://wa.me/919000658658?text=Hi";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://policeportal.tspolice.gov.in/";
+                        break;
+                    case "TN":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://tnepass.tnega.org/";
+                        break;
+                    case "TR":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://covid19.tripura.gov.in/";
+                        break;
+                    case "UP":
+                        x.WhatsAppBot = "https://wa.me/919454441036?text=Hi";
+                        x.FacebookBot = "https://m.me/InfoDeptUP";
+                        x.EPassLink = "http://jansunwai.up.nic.in/";
+                        break;
+                    case "UT":
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "http://smartcitydehradun.uk.gov.in/e-pass";
+                        break;
+                    case "WB":
+                        x.WhatsAppBot = "https://wa.me/918697245555?text=Hi";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://coronapass.kolkatapolice.org/";
+                        break;
+                    default:
+                        x.WhatsAppBot = "https://wa.me/919013151515";
+                        x.FacebookBot = "https://www.messenger.com/t/MyGovIndia";
+                        x.EPassLink = "https://www.mygov.in/covid-19";
+                        break;
+                }
+            });
+        }
         public async Task RefreshCovidDataAsync()
         {
             Stopwatch stopwatch = new Stopwatch();
@@ -148,6 +343,7 @@ namespace CovidonusApi.Repositories
                             }
                         }
                     }
+                    AddBotInfo(stateData);
                     MenuList = stateData.AsEnumerable();
                     logger.Info("SeedDataRepository:RefreshCovidDataAsync=> End update StateWiseDatas & district");
                 }

@@ -41,8 +41,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.Uwp.Managed" Version="2.0.2-uno.66" />
-    <PackageReference Include="Uno.UI" Version="3.0.0-dev.514" />
-    <PackageReference Include="Uno.UI.RemoteControl" Version="3.0.0-dev.514" Condition="'$(Configuration)'=='Debug'" />
+    <PackageReference Include="Uno.UI" Version="3.0.0-dev.692" />
+    <PackageReference Include="Uno.UI.RemoteControl" Version="3.0.0-dev.692" Condition="'$(Configuration)'=='Debug'" />
     <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.2.0" />
     <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="1.2.0" />
   </ItemGroup>

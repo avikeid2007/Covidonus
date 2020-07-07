@@ -98,7 +98,8 @@ namespace Covidonus.Shared.ViewModels
 
                     StateCollection = App.Menuitems.OrderByDescending(x => x.Confirmed).Skip(1).Select(x => new
                     {
-                        District = x.State,
+
+                        District = x.StateCode == "DN" ? "Daman & Diu" : x.StateCode == "AN" ? "Andaman & Nicobar" : x.State,
                         Confirmed = x.Confirmed,
                         Active = x.Active,
                         Recovered = x.Recovered,

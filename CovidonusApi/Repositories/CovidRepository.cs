@@ -13,29 +13,18 @@ namespace CovidonusApi.Repositories
         {
             _seedDataRepository = seedDataRepository;
         }
-        public async Task<IEnumerable<StateWiseData>> GetCovidCountsAsync()
+        public async Task<IEnumerable<StateWiseData>> GetCovidCountsAsync(bool isRefresh = false)
         {
-            if (MenuList == null || MenuList?.Count() <= 0)
+            if (MenuList == null || MenuList?.Count() <= 0 || isRefresh)
                 await _seedDataRepository.RefreshCovidDataAsync();
             return MenuList;
 
         }
         public async Task<IEnumerable<StateWiseData>> RefreshCovidCountsAsync()
         {
-
             await _seedDataRepository.RefreshCovidDataAsync();
             return MenuList;
 
         }
-        //public async Task<DailyTotalCount> GetDailyTotalsAsync()
-        //{
-        //    if (DailyTotalCounts == null)
-        //    {
-        //        await SetDailyCountAsync();
-        //    }
-        //    return DailyTotalCounts;
-
-        //}
-
     }
 }

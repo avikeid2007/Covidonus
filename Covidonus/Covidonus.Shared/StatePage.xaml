@@ -350,7 +350,7 @@
                             FontWeight="Normal"
                             Foreground="{StaticResource SecondaryVariantDarkBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="NA" />
+                            Text="{Binding Population}" />
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="2">
                         <TextBlock
@@ -600,77 +600,145 @@
                             Text="NA%" />
                     </StackPanel>
                 </Grid>
-                <TextBlock
-                    x:Name="SetFontSize"
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    FontSize="24"
-                    Visibility="Collapsed" />
-                <ListView
+                <Grid
                     x:Name="scrollIndList"
                     Grid.Row="0"
                     Grid.RowSpan="2"
                     Grid.Column="1"
                     HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    HorizontalContentAlignment="Stretch"
-                    FontSize="30"
-                    ItemsSource="{Binding StateCollection}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="3*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
+                    VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        x:Name="SetFontSize"
+                        Grid.Row="0"
+                        FontSize="24"
+                        Visibility="Collapsed" />
+                    <Grid
+                        Grid.Row="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2.5*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            Margin="2,0,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                            FontWeight="Medium"
+                            Text="District"
+                            TextAlignment="Left" />
+                        <TextBlock
+                            Grid.Column="1"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                            FontWeight="Medium"
+                            Text="Confirm"
+                            TextAlignment="Left" />
+                        <TextBlock
+                            Grid.Column="2"
+                            Margin="6,0,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                            FontWeight="Medium"
+                            Text="Active"
+                            TextAlignment="Left" />
+                        <TextBlock
+                            Grid.Column="3"
+                            Margin="6,0,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                            FontWeight="Medium"
+                            Text="Cured"
+                            TextAlignment="Left" />
+                        <TextBlock
+                            Grid.Column="4"
+                            Margin="6,0,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                            FontWeight="Medium"
+                            Text="Deaths"
+                            TextAlignment="Left" />
+                    </Grid>
 
-                                </Grid.ColumnDefinitions>
-                                <TextBlock
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch"
-                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
-                                    Text="{Binding District}"
-                                    TextAlignment="Left" />
-                                <TextBlock
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch"
-                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
-                                    Text="{Binding Confirmed}"
-                                    TextAlignment="Left" />
-                                <TextBlock
-                                    Grid.Column="2"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch"
-                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
-                                    Text="{Binding Active}"
-                                    TextAlignment="Left" />
-                                <TextBlock
-                                    Grid.Column="3"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch"
-                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
-                                    Text="{Binding Recovered}"
-                                    TextAlignment="Left" />
-                                <TextBlock
-                                    Grid.Column="4"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch"
-                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
-                                    Text="{Binding Deaths}"
-                                    TextAlignment="Left" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                </ListView>
+                    <ListView
+                        Grid.Row="1"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        FontSize="30"
+                        ItemsSource="{Binding StateCollection}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2.5*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                        Text="{Binding District}"
+                                        TextAlignment="Left" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                        Text="{Binding Confirmed}"
+                                        TextAlignment="Left" />
+                                    <TextBlock
+                                        Grid.Column="2"
+                                        Margin="6,0,0,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                        Text="{Binding Active}"
+                                        TextAlignment="Left" />
+                                    <TextBlock
+                                        Grid.Column="3"
+                                        Margin="6,0,0,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                        Text="{Binding Recovered}"
+                                        TextAlignment="Left" />
+                                    <TextBlock
+                                        Grid.Column="4"
+                                        Margin="8,0,0,0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                        Text="{Binding Deaths}"
+                                        TextAlignment="Left" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </Grid>
                 <Image
                     x:Name="imgState"
                     Grid.Row="1"
