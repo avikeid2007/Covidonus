@@ -2,6 +2,8 @@
     x:Class="Covidonus.Shared.StatePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Interactions="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:android="http://uno.ui/android"
     xmlns:controls="using:Uno.Material.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -22,7 +24,8 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <!--  State view  -->
+        <Grid x:Name="gridDataView" Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
@@ -45,14 +48,14 @@
                     Grid.ColumnSpan="3"
                     Margin="4,0,0,0"
                     Orientation="Horizontal">
-                    <Button Margin="4,0" Style="{StaticResource FabMaterialButtonStyle}">
+                    <!--<Button Margin="4,0" Style="{StaticResource FabMaterialButtonStyle}">
                         <SymbolIcon
                             Grid.Row="1"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Foreground="{StaticResource FabIconColor}"
                             Symbol="Cancel" />
-                    </Button>
+                    </Button>-->
                     <Button Margin="4,0" Style="{StaticResource FabLabelMaterialButtonStyle}">
                         <StackPanel Orientation="Horizontal">
                             <Image
@@ -115,9 +118,9 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Foreground="{StaticResource FabIconColor}"
-                            Symbol="Cancel" />
+                            Symbol="Refresh" />
                     </Button>
-                    <Button
+                    <!--<Button
                         Margin="4,0"
                         HorizontalAlignment="Right"
                         Style="{StaticResource FabMaterialButtonStyle}">
@@ -126,7 +129,7 @@
                             VerticalAlignment="Center"
                             Foreground="{StaticResource FabIconColor}"
                             Symbol="Cancel" />
-                    </Button>
+                    </Button>-->
 
                 </StackPanel>
                 <Grid
@@ -343,14 +346,19 @@
                             HorizontalAlignment="Center"
                             FontWeight="Medium"
                             Style="{StaticResource NewSubheaderTextBlockStyle}"
-                            Text="Active" />
-                        <TextBlock
+                            Text="Help" />
+
+                        <HyperlinkButton
                             x:Name="txtTodayActiveCount"
                             HorizontalAlignment="Center"
                             FontWeight="Normal"
                             Foreground="{StaticResource SecondaryVariantDarkBrush}"
-                            Style="{StaticResource TitleTextBlockStyle}"
-                            Text="{Binding Population}" />
+                            NavigateUri="{Binding SelectedState.WhatsAppBot}">
+                            <Image
+                                x:Name="imgWhatsapp"
+                                Height="24"
+                                Source="ms-appx:///Assets/wharsApp.png" />
+                        </HyperlinkButton>
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="2">
                         <TextBlock
@@ -748,43 +756,208 @@
                     Source="{Binding SelectedState.StateLogo}"
                     Stretch="Uniform" />
             </Grid>
-
         </Grid>
+        <!--  State view  -->
+        <!--  Resource View  -->
+        <Grid x:Name="gridResourceView" Grid.Row="0">
+            <ListView
+                Grid.Row="1"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                FontSize="30"
+                ItemsSource="{Binding StateCollection}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <SymbolIcon
+                                Grid.Column="0"
+                                Height="{Binding Path=Height, ElementName=imgWhatsapp}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Symbol="Favorite" />
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                Text="{Binding City}"
+                                TextAlignment="Left" />
+                            <SymbolIcon
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Height="{Binding Path=Height, ElementName=imgWhatsapp}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Symbol="Favorite" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                Text="{Binding NameOfTheOrganisation}"
+                                TextAlignment="Left" />
+                            <SymbolIcon
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                Height="{Binding Path=Height, ElementName=imgWhatsapp}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Symbol="Favorite" />
+                            <TextBlock
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                Text="{Binding DescriptionAndOrServiceProvided}"
+                                TextAlignment="Left" />
+                            <SymbolIcon
+                                Grid.Row="3"
+                                Grid.Column="0"
+                                Height="{Binding Path=Height, ElementName=imgWhatsapp}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Symbol="Favorite" />
+                            <TextBlock
+                                Grid.Row="3"
+                                Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                Text="{Binding PhoneNumber}"
+                                TextAlignment="Left" />
+                            <SymbolIcon
+                                Grid.Row="4"
+                                Grid.Column="0"
+                                Height="{Binding Path=Height, ElementName=imgWhatsapp}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Symbol="Favorite" />
+                            <TextBlock
+                                Grid.Row="4"
+                                Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                Text="{Binding Contact}"
+                                TextAlignment="Left" />
+
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </Grid>
+        <!--  Resource View  -->
         <controls:BottomNavigationBar x:Name="BottomNavBar" Grid.Row="1">
             <controls:BottomNavigationBar.Items>
-                <controls:BottomNavigationBarItem Label="Favorites">
+                <controls:BottomNavigationBarItem
+                    x:Name="btnFav"
+                    Command="{Binding FavoriteCommand}"
+                    Label="Favorites">
                     <controls:BottomNavigationBarItem.Icon>
-                        <SymbolIcon Symbol="Favorite" />
+                        <SymbolIcon x:Name="favIcon" Symbol="Favorite">
+                            <Interactivity:Interaction.Behaviors>
+                                <Interactions:DataTriggerBehavior
+                                    Binding="{Binding IsFavoriteState}"
+                                    ComparisonCondition="Equal"
+                                    Value="true">
+                                    <Interactions:ChangePropertyAction
+                                        PropertyName="Symbol"
+                                        TargetObject="{Binding ElementName=favIcon}"
+                                        Value="UnFavorite" />
+                                    <Interactions:ChangePropertyAction
+                                        PropertyName="Label"
+                                        TargetObject="{Binding ElementName=btnFav}"
+                                        Value="UnFavorite" />
+                                </Interactions:DataTriggerBehavior>
+                                <Interactions:DataTriggerBehavior
+                                    Binding="{Binding IsFavoriteState}"
+                                    ComparisonCondition="Equal"
+                                    Value="false">
+                                    <Interactions:ChangePropertyAction
+                                        PropertyName="Symbol"
+                                        TargetObject="{Binding ElementName=favIcon}"
+                                        Value="Favorite" />
+                                    <Interactions:ChangePropertyAction
+                                        PropertyName="Label"
+                                        TargetObject="{Binding ElementName=btnFav}"
+                                        Value="Favorite" />
+                                </Interactions:DataTriggerBehavior>
+                            </Interactivity:Interaction.Behaviors>
+                        </SymbolIcon>
                     </controls:BottomNavigationBarItem.Icon>
                 </controls:BottomNavigationBarItem>
-                <controls:BottomNavigationBarItem Label="Search">
+                <controls:BottomNavigationBarItem Command="{Binding ResourceCommand}" Label="Resource">
                     <controls:BottomNavigationBarItem.Icon>
-                        <SymbolIcon Symbol="Find" />
+                        <SymbolIcon Symbol="Read" />
                     </controls:BottomNavigationBarItem.Icon>
                 </controls:BottomNavigationBarItem>
-                <controls:BottomNavigationBarItem>
+                <controls:BottomNavigationBarItem Command="{Binding ImportantCommand}">
                     <controls:BottomNavigationBarItem.Icon>
                         <SymbolIcon Symbol="Important" />
                     </controls:BottomNavigationBarItem.Icon>
-                    <controls:BottomNavigationBarItem.Badge>
-                        <entities:BottomNavigationBarBadge IsVisible="True" />
-                    </controls:BottomNavigationBarItem.Badge>
                 </controls:BottomNavigationBarItem>
-                <controls:BottomNavigationBarItem Label="Notifications">
+                <controls:BottomNavigationBarItem Command="{Binding NotificationCommand}" Label="Notifications">
                     <controls:BottomNavigationBarItem.Icon>
                         <SymbolIcon Symbol="Flag" />
                     </controls:BottomNavigationBarItem.Icon>
-                    <controls:BottomNavigationBarItem.Badge>
+                    <!--<controls:BottomNavigationBarItem.Badge>
                         <entities:BottomNavigationBarBadge IsVisible="True" Text="12" />
-                    </controls:BottomNavigationBarItem.Badge>
+                    </controls:BottomNavigationBarItem.Badge>-->
                 </controls:BottomNavigationBarItem>
-                <controls:BottomNavigationBarItem>
+                <controls:BottomNavigationBarItem Command="{Binding ShareCommand}" Label="Share">
                     <controls:BottomNavigationBarItem.Icon>
-                        <SymbolIcon Symbol="Setting" />
+                        <SymbolIcon Symbol="ReShare" />
                     </controls:BottomNavigationBarItem.Icon>
                 </controls:BottomNavigationBarItem>
             </controls:BottomNavigationBar.Items>
         </controls:BottomNavigationBar>
+        <Interactivity:Interaction.Behaviors>
+            <Interactions:DataTriggerBehavior
+                Binding="{Binding IsResourceVisible}"
+                ComparisonCondition="Equal"
+                Value="true">
+                <Interactions:ChangePropertyAction
+                    PropertyName="Visibility"
+                    TargetObject="{Binding ElementName=gridResourceView}"
+                    Value="Visible" />
+                <Interactions:ChangePropertyAction
+                    PropertyName="Visibility"
+                    TargetObject="{Binding ElementName=gridDataView}"
+                    Value="Collapsed" />
+            </Interactions:DataTriggerBehavior>
+            <Interactions:DataTriggerBehavior
+                Binding="{Binding IsResourceVisible}"
+                ComparisonCondition="Equal"
+                Value="false">
+                <Interactions:ChangePropertyAction
+                    PropertyName="Visibility"
+                    TargetObject="{Binding ElementName=gridResourceView}"
+                    Value="Collapsed" />
+                <Interactions:ChangePropertyAction
+                    PropertyName="Visibility"
+                    TargetObject="{Binding ElementName=gridDataView}"
+                    Value="Visible" />
+            </Interactions:DataTriggerBehavior>
+        </Interactivity:Interaction.Behaviors>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
@@ -876,7 +1049,7 @@
                         <Setter Target="scrollIndList.(Grid.ColumnSpan)" Value="2" />
                         <Setter Target="scrollIndList.(Grid.Column)" Value="0" />
                         <Setter Target="imgState.Visibility" Value="Collapsed" />
-
+                        <Setter Target="imgWhatsapp.Height" Value="14" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateNormal">
@@ -963,6 +1136,7 @@
                         <Setter Target="scrollIndList.(Grid.ColumnSpan)" Value="2" />
                         <Setter Target="scrollIndList.(Grid.Column)" Value="0" />
                         <Setter Target="imgState.Visibility" Value="Collapsed" />
+                        <Setter Target="imgWhatsapp.Height" Value="14" />
                         <!--<Setter Target="TaskTxt.FontSize" Value="24" />
                         <Setter Target="CurrentTimeTxt.FontSize" Value="24" />
                         <Setter Target="SettingIcon.Width" Value="48" />

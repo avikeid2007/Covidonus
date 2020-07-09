@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Uno.Extensions;
 using Uno.Extensions.Specialized;
 using Uno.Material.Helpers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Markup;
 
 namespace Uno.Material.Controls
 {
-	[TemplatePart(Name = LayoutRootName, Type = typeof(Grid))]
+    [TemplatePart(Name = LayoutRootName, Type = typeof(Grid))]
 	public partial class BottomNavigationBar : Control
 	{
 		private const string LayoutRootName = "PART_LayoutRoot";

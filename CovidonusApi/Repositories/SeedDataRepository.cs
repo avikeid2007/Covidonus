@@ -26,6 +26,16 @@ namespace CovidonusApi.Repositories
                 return JsonConvert.DeserializeObject<List<StateWiseData>>(response);
             }
         }
+        private async Task<List<Resource>> GetResourceListAsync()
+        {
+            logger.Info("RefreshCovidDataAsync: GetStateAndDistrictDataAsync()=> Start fetching state Wise data https://api.covid19india.org/resources/resources.json");
+            using (var client = new HttpClient())
+            {
+                var response = await client.GetStringAsync("https://api.covid19india.org/resources/resources.json");
+                logger.Info("SeedDataRepository: GetStateAndDistrictDataAsync()=> End fetching state Wise data https://api.covid19india.org/resources/resources.json");
+                return (JsonConvert.DeserializeObject<CovidResource>(response)).Resources;
+            }
+        }
         private static async Task<Dictionary<string, Daily>> GetTodayDataAsync()
         {
             using (var client = new HttpClient())
@@ -345,6 +355,7 @@ namespace CovidonusApi.Repositories
                     }
                     AddBotInfo(stateData);
                     MenuList = stateData.AsEnumerable();
+                    await LoadResourceListAsync();
                     logger.Info("SeedDataRepository:RefreshCovidDataAsync=> End update StateWiseDatas & district");
                 }
             }
@@ -354,6 +365,11 @@ namespace CovidonusApi.Repositories
             }
             stopwatch.Stop();
             logger.Info("SeedDataRepository:RefreshCovidDataAsync=> Complete refresh in " + stopwatch.Elapsed);
+        }
+
+        private async Task LoadResourceListAsync()
+        {
+            ResourceList = await GetResourceListAsync();
         }
     }
 }

@@ -39,4 +39,9 @@ namespace CovidonusApi.Models.DTOs
         public Total Total { get; set; }
         public Delta Delta { get; set; }
     }
+    public class CovidResource
+    {
+        public List<Resource> Resources { get; set; }
+    }
+
 }

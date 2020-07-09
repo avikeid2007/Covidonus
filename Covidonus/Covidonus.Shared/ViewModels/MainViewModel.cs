@@ -1,5 +1,6 @@
 ﻿using BasicMvvm;
 using BasicMvvm.Commands;
+using Covidonus.Shared.Helpers;
 using System;
 using System.Windows.Input;
 using Windows.UI.Xaml;
@@ -54,6 +55,22 @@ namespace Covidonus.Shared.ViewModels
         private void OnLoadCommandExecute(object obj)
         {
             _contentFrame = obj as Frame;
+            var code = GetFavoriteState();
+            if (!string.IsNullOrEmpty(code))
+            {
+                _contentFrame.Navigate(typeof(StatePage), code);
+            }
+        }
+        private string GetFavoriteState()
+        {
+            try
+            {
+                return LocalSettingsHelper.GetContainerValue<string>(SettingContainer.Favorite, "StateCode");
+            }
+            catch
+            {
+                return string.Empty;
+            }
         }
     }
 }

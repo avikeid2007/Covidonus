@@ -3,7 +3,6 @@ using Covidonus.Swag;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -19,6 +18,7 @@ namespace Covidonus
     {
         private static CovidClient _covidClient;
         public static List<StateWiseData> Menuitems { get; set; }
+        public static List<Swag.Resource> AllResource;
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -28,18 +28,6 @@ namespace Covidonus
             ConfigureFilters(global::Uno.Extensions.LogExtensionPoint.AmbientLoggerFactory);
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-        }
-
-        private static async Task LoadDailyCountsAsync()
-        {
-            try
-            {
-                _covidClient = new CovidClient();
-                var res = await _covidClient.GetCovidCountsAsync();
-                Menuitems = new List<StateWiseData>(res);
-            }
-            catch (Exception ex)
-            { }
         }
 
         /// <summary>

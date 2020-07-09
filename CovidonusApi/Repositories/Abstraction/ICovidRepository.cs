@@ -7,5 +7,6 @@ namespace CovidonusApi.Repositories.Abstraction
     public interface ICovidRepository
     {
         Task<IEnumerable<StateWiseData>> GetCovidCountsAsync(bool isRefresh = false);
+        IEnumerable<Resource> GetResource();
     }
 }

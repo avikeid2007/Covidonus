@@ -19,5 +19,11 @@ namespace CovidonusApi.Controllers
         {
             return await _covidRepository.GetCovidCountsAsync(isRefresh);
         }
+        [Route(nameof(GetResource))]
+        public IEnumerable<Resource> GetResource()
+        {
+            return _covidRepository.GetResource();
+        }
+
     }
 }
