@@ -1,9 +1,14 @@
 ﻿using BasicMvvm;
+using BasicMvvm.Commands;
+using Covidonus.Shared.Helpers;
 using Covidonus.Swag;
 using System.Collections;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
+using Xamarin.Essentials;
 
 namespace Covidonus.Shared.ViewModels
 {
@@ -16,11 +21,46 @@ namespace Covidonus.Shared.ViewModels
         private IList _stateCollection;
         private string _newCases;
         private string _newDeaths;
+        private bool _isFavoriteState;
 
+        public ICommand FavoriteCommand { get; set; }
+        public ICommand ResourceCommand { get; set; }
+        public ICommand ImportantCommand { get; set; }
+        public ICommand NotificationCommand { get; set; }
+        public ICommand ShareCommand { get; set; }
         public StateViewModel()
         {
             IsVisibleIndiaCounts = Visibility.Collapsed;
             IsVisibleStateCounts = Visibility.Collapsed;
+            FavoriteCommand = new DelegateCommand(OnFavoriteCommandExecute);
+            ShareCommand = new AsyncCommand(OnShareCommandExecuteAsync);
+        }
+
+        private async Task OnShareCommandExecuteAsync()
+        {
+            await Share.RequestAsync(new ShareTextRequest
+            {
+                Text = SelectedState.Confirmed.ToString(),
+                Title = SelectedState.State
+            });
+        }
+
+        private void OnFavoriteCommandExecute()
+        {
+            if (IsFavoriteState)
+                LocalSettingsHelper.MarkContainer(SettingContainer.Favorite, "StateCode", string.Empty);
+            else
+                LocalSettingsHelper.MarkContainer(SettingContainer.Favorite, "StateCode", SelectedState.StateCode);
+            SetFavoriteIcon();
+        }
+        public bool IsFavoriteState
+        {
+            get { return _isFavoriteState; }
+            set
+            {
+                _isFavoriteState = value;
+                OnPropertyChanged();
+            }
         }
         public string NewCases
         {
@@ -124,6 +164,7 @@ namespace Covidonus.Shared.ViewModels
                     }).ToList();
                     SetNewCounts(App.Menuitems.FirstOrDefault(x => x.StateCode.Equals("TT", System.StringComparison.OrdinalIgnoreCase)));
                 }
+                SetFavoriteIcon();
             }
 
         }
@@ -136,7 +177,22 @@ namespace Covidonus.Shared.ViewModels
                 NewDeaths = $"+{indiaData.TodayDeaths}";
             }
         }
-
+        private void SetFavoriteIcon()
+        {
+            var code = GetFavoriteState();
+            IsFavoriteState = !string.IsNullOrEmpty(code) && code == SelectedState?.StateCode;
+        }
+        private string GetFavoriteState()
+        {
+            try
+            {
+                return LocalSettingsHelper.GetContainerValue<string>(SettingContainer.Favorite, "StateCode");
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
         public void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
 

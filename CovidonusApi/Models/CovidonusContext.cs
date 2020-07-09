@@ -9,10 +9,6 @@ namespace CovidonusApi.Models
         public DbSet<StateWiseData> StateWiseDatas { get; set; }
         public DbSet<DistrictWiseData> DistrictWiseDatas { get; set; }
         public DbSet<DeltaData> DeltaDatas { get; set; }
-        public DbSet<CasesTimeSeries> CasesTimeSeries { get; set; }
-        public DbSet<Tested> Testeds { get; set; }
-        public DbSet<DailyStateWiseData> DailyStateWiseDatas { get; set; }
-        public DbSet<DailyDistrictWiseData> DailyDistrictWiseDatas { get; set; }
         public CovidonusContext() : base("DefaultConnection")
         {
             Configuration.LazyLoadingEnabled = false;

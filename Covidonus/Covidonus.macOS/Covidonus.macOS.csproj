@@ -82,6 +82,9 @@
     <PackageReference Include="Uno.UI.RemoteControl" Version="3.0.0-dev.692" Condition="'$(Configuration)'=='Debug'" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.1" />
+    <PackageReference Include="Xamarin.Essentials">
+      <Version>1.2.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="..\Covidonus.Shared\Covidonus.Shared.projitems" Label="Shared" Condition="Exists('..\Covidonus.Shared\Covidonus.Shared.projitems')" />
   <ItemGroup>
