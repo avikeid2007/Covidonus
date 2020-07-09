@@ -45,6 +45,7 @@
     <PackageReference Include="Uno.UI.RemoteControl" Version="3.0.0-dev.692" Condition="'$(Configuration)'=='Debug'" />
     <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.2.0" />
     <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="1.2.0" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Covidonus.Swag\Covidonus.Swag.csproj" />

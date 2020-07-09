@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CovidonusApi.Helpers;
 using CovidonusApi.Models;
+using CovidonusApi.Models.DTOs;
 using System;
 using System.Collections.Generic;
 
@@ -11,6 +12,7 @@ namespace CovidonusApi.Repositories
         protected IMapper mapper;
         protected CovidonusContext db = new CovidonusContext();
         protected static IEnumerable<StateWiseData> MenuList;
+        protected static IEnumerable<Resource> ResourceList;
         protected IMapper GetMapper()
         {
             return CovidonusMapper.GetMapper();
