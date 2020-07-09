@@ -21,6 +21,10 @@ namespace Covidonus.Swag
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.Generic.ICollection<StateWiseData>> GetCovidCountsAsync(bool? isRefresh = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Resource>> GetResourceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.6.1.0 (NJsonSchema v10.1.21.0 (Newtonsoft.Json v11.0.0.0))")]
@@ -98,6 +102,67 @@ namespace Covidonus.Swag
                         }
             
                         return default(System.Collections.Generic.ICollection<StateWiseData>);
+                    }
+                    finally
+                    {
+                        if (response_ != null)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (client_ != null)
+                    client_.Dispose();
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Resource>> GetResourceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Covid/GetResource");
+    
+            var client_ = new System.Net.Http.HttpClient();
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+    
+                        ProcessResponse(client_, response_);
+    
+                        var status_ = ((int)response_.StatusCode).ToString();
+                        if (status_ == "200") 
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<Resource>>(response_, headers_).ConfigureAwait(false);
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ != "200" && status_ != "204")
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false); 
+                            throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
+                        }
+            
+                        return default(System.Collections.Generic.ICollection<Resource>);
                     }
                     finally
                     {
@@ -1050,6 +1115,142 @@ namespace Covidonus.Swag
                 if (_recovered != value)
                 {
                     _recovered = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+    
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null) 
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class Resource : System.ComponentModel.INotifyPropertyChanged
+    {
+        private string _category;
+        private string _city;
+        private string _contact;
+        private string _descriptionAndOrServiceProvided;
+        private string _nameOfTheOrganisation;
+        private string _phoneNumber;
+        private string _recordid;
+        private string _state;
+    
+        [Newtonsoft.Json.JsonProperty("Category", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Category
+        {
+            get { return _category; }
+            set 
+            {
+                if (_category != value)
+                {
+                    _category = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("City", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string City
+        {
+            get { return _city; }
+            set 
+            {
+                if (_city != value)
+                {
+                    _city = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Contact", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Contact
+        {
+            get { return _contact; }
+            set 
+            {
+                if (_contact != value)
+                {
+                    _contact = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("DescriptionAndOrServiceProvided", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string DescriptionAndOrServiceProvided
+        {
+            get { return _descriptionAndOrServiceProvided; }
+            set 
+            {
+                if (_descriptionAndOrServiceProvided != value)
+                {
+                    _descriptionAndOrServiceProvided = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("NameOfTheOrganisation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string NameOfTheOrganisation
+        {
+            get { return _nameOfTheOrganisation; }
+            set 
+            {
+                if (_nameOfTheOrganisation != value)
+                {
+                    _nameOfTheOrganisation = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("PhoneNumber", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string PhoneNumber
+        {
+            get { return _phoneNumber; }
+            set 
+            {
+                if (_phoneNumber != value)
+                {
+                    _phoneNumber = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Recordid", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Recordid
+        {
+            get { return _recordid; }
+            set 
+            {
+                if (_recordid != value)
+                {
+                    _recordid = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("State", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string State
+        {
+            get { return _state; }
+            set 
+            {
+                if (_state != value)
+                {
+                    _state = value; 
                     RaisePropertyChanged();
                 }
             }

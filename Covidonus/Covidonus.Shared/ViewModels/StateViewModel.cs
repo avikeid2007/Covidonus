@@ -3,6 +3,7 @@ using BasicMvvm.Commands;
 using Covidonus.Shared.Helpers;
 using Covidonus.Swag;
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -22,6 +23,8 @@ namespace Covidonus.Shared.ViewModels
         private string _newCases;
         private string _newDeaths;
         private bool _isFavoriteState;
+        private bool _isResourceVisible;
+        private ObservableCollection<Swag.Resource> _stateResources;
 
         public ICommand FavoriteCommand { get; set; }
         public ICommand ResourceCommand { get; set; }
@@ -34,6 +37,26 @@ namespace Covidonus.Shared.ViewModels
             IsVisibleStateCounts = Visibility.Collapsed;
             FavoriteCommand = new DelegateCommand(OnFavoriteCommandExecute);
             ShareCommand = new AsyncCommand(OnShareCommandExecuteAsync);
+            ResourceCommand = new DelegateCommand(OnResourceCommandExecute);
+            IsResourceVisible = false;
+        }
+        public ObservableCollection<Swag.Resource> StateResources
+        {
+            get { return _stateResources; }
+            set
+            {
+                _stateResources = value;
+                OnPropertyChanged();
+            }
+        }
+        private void OnResourceCommandExecute()
+        {
+            if (IsResourceVisible)
+            {
+                IsResourceVisible = false;
+            }
+            IsResourceVisible = true;
+            StateResources = new ObservableCollection<Swag.Resource>(App.AllResource.Where(x => x.State == SelectedState.State));
         }
 
         private async Task OnShareCommandExecuteAsync()
@@ -126,6 +149,13 @@ namespace Covidonus.Shared.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public bool IsResourceVisible
+        {
+            get { return _isResourceVisible; }
+            private set { _isResourceVisible = value; OnPropertyChanged(); }
+        }
+
         public void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e.Parameter is string stateCode && App.Menuitems?.Count > 0)
@@ -193,6 +223,7 @@ namespace Covidonus.Shared.ViewModels
                 return string.Empty;
             }
         }
+
         public void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
 

@@ -280,6 +280,7 @@
     <Compile Include="Models\DeltaData.cs" />
     <Compile Include="Models\DistrictWiseData.cs" />
     <Compile Include="Models\DTOs\DistrictData.cs" />
+    <Compile Include="Models\Resource.cs" />
     <Compile Include="Models\StateWiseData.cs" />
     <Compile Include="Models\DTOs\Tested.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -355,7 +355,7 @@ namespace CovidonusApi.Repositories
                     }
                     AddBotInfo(stateData);
                     MenuList = stateData.AsEnumerable();
-                    ResourceList = await GetResourceListAsync();
+                    await LoadResourceListAsync();
                     logger.Info("SeedDataRepository:RefreshCovidDataAsync=> End update StateWiseDatas & district");
                 }
             }
@@ -365,6 +365,11 @@ namespace CovidonusApi.Repositories
             }
             stopwatch.Stop();
             logger.Info("SeedDataRepository:RefreshCovidDataAsync=> Complete refresh in " + stopwatch.Elapsed);
+        }
+
+        private async Task LoadResourceListAsync()
+        {
+            ResourceList = await GetResourceListAsync();
         }
     }
 }

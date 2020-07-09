@@ -23,21 +23,29 @@ namespace Covidonus.Shared.ViewModels
         {
             if (obj is Page page)
             {
-                await LoadDailyCountsAsync();
+                await Task.WhenAll(LoadDailyCountsAsync(), LoadResourceAsync());
                 page.Frame.Navigate(typeof(MainPage));
             }
 
         }
         private static async Task LoadDailyCountsAsync()
         {
-            try
+            if (App.Menuitems == null)
             {
                 _covidClient = new CovidClient();
                 var res = await _covidClient.GetCovidCountsAsync();
                 App.Menuitems = new List<StateWiseData>(res);
             }
-            catch (Exception ex)
-            { }
+        }
+        private async Task LoadResourceAsync()
+        {
+            if (App.AllResource == null)
+            {
+                if (_covidClient == null)
+                    _covidClient = new CovidClient();
+                var resource = await _covidClient.GetResourceAsync();
+                App.AllResource = new List<Resource>(resource);
+            }
         }
     }
 }
