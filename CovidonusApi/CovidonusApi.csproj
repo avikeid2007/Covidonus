@@ -273,15 +273,26 @@
     </Compile>
     <Compile Include="Helpers\AuditorHelper.cs" />
     <Compile Include="Helpers\CovidonusMapper.cs" />
+    <Compile Include="Migrations\202006200901525_CreateDb.cs" />
+    <Compile Include="Migrations\202006200901525_CreateDb.designer.cs">
+      <DependentUpon>202006200901525_CreateDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006221440560_AddDailyTables.cs" />
+    <Compile Include="Migrations\202006221440560_AddDailyTables.designer.cs">
+      <DependentUpon>202006221440560_AddDailyTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Auditor.cs" />
-    <Compile Include="Models\DTOs\CasesTimeSeries.cs" />
+    <Compile Include="Models\CasesTimeSeries.cs" />
     <Compile Include="Models\CovidonusContext.cs" />
-    <Compile Include="Models\DTOs\DailyCovidUpdate.cs" />
+    <Compile Include="Models\DailyCovidUpdate.cs" />
+    <Compile Include="Models\DailyDistrictWiseData.cs" />
+    <Compile Include="Models\DailyStateWiseData.cs" />
     <Compile Include="Models\DeltaData.cs" />
     <Compile Include="Models\DistrictWiseData.cs" />
     <Compile Include="Models\DTOs\DistrictData.cs" />
     <Compile Include="Models\StateWiseData.cs" />
-    <Compile Include="Models\DTOs\Tested.cs" />
+    <Compile Include="Models\Tested.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CoreRepository.cs" />
     <Compile Include="Repositories\Abstraction\ISeedDataRepository.cs" />
@@ -373,11 +384,9 @@
     <Content Include="Images\MZ.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\TG.png" />
     <Content Include="Images\NL.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\OR.png" />
     <Content Include="Images\PB.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -485,6 +494,14 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202006200901525_CreateDb.resx">
+      <DependentUpon>202006200901525_CreateDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006221440560_AddDailyTables.resx">
+      <DependentUpon>202006221440560_AddDailyTables.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -16,7 +16,6 @@
         <NavigationView
             x:Name="NavView"
             Margin="0,12,0,0"
-            Background="Transparent"
             IsBackButtonVisible="Collapsed"
             IsTabStop="False"
             PaneDisplayMode="Auto"
@@ -36,6 +35,7 @@
                         HorizontalAlignment="Left"
                         Source="ms-appx:///Assets/Logo.png"
                         Stretch="Uniform" />
+
                     <TextBlock
                         Margin="16,0,0,0"
                         HorizontalAlignment="Left"
@@ -46,7 +46,7 @@
             </NavigationView.PaneHeader>
             <NavigationView.MenuItems>
                 <NavigationViewItemHeader Content="India" />
-                <NavigationViewItem Content="All States" Tag="TT">
+                <NavigationViewItem Content="Total" Tag="TT">
                     <NavigationViewItem.Icon>
                         <BitmapIcon UriSource="ms-appx:///Assets/Logo.png" />
                     </NavigationViewItem.Icon>

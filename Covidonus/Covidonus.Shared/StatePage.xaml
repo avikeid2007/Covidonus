@@ -2,8 +2,6 @@
     x:Class="Covidonus.Shared.StatePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Interactions="using:Microsoft.Xaml.Interactions.Core"
-    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:android="http://uno.ui/android"
     xmlns:controls="using:Uno.Material.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -47,14 +45,14 @@
                     Grid.ColumnSpan="3"
                     Margin="4,0,0,0"
                     Orientation="Horizontal">
-                    <!--<Button Margin="4,0" Style="{StaticResource FabMaterialButtonStyle}">
+                    <Button Margin="4,0" Style="{StaticResource FabMaterialButtonStyle}">
                         <SymbolIcon
                             Grid.Row="1"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Foreground="{StaticResource FabIconColor}"
                             Symbol="Cancel" />
-                    </Button>-->
+                    </Button>
                     <Button Margin="4,0" Style="{StaticResource FabLabelMaterialButtonStyle}">
                         <StackPanel Orientation="Horizontal">
                             <Image
@@ -117,9 +115,9 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Foreground="{StaticResource FabIconColor}"
-                            Symbol="Refresh" />
+                            Symbol="Cancel" />
                     </Button>
-                    <!--<Button
+                    <Button
                         Margin="4,0"
                         HorizontalAlignment="Right"
                         Style="{StaticResource FabMaterialButtonStyle}">
@@ -128,7 +126,7 @@
                             VerticalAlignment="Center"
                             Foreground="{StaticResource FabIconColor}"
                             Symbol="Cancel" />
-                    </Button>-->
+                    </Button>
 
                 </StackPanel>
                 <Grid
@@ -345,19 +343,14 @@
                             HorizontalAlignment="Center"
                             FontWeight="Medium"
                             Style="{StaticResource NewSubheaderTextBlockStyle}"
-                            Text="Help" />
-
-                        <HyperlinkButton
+                            Text="Active" />
+                        <TextBlock
                             x:Name="txtTodayActiveCount"
                             HorizontalAlignment="Center"
                             FontWeight="Normal"
                             Foreground="{StaticResource SecondaryVariantDarkBrush}"
-                            NavigateUri="{Binding SelectedState.WhatsAppBot}">
-                            <Image
-                                x:Name="imgWhatsapp"
-                                Height="24"
-                                Source="ms-appx:///Assets/wharsApp.png" />
-                        </HyperlinkButton>
+                            Style="{StaticResource TitleTextBlockStyle}"
+                            Text="{Binding Population}" />
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="2">
                         <TextBlock
@@ -759,64 +752,35 @@
         </Grid>
         <controls:BottomNavigationBar x:Name="BottomNavBar" Grid.Row="1">
             <controls:BottomNavigationBar.Items>
-                <controls:BottomNavigationBarItem
-                    x:Name="btnFav"
-                    Command="{Binding FavoriteCommand}"
-                    Label="Favorites">
+                <controls:BottomNavigationBarItem Label="Favorites">
                     <controls:BottomNavigationBarItem.Icon>
-                        <SymbolIcon x:Name="favIcon" Symbol="Favorite">
-                            <Interactivity:Interaction.Behaviors>
-                                <Interactions:DataTriggerBehavior
-                                    Binding="{Binding IsFavoriteState}"
-                                    ComparisonCondition="Equal"
-                                    Value="true">
-                                    <Interactions:ChangePropertyAction
-                                        PropertyName="Symbol"
-                                        TargetObject="{Binding ElementName=favIcon}"
-                                        Value="UnFavorite" />
-                                    <Interactions:ChangePropertyAction
-                                        PropertyName="Label"
-                                        TargetObject="{Binding ElementName=btnFav}"
-                                        Value="UnFavorite" />
-                                </Interactions:DataTriggerBehavior>
-                                <Interactions:DataTriggerBehavior
-                                    Binding="{Binding IsFavoriteState}"
-                                    ComparisonCondition="Equal"
-                                    Value="false">
-                                    <Interactions:ChangePropertyAction
-                                        PropertyName="Symbol"
-                                        TargetObject="{Binding ElementName=favIcon}"
-                                        Value="Favorite" />
-                                    <Interactions:ChangePropertyAction
-                                        PropertyName="Label"
-                                        TargetObject="{Binding ElementName=btnFav}"
-                                        Value="Favorite" />
-                                </Interactions:DataTriggerBehavior>
-                            </Interactivity:Interaction.Behaviors>
-                        </SymbolIcon>
+                        <SymbolIcon Symbol="Favorite" />
                     </controls:BottomNavigationBarItem.Icon>
                 </controls:BottomNavigationBarItem>
-                <controls:BottomNavigationBarItem Command="{Binding ResourceCommand}" Label="Resource">
+                <controls:BottomNavigationBarItem Label="Search">
                     <controls:BottomNavigationBarItem.Icon>
-                        <SymbolIcon Symbol="Read" />
+                        <SymbolIcon Symbol="Find" />
                     </controls:BottomNavigationBarItem.Icon>
                 </controls:BottomNavigationBarItem>
-                <controls:BottomNavigationBarItem Command="{Binding ImportantCommand}">
+                <controls:BottomNavigationBarItem>
                     <controls:BottomNavigationBarItem.Icon>
                         <SymbolIcon Symbol="Important" />
                     </controls:BottomNavigationBarItem.Icon>
+                    <controls:BottomNavigationBarItem.Badge>
+                        <entities:BottomNavigationBarBadge IsVisible="True" />
+                    </controls:BottomNavigationBarItem.Badge>
                 </controls:BottomNavigationBarItem>
-                <controls:BottomNavigationBarItem Command="{Binding NotificationCommand}" Label="Notifications">
+                <controls:BottomNavigationBarItem Label="Notifications">
                     <controls:BottomNavigationBarItem.Icon>
                         <SymbolIcon Symbol="Flag" />
                     </controls:BottomNavigationBarItem.Icon>
-                    <!--<controls:BottomNavigationBarItem.Badge>
+                    <controls:BottomNavigationBarItem.Badge>
                         <entities:BottomNavigationBarBadge IsVisible="True" Text="12" />
-                    </controls:BottomNavigationBarItem.Badge>-->
+                    </controls:BottomNavigationBarItem.Badge>
                 </controls:BottomNavigationBarItem>
-                <controls:BottomNavigationBarItem Command="{Binding ShareCommand}" Label="Share">
+                <controls:BottomNavigationBarItem>
                     <controls:BottomNavigationBarItem.Icon>
-                        <SymbolIcon Symbol="ReShare" />
+                        <SymbolIcon Symbol="Setting" />
                     </controls:BottomNavigationBarItem.Icon>
                 </controls:BottomNavigationBarItem>
             </controls:BottomNavigationBar.Items>
@@ -912,7 +876,7 @@
                         <Setter Target="scrollIndList.(Grid.ColumnSpan)" Value="2" />
                         <Setter Target="scrollIndList.(Grid.Column)" Value="0" />
                         <Setter Target="imgState.Visibility" Value="Collapsed" />
-                        <Setter Target="imgWhatsapp.Height" Value="14" />
+
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateNormal">
@@ -999,7 +963,6 @@
                         <Setter Target="scrollIndList.(Grid.ColumnSpan)" Value="2" />
                         <Setter Target="scrollIndList.(Grid.Column)" Value="0" />
                         <Setter Target="imgState.Visibility" Value="Collapsed" />
-                        <Setter Target="imgWhatsapp.Height" Value="14" />
                         <!--<Setter Target="TaskTxt.FontSize" Value="24" />
                         <Setter Target="CurrentTimeTxt.FontSize" Value="24" />
                         <Setter Target="SettingIcon.Width" Value="48" />
