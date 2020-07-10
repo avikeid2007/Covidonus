@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Uno.Extensions;
 using Windows.UI.Xaml.Controls;
 
 namespace Covidonus.Shared.ViewModels
@@ -44,6 +45,7 @@ namespace Covidonus.Shared.ViewModels
                 if (_covidClient == null)
                     _covidClient = new CovidClient();
                 var resource = await _covidClient.GetResourceAsync();
+                resource.ForEach(x => x.PhoneNumber = x.PhoneNumber.Replace("\n", ""));
                 App.AllResource = new List<Resource>(resource);
             }
         }

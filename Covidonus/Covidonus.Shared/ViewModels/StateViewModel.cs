@@ -23,8 +23,9 @@ namespace Covidonus.Shared.ViewModels
         private string _newCases;
         private string _newDeaths;
         private bool _isFavoriteState;
-        private bool _isResourceVisible;
+        private Visibility _isResourceVisible;
         private ObservableCollection<Swag.Resource> _stateResources;
+        private Visibility _isCovidCountVisible;
 
         public ICommand FavoriteCommand { get; set; }
         public ICommand ResourceCommand { get; set; }
@@ -38,7 +39,8 @@ namespace Covidonus.Shared.ViewModels
             FavoriteCommand = new DelegateCommand(OnFavoriteCommandExecute);
             ShareCommand = new AsyncCommand(OnShareCommandExecuteAsync);
             ResourceCommand = new DelegateCommand(OnResourceCommandExecute);
-            IsResourceVisible = false;
+            IsResourceVisible = Visibility.Collapsed;
+            IsCovidCountVisible = Visibility.Visible;
         }
         public ObservableCollection<Swag.Resource> StateResources
         {
@@ -51,11 +53,16 @@ namespace Covidonus.Shared.ViewModels
         }
         private void OnResourceCommandExecute()
         {
-            if (IsResourceVisible)
+            if (IsResourceVisible == Visibility.Visible)
             {
-                IsResourceVisible = false;
+                IsResourceVisible = Visibility.Collapsed;
+                IsCovidCountVisible = Visibility.Visible;
             }
-            IsResourceVisible = true;
+            else
+            {
+                IsResourceVisible = Visibility.Visible;
+                IsCovidCountVisible = Visibility.Collapsed;
+            }
             StateResources = new ObservableCollection<Swag.Resource>(App.AllResource.Where(x => x.State == SelectedState.State));
         }
 
@@ -150,12 +157,24 @@ namespace Covidonus.Shared.ViewModels
             }
         }
 
-        public bool IsResourceVisible
+        public Visibility IsResourceVisible
         {
             get { return _isResourceVisible; }
-            private set { _isResourceVisible = value; OnPropertyChanged(); }
+            set
+            {
+                _isResourceVisible = value;
+                OnPropertyChanged();
+            }
         }
-
+        public Visibility IsCovidCountVisible
+        {
+            get { return _isCovidCountVisible; }
+            set
+            {
+                _isCovidCountVisible = value;
+                OnPropertyChanged();
+            }
+        }
         public void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e.Parameter is string stateCode && App.Menuitems?.Count > 0)
@@ -195,6 +214,8 @@ namespace Covidonus.Shared.ViewModels
                     SetNewCounts(App.Menuitems.FirstOrDefault(x => x.StateCode.Equals("TT", System.StringComparison.OrdinalIgnoreCase)));
                 }
                 SetFavoriteIcon();
+                IsResourceVisible = Visibility.Collapsed;
+                IsCovidCountVisible = Visibility.Visible;
             }
 
         }

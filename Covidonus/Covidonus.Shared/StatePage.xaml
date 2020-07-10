@@ -24,8 +24,8 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <!--  State view  -->
-        <Grid x:Name="gridDataView" Grid.Row="0">
+
+        <Grid Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
@@ -196,7 +196,8 @@
                     </StackPanel>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="1">
+
+            <Grid Grid.Row="1" Visibility="{Binding IsCovidCountVisible}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
@@ -756,116 +757,134 @@
                     Source="{Binding SelectedState.StateLogo}"
                     Stretch="Uniform" />
             </Grid>
-        </Grid>
-        <!--  State view  -->
-        <!--  Resource View  -->
-        <Grid x:Name="gridResourceView" Grid.Row="0">
-            <ListView
-                Grid.Row="1"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                HorizontalContentAlignment="Stretch"
-                FontSize="30"
-                ItemsSource="{Binding StateCollection}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <SymbolIcon
-                                Grid.Column="0"
-                                Height="{Binding Path=Height, ElementName=imgWhatsapp}"
+            <Grid Grid.Row="1" Visibility="{Binding IsResourceVisible}">
+                <GridView
+                    Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    FontSize="30"
+                    ItemsSource="{Binding StateResources}">
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid
+                                Width="500"
+                                Padding="8,8"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
-                                Symbol="Favorite" />
-                            <TextBlock
-                                Grid.Column="1"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
-                                Text="{Binding City}"
-                                TextAlignment="Left" />
-                            <SymbolIcon
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Height="{Binding Path=Height, ElementName=imgWhatsapp}"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                Symbol="Favorite" />
-                            <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
-                                Text="{Binding NameOfTheOrganisation}"
-                                TextAlignment="Left" />
-                            <SymbolIcon
-                                Grid.Row="2"
-                                Grid.Column="0"
-                                Height="{Binding Path=Height, ElementName=imgWhatsapp}"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                Symbol="Favorite" />
-                            <TextBlock
-                                Grid.Row="2"
-                                Grid.Column="1"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
-                                Text="{Binding DescriptionAndOrServiceProvided}"
-                                TextAlignment="Left" />
-                            <SymbolIcon
-                                Grid.Row="3"
-                                Grid.Column="0"
-                                Height="{Binding Path=Height, ElementName=imgWhatsapp}"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                Symbol="Favorite" />
-                            <TextBlock
-                                Grid.Row="3"
-                                Grid.Column="1"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
-                                Text="{Binding PhoneNumber}"
-                                TextAlignment="Left" />
-                            <SymbolIcon
-                                Grid.Row="4"
-                                Grid.Column="0"
-                                Height="{Binding Path=Height, ElementName=imgWhatsapp}"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                Symbol="Favorite" />
-                            <TextBlock
-                                Grid.Row="4"
-                                Grid.Column="1"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
-                                Text="{Binding Contact}"
-                                TextAlignment="Left" />
+                                BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                                BorderThickness="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <SymbolIcon
+                                    Grid.Column="0"
+                                    Margin="8,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Symbol="Map" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                    Text="{Binding City}"
+                                    TextAlignment="Left" />
+                                <SymbolIcon
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="8,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Symbol="Account" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                    Text="{Binding NameOfTheOrganisation}"
+                                    TextAlignment="Left" />
+                                <SymbolIcon
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    Margin="8,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Symbol="Bookmarks" />
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                    Text="{Binding DescriptionAndOrServiceProvided}"
+                                    TextAlignment="Left"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap" />
+                                <SymbolIcon
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    Margin="8,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Symbol="Phone" />
+                                <TextBlock
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                    Text="{Binding PhoneNumber}"
+                                    TextAlignment="Left"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap" />
+                                <SymbolIcon
+                                    Grid.Row="4"
+                                    Grid.Column="0"
+                                    Margin="8,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Symbol="Globe" />
+                                <HyperlinkButton
+                                    Grid.Row="4"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Stretch"
+                                    Content="{Binding Contact}"
+                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                    NavigateUri="{Binding Contact}" />
 
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
+                            </Grid>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                    <GridView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </GridView.ItemContainerStyle>
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid
+                                Margin="20,0"
+                                HorizontalAlignment="Center"
+                                MaximumRowsOrColumns="3"
+                                Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                </GridView>
+            </Grid>
+
         </Grid>
-        <!--  Resource View  -->
+
         <controls:BottomNavigationBar x:Name="BottomNavBar" Grid.Row="1">
             <controls:BottomNavigationBar.Items>
                 <controls:BottomNavigationBarItem
@@ -930,7 +949,7 @@
                 </controls:BottomNavigationBarItem>
             </controls:BottomNavigationBar.Items>
         </controls:BottomNavigationBar>
-        <Interactivity:Interaction.Behaviors>
+        <!--<Interactivity:Interaction.Behaviors>
             <Interactions:DataTriggerBehavior
                 Binding="{Binding IsResourceVisible}"
                 ComparisonCondition="Equal"
@@ -957,7 +976,7 @@
                     TargetObject="{Binding ElementName=gridDataView}"
                     Value="Visible" />
             </Interactions:DataTriggerBehavior>
-        </Interactivity:Interaction.Behaviors>
+        </Interactivity:Interaction.Behaviors>-->
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveVisualStateGroup">
                 <VisualState x:Name="VisualStateNarrow">
