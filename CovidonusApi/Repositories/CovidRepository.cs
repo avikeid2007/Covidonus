@@ -1,4 +1,5 @@
 ﻿using CovidonusApi.Models;
+using CovidonusApi.Models.DTOs;
 using CovidonusApi.Repositories.Abstraction;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,10 @@ namespace CovidonusApi.Repositories
         public IEnumerable<Resource> GetResource()
         {
             return ResourceList;
+        }
+        public CovidNews GetNews()
+        {
+            return News;
         }
     }
 }

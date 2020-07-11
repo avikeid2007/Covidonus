@@ -1,4 +1,5 @@
 ﻿using CovidonusApi.Models;
+using CovidonusApi.Models.DTOs;
 using CovidonusApi.Repositories.Abstraction;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -24,6 +25,10 @@ namespace CovidonusApi.Controllers
         {
             return _covidRepository.GetResource();
         }
-
+        [Route(nameof(GetNews))]
+        public CovidNews GetNews()
+        {
+            return _covidRepository.GetNews();
+        }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using CovidonusApi.Models;
 using CovidonusApi.Models.DTOs;
 using CovidonusApi.Repositories.Abstraction;
+using NewsAPI;
+using NewsAPI.Constants;
+using NewsAPI.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using NLog;
@@ -356,6 +359,7 @@ namespace CovidonusApi.Repositories
                     AddBotInfo(stateData);
                     MenuList = stateData.AsEnumerable();
                     await LoadResourceListAsync();
+                    await LoadNewsAsync();
                     logger.Info("SeedDataRepository:RefreshCovidDataAsync=> End update StateWiseDatas & district");
                 }
             }
@@ -370,6 +374,26 @@ namespace CovidonusApi.Repositories
         private async Task LoadResourceListAsync()
         {
             ResourceList = await GetResourceListAsync();
+        }
+        private async Task LoadNewsAsync()
+        {
+            var newsApiClient = new NewsApiClient(NewsApiKey);
+            var articlesResponse = await newsApiClient.GetTopHeadlinesAsync(new TopHeadlinesRequest
+            {
+                Q = "covid",
+                Page = 1,
+                PageSize = 40,
+                Country = Countries.IN,
+                Language = Languages.EN,
+            });
+            if (articlesResponse.Status == Statuses.Ok)
+            {
+                News = new CovidNews()
+                {
+                    Articles = articlesResponse.Articles,
+                    TotalResults = articlesResponse.TotalResults
+                };
+            }
         }
     }
 }

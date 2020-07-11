@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Uno.Extensions;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 
 namespace Covidonus.Shared.ViewModels
@@ -24,8 +25,15 @@ namespace Covidonus.Shared.ViewModels
         {
             if (obj is Page page)
             {
-                await Task.WhenAll(LoadDailyCountsAsync(), LoadResourceAsync());
-                page.Frame.Navigate(typeof(MainPage));
+                try
+                {
+                    await Task.WhenAll(LoadDailyCountsAsync(), LoadResourceAsync());
+                    page.Frame.Navigate(typeof(MainPage));
+                }
+                catch
+                {
+                    await new MessageDialog("Something went wrong").ShowAsync();
+                }
             }
 
         }

@@ -25,6 +25,10 @@ namespace Covidonus.Swag
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Resource>> GetResourceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CovidNews> GetNewsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
     }
     
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.6.1.0 (NJsonSchema v10.1.21.0 (Newtonsoft.Json v11.0.0.0))")]
@@ -163,6 +167,67 @@ namespace Covidonus.Swag
                         }
             
                         return default(System.Collections.Generic.ICollection<Resource>);
+                    }
+                    finally
+                    {
+                        if (response_ != null)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (client_ != null)
+                    client_.Dispose();
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<CovidNews> GetNewsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Covid/GetNews");
+    
+            var client_ = new System.Net.Http.HttpClient();
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+    
+                        ProcessResponse(client_, response_);
+    
+                        var status_ = ((int)response_.StatusCode).ToString();
+                        if (status_ == "200") 
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CovidNews>(response_, headers_).ConfigureAwait(false);
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ != "200" && status_ != "204")
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false); 
+                            throw new ApiException("The HTTP status code of the response was not expected (" + (int)response_.StatusCode + ").", (int)response_.StatusCode, responseData_, headers_, null);
+                        }
+            
+                        return default(CovidNews);
                     }
                     finally
                     {
@@ -1251,6 +1316,219 @@ namespace Covidonus.Swag
                 if (_state != value)
                 {
                     _state = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+    
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null) 
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class CovidNews : System.ComponentModel.INotifyPropertyChanged
+    {
+        private int _totalResults;
+        private System.Collections.Generic.ICollection<Article> _articles;
+    
+        [Newtonsoft.Json.JsonProperty("TotalResults", Required = Newtonsoft.Json.Required.Always)]
+        public int TotalResults
+        {
+            get { return _totalResults; }
+            set 
+            {
+                if (_totalResults != value)
+                {
+                    _totalResults = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Articles", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<Article> Articles
+        {
+            get { return _articles; }
+            set 
+            {
+                if (_articles != value)
+                {
+                    _articles = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+    
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null) 
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class Article : System.ComponentModel.INotifyPropertyChanged
+    {
+        private Source _source;
+        private string _author;
+        private string _title;
+        private string _description;
+        private string _url;
+        private string _urlToImage;
+        private System.DateTimeOffset? _publishedAt;
+    
+        [Newtonsoft.Json.JsonProperty("Source", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Source Source
+        {
+            get { return _source; }
+            set 
+            {
+                if (_source != value)
+                {
+                    _source = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Author", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Author
+        {
+            get { return _author; }
+            set 
+            {
+                if (_author != value)
+                {
+                    _author = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Title", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Title
+        {
+            get { return _title; }
+            set 
+            {
+                if (_title != value)
+                {
+                    _title = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Description
+        {
+            get { return _description; }
+            set 
+            {
+                if (_description != value)
+                {
+                    _description = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Url", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Url
+        {
+            get { return _url; }
+            set 
+            {
+                if (_url != value)
+                {
+                    _url = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("UrlToImage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string UrlToImage
+        {
+            get { return _urlToImage; }
+            set 
+            {
+                if (_urlToImage != value)
+                {
+                    _urlToImage = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("PublishedAt", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTimeOffset? PublishedAt
+        {
+            get { return _publishedAt; }
+            set 
+            {
+                if (_publishedAt != value)
+                {
+                    _publishedAt = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+    
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null) 
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.21.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class Source : System.ComponentModel.INotifyPropertyChanged
+    {
+        private string _id;
+        private string _name;
+    
+        [Newtonsoft.Json.JsonProperty("Id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Id
+        {
+            get { return _id; }
+            set 
+            {
+                if (_id != value)
+                {
+                    _id = value; 
+                    RaisePropertyChanged();
+                }
+            }
+        }
+    
+        [Newtonsoft.Json.JsonProperty("Name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Name
+        {
+            get { return _name; }
+            set 
+            {
+                if (_name != value)
+                {
+                    _name = value; 
                     RaisePropertyChanged();
                 }
             }

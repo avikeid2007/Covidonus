@@ -13,6 +13,7 @@ namespace CovidonusApi.Repositories
         protected CovidonusContext db = new CovidonusContext();
         protected static IEnumerable<StateWiseData> MenuList;
         protected static IEnumerable<Resource> ResourceList;
+        protected static CovidNews News;
         protected IMapper GetMapper()
         {
             return CovidonusMapper.GetMapper();
@@ -53,5 +54,13 @@ namespace CovidonusApi.Repositories
                 obj.ModifiedBy = userName;
             }
         }
+        protected static string NewsApiKey
+        {
+            get
+            {
+                return System.Configuration.ConfigurationManager.AppSettings["NewsApiKey"];
+            }
+        }
+
     }
 }

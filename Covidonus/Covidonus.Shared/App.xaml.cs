@@ -16,7 +16,6 @@ namespace Covidonus
     /// </summary>
     sealed partial class App : Application
     {
-        private static CovidClient _covidClient;
         public static List<StateWiseData> Menuitems { get; set; }
         public static List<Swag.Resource> AllResource;
         /// <summary>

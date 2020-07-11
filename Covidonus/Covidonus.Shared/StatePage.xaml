@@ -758,7 +758,18 @@
                     Stretch="Uniform" />
             </Grid>
             <Grid Grid.Row="1" Visibility="{Binding IsResourceVisible}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <ComboBox
+                    Margin="4,2"
+                    ItemsSource="{Binding ResourceCategoryList}"
+                    PlaceholderText="Select Category"
+                    SelectedValue="{Binding SelectedResourceCategory, Mode=TwoWay}"
+                    Style="{StaticResource MaterialComboBoxStyle}" />
                 <GridView
+                    x:Name="resouseGrid"
                     Grid.Row="1"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
@@ -780,6 +791,7 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto" />
@@ -790,38 +802,59 @@
                                     Margin="8,0"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
-                                    Symbol="Map" />
+                                    Symbol="Favorite" />
                                 <TextBlock
                                     Grid.Column="1"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
                                     FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
-                                    Text="{Binding City}"
-                                    TextAlignment="Left" />
+                                    Text="{Binding Category}"
+                                    TextAlignment="Left"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap" />
                                 <SymbolIcon
                                     Grid.Row="1"
+                                    Grid.Column="0"
+                                    Margin="8,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Symbol="Map" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                    Text="{Binding City}"
+                                    TextAlignment="Left"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap" />
+                                <SymbolIcon
+                                    Grid.Row="2"
                                     Grid.Column="0"
                                     Margin="8,0"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
                                     Symbol="Account" />
                                 <TextBlock
-                                    Grid.Row="1"
+                                    Grid.Row="2"
                                     Grid.Column="1"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
                                     FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
                                     Text="{Binding NameOfTheOrganisation}"
-                                    TextAlignment="Left" />
+                                    TextAlignment="Left"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap" />
                                 <SymbolIcon
-                                    Grid.Row="2"
+                                    Grid.Row="3"
                                     Grid.Column="0"
                                     Margin="8,0"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
                                     Symbol="Bookmarks" />
                                 <TextBlock
-                                    Grid.Row="2"
+                                    Grid.Row="3"
                                     Grid.Column="1"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
@@ -831,31 +864,34 @@
                                     TextTrimming="CharacterEllipsis"
                                     TextWrapping="NoWrap" />
                                 <SymbolIcon
-                                    Grid.Row="3"
+                                    Grid.Row="4"
                                     Grid.Column="0"
                                     Margin="8,0"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
                                     Symbol="Phone" />
-                                <TextBlock
-                                    Grid.Row="3"
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch"
-                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
-                                    Text="{Binding PhoneNumber}"
-                                    TextAlignment="Left"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="NoWrap" />
-                                <SymbolIcon
+                                <HyperlinkButton
                                     Grid.Row="4"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Stretch"
+                                    Command="{Binding DataContext.DialerCommand, ElementName=resouseGrid}"
+                                    CommandParameter="{Binding PhoneNumber}"
+                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}">
+                                    <TextBlock
+                                        Text="{Binding PhoneNumber}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap" />
+                                </HyperlinkButton>
+                                <SymbolIcon
+                                    Grid.Row="5"
                                     Grid.Column="0"
                                     Margin="8,0"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch"
                                     Symbol="Globe" />
                                 <HyperlinkButton
-                                    Grid.Row="4"
+                                    Grid.Row="5"
                                     Grid.Column="1"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Stretch"

@@ -92,6 +92,9 @@
     <Reference Include="Namotion.Reflection, Version=1.0.11.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
       <HintPath>..\packages\Namotion.Reflection.1.0.11\lib\net45\Namotion.Reflection.dll</HintPath>
     </Reference>
+    <Reference Include="NewsAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewsAPI.0.5.0\lib\portable45-net45+win8+wpa81\NewsAPI.dll</HintPath>
+    </Reference>
     <Reference Include="NJsonSchema, Version=10.1.21.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
       <HintPath>..\packages\NJsonSchema.10.1.21\lib\net45\NJsonSchema.dll</HintPath>
     </Reference>
@@ -276,6 +279,7 @@
     <Compile Include="Models\Auditor.cs" />
     <Compile Include="Models\DTOs\CasesTimeSeries.cs" />
     <Compile Include="Models\CovidonusContext.cs" />
+    <Compile Include="Models\DTOs\CovidNews.cs" />
     <Compile Include="Models\DTOs\DailyCovidUpdate.cs" />
     <Compile Include="Models\DeltaData.cs" />
     <Compile Include="Models\DistrictWiseData.cs" />
@@ -433,6 +437,7 @@
     <Content Include="ConnectionStrings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="appSettings.config" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
