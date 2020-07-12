@@ -60,6 +60,10 @@ namespace Covidonus.Shared.ViewModels
             {
                 _contentFrame.Navigate(typeof(StatePage), code);
             }
+            else
+            {
+                _contentFrame.Navigate(typeof(StatePage), "TT");
+            }
         }
         private string GetFavoriteState()
         {
