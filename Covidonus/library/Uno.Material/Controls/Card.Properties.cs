@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Uno.Material.Controls
 {
-	public partial class Card : Control
+    public partial class Card : Control
 	{
 		#region HeaderContent and HeaderContentTemplate
 		public object HeaderContent

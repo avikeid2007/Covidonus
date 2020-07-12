@@ -1,12 +1,11 @@
-﻿using Windows.ApplicationModel.Store;
-using Windows.Foundation;
+﻿using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
 namespace Uno.Material.Controls
 {
-	[TemplateVisualState(GroupName = OpenStateGroup, Name = OpenedState)]
+    [TemplateVisualState(GroupName = OpenStateGroup, Name = OpenedState)]
 	[TemplateVisualState(GroupName = OpenStateGroup, Name = ClosedState)]
 	public partial class Card : Control
 	{

@@ -5,7 +5,7 @@
     xmlns:Interactions="using:Microsoft.Xaml.Interactions.Core"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="using:Covidonus"
+    xmlns:local="using:Covidonus" Loaded="Page_Loaded"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:swag="using:Covidonus.Swag"
     xmlns:toolkit="using:Uno.UI.Toolkit"
@@ -16,6 +16,7 @@
         <NavigationView
             x:Name="NavView"
             Margin="0,12,0,0"
+            Background="Transparent"
             IsBackButtonVisible="Collapsed"
             IsTabStop="False"
             PaneDisplayMode="Auto"
@@ -35,7 +36,6 @@
                         HorizontalAlignment="Left"
                         Source="ms-appx:///Assets/Logo.png"
                         Stretch="Uniform" />
-
                     <TextBlock
                         Margin="16,0,0,0"
                         HorizontalAlignment="Left"
@@ -46,7 +46,7 @@
             </NavigationView.PaneHeader>
             <NavigationView.MenuItems>
                 <NavigationViewItemHeader Content="India" />
-                <NavigationViewItem Content="Total" Tag="TT">
+                <NavigationViewItem Content="All States" Tag="TT">
                     <NavigationViewItem.Icon>
                         <BitmapIcon UriSource="ms-appx:///Assets/Logo.png" />
                     </NavigationViewItem.Icon>

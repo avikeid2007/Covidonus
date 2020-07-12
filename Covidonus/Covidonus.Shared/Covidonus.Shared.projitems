@@ -21,6 +21,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)ExtendedSplashPage.xaml.cs">
       <DependentUpon>ExtendedSplashPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\LocalSettingsHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\SettingContainer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -52,12 +54,12 @@
     <Content Include="$(MSBuildThisFileDirectory)Assets\SharedAssets.md" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\UP.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\UPe.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\wharsApp.png" />
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="$(MSBuildThisFileDirectory)Strings\en\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Repositories\" />
     <Folder Include="$(MSBuildThisFileDirectory)Styles\" />
   </ItemGroup>
 </Project>

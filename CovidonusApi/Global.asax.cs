@@ -19,7 +19,6 @@ namespace CovidonusApi
                 {
                     settings.MiddlewareBasePath = "/swagger";
                     settings.DocumentTitle = "Covidonus api";
-                    //settings.GeneratorSettings.DefaultUrlTemplate = "api/{controller}/{id}";  //this is the default one
                     settings.GeneratorSettings.DefaultUrlTemplate = "api/{controller}/{action}/{id}";
                 });
             });
@@ -30,8 +29,6 @@ namespace CovidonusApi
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Database.SetInitializer<CovidonusContext>(new DropCreateDatabaseIfModelChanges<CovidonusContext>());
             JobScheduler.StartAsync();
-            //SeedDataRepository repo = new SeedDataRepository();
-            //_ = repo.SeedCovidDataAsync();
         }
     }
 }

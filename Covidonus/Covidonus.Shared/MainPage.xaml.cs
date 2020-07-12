@@ -15,5 +15,10 @@ namespace Covidonus
             this.InitializeComponent();
             this.DataContext = new MainViewModel();
         }
+
+        private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            //NavView.ispa
+        }
     }
 }

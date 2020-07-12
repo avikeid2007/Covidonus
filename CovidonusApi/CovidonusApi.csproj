@@ -92,6 +92,9 @@
     <Reference Include="Namotion.Reflection, Version=1.0.11.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
       <HintPath>..\packages\Namotion.Reflection.1.0.11\lib\net45\Namotion.Reflection.dll</HintPath>
     </Reference>
+    <Reference Include="NewsAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NewsAPI.0.5.0\lib\portable45-net45+win8+wpa81\NewsAPI.dll</HintPath>
+    </Reference>
     <Reference Include="NJsonSchema, Version=10.1.21.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
       <HintPath>..\packages\NJsonSchema.10.1.21\lib\net45\NJsonSchema.dll</HintPath>
     </Reference>
@@ -273,26 +276,17 @@
     </Compile>
     <Compile Include="Helpers\AuditorHelper.cs" />
     <Compile Include="Helpers\CovidonusMapper.cs" />
-    <Compile Include="Migrations\202006200901525_CreateDb.cs" />
-    <Compile Include="Migrations\202006200901525_CreateDb.designer.cs">
-      <DependentUpon>202006200901525_CreateDb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202006221440560_AddDailyTables.cs" />
-    <Compile Include="Migrations\202006221440560_AddDailyTables.designer.cs">
-      <DependentUpon>202006221440560_AddDailyTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Auditor.cs" />
-    <Compile Include="Models\CasesTimeSeries.cs" />
+    <Compile Include="Models\DTOs\CasesTimeSeries.cs" />
     <Compile Include="Models\CovidonusContext.cs" />
-    <Compile Include="Models\DailyCovidUpdate.cs" />
-    <Compile Include="Models\DailyDistrictWiseData.cs" />
-    <Compile Include="Models\DailyStateWiseData.cs" />
+    <Compile Include="Models\DTOs\CovidNews.cs" />
+    <Compile Include="Models\DTOs\DailyCovidUpdate.cs" />
     <Compile Include="Models\DeltaData.cs" />
     <Compile Include="Models\DistrictWiseData.cs" />
     <Compile Include="Models\DTOs\DistrictData.cs" />
+    <Compile Include="Models\Resource.cs" />
     <Compile Include="Models\StateWiseData.cs" />
-    <Compile Include="Models\Tested.cs" />
+    <Compile Include="Models\DTOs\Tested.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CoreRepository.cs" />
     <Compile Include="Repositories\Abstraction\ISeedDataRepository.cs" />
@@ -354,6 +348,9 @@
     <Content Include="Images\JH.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\LA.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\JK.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -363,7 +360,57 @@
     <Content Include="Images\KL.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\LD.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\MH.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\ML.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\MN.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\MP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\MZ.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TG.png" />
+    <Content Include="Images\NL.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\OR.png" />
+    <Content Include="Images\PB.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\PY.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\RJ.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\SK.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TN.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\TR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\TT.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\UP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\UT.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\WB.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
@@ -390,6 +437,7 @@
     <Content Include="ConnectionStrings.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="appSettings.config" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -443,14 +491,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202006200901525_CreateDb.resx">
-      <DependentUpon>202006200901525_CreateDb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202006221440560_AddDailyTables.resx">
-      <DependentUpon>202006221440560_AddDailyTables.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

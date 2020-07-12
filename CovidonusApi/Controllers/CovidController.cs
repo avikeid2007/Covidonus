@@ -1,4 +1,5 @@
 ﻿using CovidonusApi.Models;
+using CovidonusApi.Models.DTOs;
 using CovidonusApi.Repositories.Abstraction;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,14 +16,19 @@ namespace CovidonusApi.Controllers
             _covidRepository = covidRepository;
         }
         [Route(nameof(GetCovidCountsAsync))]
-        public async Task<IEnumerable<StateWiseData>> GetCovidCountsAsync()
+        public async Task<IEnumerable<StateWiseData>> GetCovidCountsAsync(bool isRefresh = false)
         {
-            return await _covidRepository.GetCovidCountsAsync();
+            return await _covidRepository.GetCovidCountsAsync(isRefresh);
         }
-        [Route(nameof(RefreshCovidCountsAsync))]
-        public async Task<IEnumerable<StateWiseData>> RefreshCovidCountsAsync()
+        [Route(nameof(GetResource))]
+        public IEnumerable<Resource> GetResource()
         {
-            return await _covidRepository.RefreshCovidCountsAsync();
+            return _covidRepository.GetResource();
+        }
+        [Route(nameof(GetNews))]
+        public CovidNews GetNews()
+        {
+            return _covidRepository.GetNews();
         }
     }
 }

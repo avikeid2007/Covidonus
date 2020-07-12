@@ -40,20 +40,6 @@ namespace CovidonusApi.Helpers
             double per = (double)x.TotalDeceased / (double)x.TotalConfirmed * 100;
             return Convert.ToString(Math.Round(per, 2));
         }
-        private static string GetRecoverRation(CasesTimeSeries x)
-        {
-            if (x.TotalConfirmed == 0)
-            {
-                return string.Empty;
-            }
-            double per = (double)x.TotalRecovered / (double)x.TotalConfirmed * 100;
-            return Convert.ToString(Math.Round(per, 2));
-        }
-
-        private static int GetTotalActive(CasesTimeSeries x)
-        {
-            return x.TotalConfirmed - (x.TotalDeceased + x.TotalRecovered);
-        }
 
         private static DateTime ConvertDate(string date)
         {

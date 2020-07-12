@@ -1,4 +1,5 @@
 ﻿using CovidonusApi.Models;
+using CovidonusApi.Models.DTOs;
 using CovidonusApi.Repositories.Abstraction;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,29 +14,20 @@ namespace CovidonusApi.Repositories
         {
             _seedDataRepository = seedDataRepository;
         }
-        public async Task<IEnumerable<StateWiseData>> GetCovidCountsAsync()
+        public async Task<IEnumerable<StateWiseData>> GetCovidCountsAsync(bool isRefresh = false)
         {
-            if (MenuList == null || MenuList?.Count() <= 0)
+            if (MenuList == null || MenuList?.Count() <= 0 || isRefresh)
                 await _seedDataRepository.RefreshCovidDataAsync();
             return MenuList;
 
         }
-        public async Task<IEnumerable<StateWiseData>> RefreshCovidCountsAsync()
+        public IEnumerable<Resource> GetResource()
         {
-
-            await _seedDataRepository.RefreshCovidDataAsync();
-            return MenuList;
-
+            return ResourceList;
         }
-        //public async Task<DailyTotalCount> GetDailyTotalsAsync()
-        //{
-        //    if (DailyTotalCounts == null)
-        //    {
-        //        await SetDailyCountAsync();
-        //    }
-        //    return DailyTotalCounts;
-
-        //}
-
+        public CovidNews GetNews()
+        {
+            return News;
+        }
     }
 }

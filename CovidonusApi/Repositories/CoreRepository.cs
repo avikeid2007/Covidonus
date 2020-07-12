@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CovidonusApi.Helpers;
 using CovidonusApi.Models;
+using CovidonusApi.Models.DTOs;
 using System;
 using System.Collections.Generic;
 
@@ -11,6 +12,8 @@ namespace CovidonusApi.Repositories
         protected IMapper mapper;
         protected CovidonusContext db = new CovidonusContext();
         protected static IEnumerable<StateWiseData> MenuList;
+        protected static IEnumerable<Resource> ResourceList;
+        protected static CovidNews News;
         protected IMapper GetMapper()
         {
             return CovidonusMapper.GetMapper();
@@ -51,5 +54,13 @@ namespace CovidonusApi.Repositories
                 obj.ModifiedBy = userName;
             }
         }
+        protected static string NewsApiKey
+        {
+            get
+            {
+                return System.Configuration.ConfigurationManager.AppSettings["NewsApiKey"];
+            }
+        }
+
     }
 }
