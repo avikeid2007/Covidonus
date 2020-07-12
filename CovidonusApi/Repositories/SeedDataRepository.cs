@@ -261,7 +261,7 @@ namespace CovidonusApi.Repositories
                 }
             });
         }
-        public async Task RefreshCovidDataAsync()
+        public async Task RefreshCovidDataAsync(bool isRefreshNews = true)
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -359,7 +359,8 @@ namespace CovidonusApi.Repositories
                     AddBotInfo(stateData);
                     MenuList = stateData.AsEnumerable();
                     await LoadResourceListAsync();
-                    await LoadNewsAsync();
+                    if (isRefreshNews)
+                        await LoadNewsAsync();
                     logger.Info("SeedDataRepository:RefreshCovidDataAsync=> End update StateWiseDatas & district");
                 }
             }

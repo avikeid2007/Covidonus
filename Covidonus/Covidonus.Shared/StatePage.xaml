@@ -114,6 +114,7 @@
                     <Button
                         Margin="4,0"
                         HorizontalAlignment="Right"
+                        Command="{Binding RefreshCountCommand}"
                         Style="{StaticResource FabMaterialButtonStyle}">
                         <SymbolIcon
                             HorizontalAlignment="Center"
@@ -1000,6 +1001,73 @@
 
                 </ListView>
             </Grid>
+            <Grid
+                x:Name="InfoGraphicView"
+                Grid.Row="1"
+                Visibility="{Binding IsInfoGraphicVisible}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <HyperlinkButton
+                    Grid.Row="0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Stretch"
+                    FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
+                    NavigateUri="https://www.mohfw.gov.in/">
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Text="Source:- Ministry of Health and Family Welfare "
+                        TextWrapping="WrapWholeWords" />
+                </HyperlinkButton>
+                <ListView
+                    Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    FontSize="30"
+                    ItemsSource="{Binding InfoGraphicList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Image Source="{Binding UrlToImage}" />
+                                <HyperlinkButton
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Stretch"
+                                    FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
+                                    NavigateUri="{Binding Url}">
+                                    <TextBlock
+                                        HorizontalAlignment="Left"
+                                        Text="{Binding Title}"
+                                        TextWrapping="WrapWholeWords" />
+                                </HyperlinkButton>
+
+                                <TextBlock
+                                    Grid.Row="2"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                    Text="{Binding Description}"
+                                    TextAlignment="Left"
+                                    TextWrapping="WrapWholeWords" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="VerticalAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                </ListView>
+            </Grid>
         </Grid>
 
         <Grid
@@ -1025,7 +1093,7 @@
                 Style="{StaticResource NoHoverButtonStyle}">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <SymbolIcon x:Name="favIcon" Symbol="Favorite" />
-                    <TextBlock x:Name="txtFav" Text="Favorites" />
+                    <TextBlock x:Name="txtFav" Text="Fav" />
                     <Interactivity:Interaction.Behaviors>
                         <Interactions:DataTriggerBehavior
                             Binding="{Binding IsFavoriteState}"
@@ -1038,7 +1106,7 @@
                             <Interactions:ChangePropertyAction
                                 PropertyName="Text"
                                 TargetObject="{Binding ElementName=txtFav}"
-                                Value="UnFavorite" />
+                                Value="UnFav" />
                         </Interactions:DataTriggerBehavior>
                         <Interactions:DataTriggerBehavior
                             Binding="{Binding IsFavoriteState}"
@@ -1051,7 +1119,7 @@
                             <Interactions:ChangePropertyAction
                                 PropertyName="Text"
                                 TargetObject="{Binding ElementName=txtFav}"
-                                Value="Favorite" />
+                                Value="Fav" />
                         </Interactions:DataTriggerBehavior>
                     </Interactivity:Interaction.Behaviors>
                 </StackPanel>

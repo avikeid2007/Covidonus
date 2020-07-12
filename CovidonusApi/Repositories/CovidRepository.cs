@@ -17,7 +17,7 @@ namespace CovidonusApi.Repositories
         public async Task<IEnumerable<StateWiseData>> GetCovidCountsAsync(bool isRefresh = false)
         {
             if (MenuList == null || MenuList?.Count() <= 0 || isRefresh)
-                await _seedDataRepository.RefreshCovidDataAsync();
+                await _seedDataRepository.RefreshCovidDataAsync(!isRefresh);
             return MenuList;
 
         }
@@ -33,10 +33,8 @@ namespace CovidonusApi.Repositories
         {
             return new List<InfoGraphic>
                     {
-                        new InfoGraphic() { Title = "Covid 19 Symptoms", Order = 0, Type = "image", UrlToImage = "http://covidonusapi.avnishkumar.co.in/InfoGraphics/covid0.jpg" },
-                        new InfoGraphic() { Title = "Covid 19 Symptoms", Order = 1, Type = "image", UrlToImage = "http://covidonusapi.avnishkumar.co.in/InfoGraphics/covid1.jpg" },
-                        new InfoGraphic() { Title = "Covid 19 Symptoms", Order = 2, Type = "image", UrlToImage = "http://covidonusapi.avnishkumar.co.in/InfoGraphics/covid2.jpg" },
-                        new InfoGraphic() { Title = "Covid 19 Symptoms", Order = 3, Type = "image", UrlToImage = "http://covidonusapi.avnishkumar.co.in/InfoGraphics/covid3.jpg" }
+                        new InfoGraphic() { Order = 0, Type = "image", UrlToImage = "https://www.mygov.in/sites/all/themes/mygov/images/covid/symptoms.png" },
+                        new InfoGraphic() { Order = 1, Type = "image", UrlToImage = "https://www.mygov.in/sites/all/themes/mygov/images/covid/block-one.png" },
                     };
         }
     }

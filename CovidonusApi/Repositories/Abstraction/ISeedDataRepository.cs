@@ -4,6 +4,6 @@ namespace CovidonusApi.Repositories.Abstraction
 {
     public interface ISeedDataRepository
     {
-        Task RefreshCovidDataAsync();
+        Task RefreshCovidDataAsync(bool isRefreshNews = true);
     }
 }
