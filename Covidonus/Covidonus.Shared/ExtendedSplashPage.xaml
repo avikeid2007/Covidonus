@@ -17,7 +17,7 @@
     mc:Ignorable="not_win android ios wasm">
 
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <win:Image Width="150" Source="ms-appx:///Assets/Logo.png" />
+        <win:Image Width="100" Source="ms-appx:///Assets/Logo.png" />
         <Interactivity:Interaction.Behaviors>
             <Interactions:EventTriggerBehavior EventName="Loaded">
                 <Interactions:InvokeCommandAction Command="{Binding LoadCommand}" CommandParameter="{Binding ElementName=splashPage}" />

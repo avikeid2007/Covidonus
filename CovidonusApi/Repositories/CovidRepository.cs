@@ -29,5 +29,17 @@ namespace CovidonusApi.Repositories
         {
             return News;
         }
+        public IEnumerable<InfoGraphic> GetInfoGraphics()
+        {
+            return new List<InfoGraphic>
+                    {
+                        new InfoGraphic() { Title = "Covid 19 Symptoms", Order = 0, Type = "image", UrlToImage = "http://covidonusapi.avnishkumar.co.in/InfoGraphics/covid0.jpg" },
+                        new InfoGraphic() { Title = "Covid 19 Symptoms", Order = 1, Type = "image", UrlToImage = "http://covidonusapi.avnishkumar.co.in/InfoGraphics/covid1.jpg" },
+                        new InfoGraphic() { Title = "Covid 19 Symptoms", Order = 2, Type = "image", UrlToImage = "http://covidonusapi.avnishkumar.co.in/InfoGraphics/covid2.jpg" },
+                        new InfoGraphic() { Title = "Covid 19 Symptoms", Order = 3, Type = "image", UrlToImage = "http://covidonusapi.avnishkumar.co.in/InfoGraphics/covid3.jpg" }
+                    };
+        }
     }
+
+
 }

@@ -30,5 +30,10 @@ namespace CovidonusApi.Controllers
         {
             return _covidRepository.GetNews();
         }
+        [Route(nameof(GetInfoGraphics))]
+        public IEnumerable<InfoGraphic> GetInfoGraphics()
+        {
+            return _covidRepository.GetInfoGraphics();
+        }
     }
 }

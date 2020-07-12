@@ -2,6 +2,7 @@
 using BasicMvvm.Commands;
 using Covidonus.Shared.Helpers;
 using Covidonus.Swag;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -35,6 +36,13 @@ namespace Covidonus.Shared.ViewModels
         public ICommand NotificationCommand { get; set; }
         public ICommand ShareCommand { get; set; }
         public ICommand DialerCommand { get; set; }
+        private List<Article> _news;
+        private int _totalNewsCount;
+        private bool _isNewsCountVisible;
+        private Visibility _isNewsVisible;
+
+
+
         public StateViewModel()
         {
             IsVisibleIndiaCounts = Visibility.Collapsed;
@@ -43,8 +51,23 @@ namespace Covidonus.Shared.ViewModels
             ShareCommand = new AsyncCommand(OnShareCommandExecuteAsync);
             ResourceCommand = new DelegateCommand(OnResourceCommandExecute);
             DialerCommand = new DelegateCommand<string>(OnDialerCommandExecute);
-            IsResourceVisible = Visibility.Collapsed;
-            IsCovidCountVisible = Visibility.Visible;
+            NotificationCommand = new DelegateCommand(OnNotificationCommandExecute);
+            CovidAreaVisible();
+            _ = GetNewsAsync();
+        }
+
+        private void OnNotificationCommandExecute()
+        {
+            if (IsNewsVisible == Visibility.Visible)
+            {
+                CovidAreaVisible();
+            }
+            else
+            {
+                NewsAreaVisible();
+            }
+            if (App.AllNews != null)
+                News = new List<Article>(App.AllNews.Articles);
         }
 
         private void OnDialerCommandExecute(string numbers)
@@ -53,12 +76,99 @@ namespace Covidonus.Shared.ViewModels
                 numbers = numbers.Split(',').FirstOrDefault();
             PhoneDialer.Open(numbers);
         }
+
+        private void OnResourceCommandExecute()
+        {
+            if (IsResourceVisible == Visibility.Visible)
+            {
+                CovidAreaVisible();
+            }
+            else
+            {
+                ResourceAreaVisible();
+            }
+            var Categories = new List<string>(App.AllResource.Where(x => x.State == SelectedState.State).Select(x => x.Category).Distinct())
+            {
+                "All"
+            };
+            ResourceCategoryList = new List<string>(Categories.OrderBy(x => x));
+            SelectedResourceCategory = "All";
+        }
+
+        private void ResourceAreaVisible()
+        {
+            IsResourceVisible = Visibility.Visible;
+            IsCovidCountVisible = Visibility.Collapsed;
+            IsNewsVisible = Visibility.Collapsed;
+            News = null;
+        }
+        private void NewsAreaVisible()
+        {
+            IsNewsVisible = Visibility.Visible;
+            IsResourceVisible = Visibility.Collapsed;
+            IsCovidCountVisible = Visibility.Collapsed;
+            StateResources = null;
+        }
+        private void CovidAreaVisible()
+        {
+            IsCovidCountVisible = Visibility.Visible;
+            IsResourceVisible = Visibility.Collapsed;
+            IsNewsVisible = Visibility.Collapsed;
+            StateResources = null;
+            News = null;
+        }
+
+        private async Task OnShareCommandExecuteAsync()
+        {
+            await Share.RequestAsync(new ShareTextRequest
+            {
+                Text = SelectedState.Confirmed.ToString(),
+                Title = SelectedState.State
+            });
+        }
+
+        private void OnFavoriteCommandExecute()
+        {
+            if (IsFavoriteState)
+                LocalSettingsHelper.MarkContainer(SettingContainer.Favorite, "StateCode", string.Empty);
+            else
+                LocalSettingsHelper.MarkContainer(SettingContainer.Favorite, "StateCode", SelectedState.StateCode);
+            SetFavoriteIcon();
+        }
+
         public List<string> ResourceCategoryList
         {
             get { return _resourceCategoryList; }
             set
             {
                 _resourceCategoryList = value;
+                OnPropertyChanged();
+            }
+        }
+        public int TotalNewsCount
+        {
+            get { return _totalNewsCount; }
+            set
+            {
+                _totalNewsCount = value;
+                OnPropertyChanged();
+            }
+        }
+        public bool IsNewsCountVisible
+        {
+            get { return _isNewsCountVisible; }
+            set
+            {
+                _isNewsCountVisible = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<Article> News
+        {
+            get { return _news; }
+            set
+            {
+                _news = value;
                 OnPropertyChanged();
             }
         }
@@ -91,44 +201,6 @@ namespace Covidonus.Shared.ViewModels
                 _stateResources = value;
                 OnPropertyChanged();
             }
-        }
-        private void OnResourceCommandExecute()
-        {
-            if (IsResourceVisible == Visibility.Visible)
-            {
-                IsResourceVisible = Visibility.Collapsed;
-                IsCovidCountVisible = Visibility.Visible;
-            }
-            else
-            {
-                IsResourceVisible = Visibility.Visible;
-                IsCovidCountVisible = Visibility.Collapsed;
-            }
-
-            var Categories = new List<string>(App.AllResource.Where(x => x.State == SelectedState.State).Select(x => x.Category).Distinct())
-            {
-                "All"
-            };
-            ResourceCategoryList = new List<string>(Categories.OrderBy(x => x));
-            SelectedResourceCategory = "All";
-        }
-
-        private async Task OnShareCommandExecuteAsync()
-        {
-            await Share.RequestAsync(new ShareTextRequest
-            {
-                Text = SelectedState.Confirmed.ToString(),
-                Title = SelectedState.State
-            });
-        }
-
-        private void OnFavoriteCommandExecute()
-        {
-            if (IsFavoriteState)
-                LocalSettingsHelper.MarkContainer(SettingContainer.Favorite, "StateCode", string.Empty);
-            else
-                LocalSettingsHelper.MarkContainer(SettingContainer.Favorite, "StateCode", SelectedState.StateCode);
-            SetFavoriteIcon();
         }
         public bool IsFavoriteState
         {
@@ -203,7 +275,15 @@ namespace Covidonus.Shared.ViewModels
                 OnPropertyChanged();
             }
         }
-
+        public Visibility IsNewsVisible
+        {
+            get { return _isNewsVisible; }
+            set
+            {
+                _isNewsVisible = value;
+                OnPropertyChanged();
+            }
+        }
         public Visibility IsResourceVisible
         {
             get { return _isResourceVisible; }
@@ -236,10 +316,10 @@ namespace Covidonus.Shared.ViewModels
                     {
 
                         District = x.StateCode == "DN" ? "Daman & Diu" : x.StateCode == "AN" ? "Andaman & Nicobar" : x.State,
-                        Confirmed = x.Confirmed,
-                        Active = x.Active,
-                        Recovered = x.Recovered,
-                        Deaths = x.Deaths,
+                        x.Confirmed,
+                        x.Active,
+                        x.Recovered,
+                        x.Deaths,
                     }).ToList();
                     SelectedState = App.Menuitems.FirstOrDefault(x => x.StateCode.Equals(stateCode, System.StringComparison.OrdinalIgnoreCase));
                     SetNewCounts(SelectedState);
@@ -252,10 +332,10 @@ namespace Covidonus.Shared.ViewModels
                     SelectedState = App.Menuitems.FirstOrDefault(x => x.StateCode.Equals(stateCode, System.StringComparison.OrdinalIgnoreCase));
                     StateCollection = SelectedState.DistrictData.Select(x => new
                     {
-                        District = x.District,
-                        Confirmed = x.Confirmed,
-                        Active = x.Active,
-                        Recovered = x.Recovered,
+                        x.District,
+                        x.Confirmed,
+                        x.Active,
+                        x.Recovered,
                         Deaths = x.Deceased,
                     }).ToList();
                     SetNewCounts(App.Menuitems.FirstOrDefault(x => x.StateCode.Equals("TT", System.StringComparison.OrdinalIgnoreCase)));
@@ -274,6 +354,12 @@ namespace Covidonus.Shared.ViewModels
                 NewCases = $"+{indiaData.TodayConfirmed}";
                 NewDeaths = $"+{indiaData.TodayDeaths}";
             }
+        }
+        private async Task GetNewsAsync()
+        {
+            App.AllNews = await new CovidClient().GetNewsAsync();
+            TotalNewsCount = App.AllNews.TotalResults;
+            IsNewsCountVisible = true;
         }
         private void SetFavoriteIcon()
         {
