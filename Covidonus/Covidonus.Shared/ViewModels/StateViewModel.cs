@@ -115,10 +115,8 @@ namespace Covidonus.Shared.ViewModels
             {
                 ResourceAreaVisible();
             }
-            var Categories = new List<string>(App.AllResource.Where(x => x.State == SelectedState.State).Select(x => x.Category).Distinct())
-            {
-                "All"
-            };
+            var Categories = new List<string>(App.AllResource.Where(x => x.State == SelectedState.State).Select(x => x.Category).Distinct());
+            Categories.Add("All");
             ResourceCategoryList = new List<string>(Categories.OrderBy(x => x));
             SelectedResourceCategory = "All";
         }

@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)Assets\bg.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\ePass.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Assets\fb.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\india.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\Logo.png" />
     <Content Include="$(MSBuildThisFileDirectory)Assets\SharedAssets.md" />

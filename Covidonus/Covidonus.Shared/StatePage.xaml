@@ -602,13 +602,23 @@
                             FontWeight="Medium"
                             Style="{StaticResource NewSubheaderTextBlockStyle}"
                             Text="Source" />
-                        <TextBlock
+                        <!--<TextBlock
                             x:Name="txtIndTodayRecoverCount"
                             HorizontalAlignment="Center"
                             FontWeight="Normal"
                             Foreground="{StaticResource OverlayBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="NA%" />
+                            Text="NA%" />-->
+
+                        <HyperlinkButton
+                            Margin="0"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource SecondaryVariantDarkBrush}"
+                            NavigateUri="{Binding SelectedState.TestSource}">
+                            <SymbolIcon x:Name="txtIndTodayRecoverCount" Symbol="Link" />
+
+                        </HyperlinkButton>
                     </StackPanel>
                 </Grid>
                 <Grid
@@ -903,7 +913,6 @@
                                     Content="{Binding Contact}"
                                     FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
                                     NavigateUri="{Binding Contact}" />
-
                             </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>
@@ -956,7 +965,6 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="Auto" />
-
                                     </Grid.RowDefinitions>
                                     <HyperlinkButton
                                         Grid.Row="0"
@@ -969,7 +977,6 @@
                                             Text="{Binding Title}"
                                             TextWrapping="WrapWholeWords" />
                                     </HyperlinkButton>
-
                                     <TextBlock
                                         Grid.Row="1"
                                         HorizontalAlignment="Stretch"
@@ -987,10 +994,8 @@
                                         TextAlignment="Left"
                                         TextTrimming="CharacterEllipsis"
                                         TextWrapping="NoWrap" />
-
                                 </Grid>
                             </StackPanel>
-
                         </DataTemplate>
                     </ListView.ItemTemplate>
                     <ListView.ItemContainerStyle>
@@ -1007,10 +1012,13 @@
                 Visibility="{Binding IsInfoGraphicVisible}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <HyperlinkButton
                     Grid.Row="0"
+                    Margin="4,2"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Stretch"
                     FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
@@ -1020,8 +1028,111 @@
                         Text="Source:- Ministry of Health and Family Welfare "
                         TextWrapping="WrapWholeWords" />
                 </HyperlinkButton>
-                <ListView
+                <Border
                     Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                    BorderThickness="0,1,0,1">
+                    <TextBlock
+                        Grid.ColumnSpan="3"
+                        Margin="4,2"
+                        FontSize="{Binding Path=FontSize, ElementName=txtIndToday}"
+                        Foreground="{StaticResource SecondaryBrush}"
+                        Text="HelpDesk"
+                        TextAlignment="Center" />
+                </Border>
+                <Grid Grid.Row="2" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Border
+                        Grid.Column="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                        BorderThickness="1,1,1,1">
+                        <TextBlock
+                            Margin="4,2"
+                            FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
+                            Text="WhatsApp"
+                            TextAlignment="Center" />
+                    </Border>
+                    <Border
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                        BorderThickness="1,1,1,1">
+                        <TextBlock
+                            Margin="4,2"
+                            FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
+                            Text="FaceBook"
+                            TextAlignment="Center" />
+                    </Border>
+                    <Border
+                        Grid.Column="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                        BorderThickness="1,1,1,1">
+                        <TextBlock
+                            Margin="4,2"
+                            FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
+                            Text="ePass"
+                            TextAlignment="Center" />
+                    </Border>
+                    <Border
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                        BorderThickness="1,1,1,1">
+                        <HyperlinkButton
+                            HorizontalAlignment="Center"
+                            FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
+                            NavigateUri="{Binding SelectedState.WhatsAppBot}">
+                            <Image Height="{Binding Path=Height, ElementName=imgWhatsapp}" Source="ms-appx:///Assets/wharsApp.png" />
+                        </HyperlinkButton>
+                    </Border>
+                    <Border
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                        BorderThickness="1,1,1,1">
+                        <HyperlinkButton
+                            HorizontalAlignment="Center"
+                            FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
+                            NavigateUri="{Binding SelectedState.FacebookBot}">
+                            <Image Height="{Binding Path=Height, ElementName=imgWhatsapp}" Source="ms-appx:///Assets/fb.png" />
+                        </HyperlinkButton>
+                    </Border>
+                    <Border
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                        BorderThickness="1,1,1,1">
+                        <HyperlinkButton
+                            HorizontalAlignment="Center"
+                            FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
+                            NavigateUri="{Binding SelectedState.EPassLink}">
+                            <Image Height="{Binding Path=Height, ElementName=imgWhatsapp}" Source="ms-appx:///Assets/ePass.png" />
+                        </HyperlinkButton>
+                    </Border>
+                </Grid>
+                <ListView
+                    Grid.Row="3"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     HorizontalContentAlignment="Stretch"
@@ -1349,8 +1460,8 @@
                         <Setter Target="txtIndTodayTestedCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
                         <Setter Target="txtIndTodayTestedCount.FontWeight" Value="SemiBold" />
                         <Setter Target="txtIndTodayRecover.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
-                        <Setter Target="txtIndTodayRecoverCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
-                        <Setter Target="txtIndTodayRecoverCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTodayRecoverCount.Height" Value="14" />
+                        <!--<Setter Target="txtIndTodayRecoverCount.FontWeight" Value="SemiBold" />-->
                         <Setter Target="txtIndToday.Style" Value="{StaticResource TitleTextBlockStyle}" />
                         <Setter Target="txtIndRatio.Style" Value="{StaticResource TitleTextBlockStyle}" />
                         <Setter Target="SetFontSize.FontSize" Value="14" />
@@ -1439,8 +1550,8 @@
                         <Setter Target="txtIndTodayTestedCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
                         <Setter Target="txtIndTodayTestedCount.FontWeight" Value="SemiBold" />
                         <Setter Target="txtIndTodayRecover.Style" Value="{StaticResource TitleTextBlockStyle}" />
-                        <Setter Target="txtIndTodayRecoverCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
-                        <Setter Target="txtIndTodayRecoverCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTodayRecoverCount.Height" Value="14" />
+                        <!--<Setter Target="txtIndTodayRecoverCount.FontWeight" Value="SemiBold" />-->
                         <Setter Target="txtIndToday.Style" Value="{StaticResource TitleTextBlockStyle}" />
                         <Setter Target="txtIndRatio.Style" Value="{StaticResource TitleTextBlockStyle}" />
                         <Setter Target="SetFontSize.FontSize" Value="20" />
