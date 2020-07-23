@@ -14,6 +14,7 @@
     xmlns:not_win="http://uno.ui/not_win"
     xmlns:wasm="http://uno.ui/wasm"
     xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    x:Name="StatePageView"
     mc:Ignorable="not_win android ios wasm">
     <Page.Background>
         <ImageBrush ImageSource="/Assets/bg.png" Stretch="UniformToFill" />
@@ -113,6 +114,7 @@
                     <Button
                         Margin="4,0"
                         HorizontalAlignment="Right"
+                        Command="{Binding RefreshCountCommand}"
                         Style="{StaticResource FabMaterialButtonStyle}">
                         <SymbolIcon
                             HorizontalAlignment="Center"
@@ -600,13 +602,23 @@
                             FontWeight="Medium"
                             Style="{StaticResource NewSubheaderTextBlockStyle}"
                             Text="Source" />
-                        <TextBlock
+                        <!--<TextBlock
                             x:Name="txtIndTodayRecoverCount"
                             HorizontalAlignment="Center"
                             FontWeight="Normal"
                             Foreground="{StaticResource OverlayBrush}"
                             Style="{StaticResource TitleTextBlockStyle}"
-                            Text="NA%" />
+                            Text="NA%" />-->
+
+                        <HyperlinkButton
+                            Margin="0"
+                            HorizontalAlignment="Center"
+                            FontWeight="Normal"
+                            Foreground="{StaticResource SecondaryVariantDarkBrush}"
+                            NavigateUri="{Binding SelectedState.TestSource}">
+                            <SymbolIcon x:Name="txtIndTodayRecoverCount" Symbol="Link" />
+
+                        </HyperlinkButton>
                     </StackPanel>
                 </Grid>
                 <Grid
@@ -757,7 +769,10 @@
                     Source="{Binding SelectedState.StateLogo}"
                     Stretch="Uniform" />
             </Grid>
-            <Grid Grid.Row="1" Visibility="{Binding IsResourceVisible}">
+            <Grid
+                x:Name="ResourceView"
+                Grid.Row="1"
+                Visibility="{Binding IsResourceVisible}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
@@ -779,7 +794,7 @@
                     <GridView.ItemTemplate>
                         <DataTemplate>
                             <Grid
-                                Width="500"
+                                Width="650"
                                 Padding="8,8"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
@@ -898,7 +913,6 @@
                                     Content="{Binding Contact}"
                                     FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
                                     NavigateUri="{Binding Contact}" />
-
                             </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>
@@ -918,18 +932,368 @@
                     </GridView.ItemsPanel>
                 </GridView>
             </Grid>
+            <Grid
+                x:Name="NewsView"
+                Grid.Row="1"
+                Visibility="{Binding IsNewsVisible}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <StackPanel
+                    x:Name="SetOrientation"
+                    Orientation="Horizontal"
+                    Visibility="Collapsed">
+                    <TextBlock x:Name="SetTitleFontSize" Visibility="Collapsed" />
+                </StackPanel>
+                <ListView
+                    Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    FontSize="30"
+                    ItemsSource="{Binding News}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel
+                                Padding="8,8"
+                                BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                                BorderThickness="1"
+                                Orientation="{Binding Path=Orientation, ElementName=SetOrientation}">
+                                <Image Width="300" Source="{Binding UrlToImage}" />
+                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <HyperlinkButton
+                                        Grid.Row="0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Stretch"
+                                        FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
+                                        NavigateUri="{Binding Url}">
+                                        <TextBlock
+                                            HorizontalAlignment="Left"
+                                            Text="{Binding Title}"
+                                            TextWrapping="WrapWholeWords" />
+                                    </HyperlinkButton>
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                        Text="{Binding Description}"
+                                        TextAlignment="Left"
+                                        TextWrapping="WrapWholeWords" />
+                                    <TextBlock
+                                        Grid.Row="2"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                        Text="{Binding Author}"
+                                        TextAlignment="Left"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap" />
+                                </Grid>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
 
+                </ListView>
+            </Grid>
+            <Grid
+                x:Name="InfoGraphicView"
+                Grid.Row="1"
+                Visibility="{Binding IsInfoGraphicVisible}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <HyperlinkButton
+                    Grid.Row="0"
+                    Margin="4,2"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Stretch"
+                    FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
+                    NavigateUri="https://www.mohfw.gov.in/">
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Text="Source:- Ministry of Health and Family Welfare "
+                        TextWrapping="WrapWholeWords" />
+                </HyperlinkButton>
+                <Border
+                    Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                    BorderThickness="0,1,0,1">
+                    <TextBlock
+                        Grid.ColumnSpan="3"
+                        Margin="4,2"
+                        FontSize="{Binding Path=FontSize, ElementName=txtIndToday}"
+                        Foreground="{StaticResource SecondaryBrush}"
+                        Text="HelpDesk"
+                        TextAlignment="Center" />
+                </Border>
+                <Grid Grid.Row="2" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Border
+                        Grid.Column="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                        BorderThickness="1,1,1,1">
+                        <TextBlock
+                            Margin="4,2"
+                            FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
+                            Text="WhatsApp"
+                            TextAlignment="Center" />
+                    </Border>
+                    <Border
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                        BorderThickness="1,1,1,1">
+                        <TextBlock
+                            Margin="4,2"
+                            FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
+                            Text="FaceBook"
+                            TextAlignment="Center" />
+                    </Border>
+                    <Border
+                        Grid.Column="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                        BorderThickness="1,1,1,1">
+                        <TextBlock
+                            Margin="4,2"
+                            FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
+                            Text="ePass"
+                            TextAlignment="Center" />
+                    </Border>
+                    <Border
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                        BorderThickness="1,1,1,1">
+                        <HyperlinkButton
+                            HorizontalAlignment="Center"
+                            FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
+                            NavigateUri="{Binding SelectedState.WhatsAppBot}">
+                            <Image Height="{Binding Path=Height, ElementName=imgWhatsapp}" Source="ms-appx:///Assets/wharsApp.png" />
+                        </HyperlinkButton>
+                    </Border>
+                    <Border
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                        BorderThickness="1,1,1,1">
+                        <HyperlinkButton
+                            HorizontalAlignment="Center"
+                            FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
+                            NavigateUri="{Binding SelectedState.FacebookBot}">
+                            <Image Height="{Binding Path=Height, ElementName=imgWhatsapp}" Source="ms-appx:///Assets/fb.png" />
+                        </HyperlinkButton>
+                    </Border>
+                    <Border
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="{StaticResource OnSurfaceHoverBrush}"
+                        BorderThickness="1,1,1,1">
+                        <HyperlinkButton
+                            HorizontalAlignment="Center"
+                            FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
+                            NavigateUri="{Binding SelectedState.EPassLink}">
+                            <Image Height="{Binding Path=Height, ElementName=imgWhatsapp}" Source="ms-appx:///Assets/ePass.png" />
+                        </HyperlinkButton>
+                    </Border>
+                </Grid>
+                <ListView
+                    Grid.Row="3"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    FontSize="30"
+                    ItemsSource="{Binding InfoGraphicList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Image Source="{Binding UrlToImage}" />
+                                <HyperlinkButton
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Stretch"
+                                    FontSize="{Binding Path=FontSize, ElementName=SetTitleFontSize}"
+                                    NavigateUri="{Binding Url}">
+                                    <TextBlock
+                                        HorizontalAlignment="Left"
+                                        Text="{Binding Title}"
+                                        TextWrapping="WrapWholeWords" />
+                                </HyperlinkButton>
+
+                                <TextBlock
+                                    Grid.Row="2"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    FontSize="{Binding Path=FontSize, ElementName=SetFontSize}"
+                                    Text="{Binding Description}"
+                                    TextAlignment="Left"
+                                    TextWrapping="WrapWholeWords" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="VerticalAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                </ListView>
+            </Grid>
         </Grid>
 
-        <controls:BottomNavigationBar x:Name="BottomNavBar" Grid.Row="1">
+        <Grid
+            Grid.Row="1"
+            Height="64"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Background="#5555FF">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="Transparent"
+                Command="{Binding FavoriteCommand}"
+                Foreground="White"
+                Style="{StaticResource NoHoverButtonStyle}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <SymbolIcon x:Name="favIcon" Symbol="Favorite" />
+                    <TextBlock x:Name="txtFav" Text="Fav" />
+                    <Interactivity:Interaction.Behaviors>
+                        <Interactions:DataTriggerBehavior
+                            Binding="{Binding IsFavoriteState}"
+                            ComparisonCondition="Equal"
+                            Value="true">
+                            <Interactions:ChangePropertyAction
+                                PropertyName="Symbol"
+                                TargetObject="{Binding ElementName=favIcon}"
+                                Value="UnFavorite" />
+                            <Interactions:ChangePropertyAction
+                                PropertyName="Text"
+                                TargetObject="{Binding ElementName=txtFav}"
+                                Value="UnFav" />
+                        </Interactions:DataTriggerBehavior>
+                        <Interactions:DataTriggerBehavior
+                            Binding="{Binding IsFavoriteState}"
+                            ComparisonCondition="Equal"
+                            Value="false">
+                            <Interactions:ChangePropertyAction
+                                PropertyName="Symbol"
+                                TargetObject="{Binding ElementName=favIcon}"
+                                Value="Favorite" />
+                            <Interactions:ChangePropertyAction
+                                PropertyName="Text"
+                                TargetObject="{Binding ElementName=txtFav}"
+                                Value="Fav" />
+                        </Interactions:DataTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                </StackPanel>
+            </Button>
+            <Button
+                Grid.Column="1"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="Transparent"
+                Command="{Binding ResourceCommand}"
+                Foreground="White"
+                Style="{StaticResource NoHoverButtonStyle}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <SymbolIcon Symbol="Read" />
+                    <TextBlock Text="Resource" />
+                </StackPanel>
+            </Button>
+            <Button
+                Grid.Column="2"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="Transparent"
+                Command="{Binding ImportantCommand}"
+                Foreground="White"
+                Style="{StaticResource NoHoverButtonStyle}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <SymbolIcon Symbol="Important" />
+                </StackPanel>
+            </Button>
+            <Button
+                Grid.Column="3"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="Transparent"
+                Command="{Binding NotificationCommand}"
+                Foreground="White"
+                Style="{StaticResource NoHoverButtonStyle}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <SymbolIcon Symbol="Flag" />
+                    <TextBlock Text="News" />
+                </StackPanel>
+            </Button>
+            <Button
+                Grid.Column="4"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="Transparent"
+                Command="{Binding ShareCommand}"
+                Foreground="White"
+                Style="{StaticResource NoHoverButtonStyle}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <SymbolIcon Symbol="ReShare" />
+                    <TextBlock Text="Share" />
+                </StackPanel>
+            </Button>
+        </Grid>
+        <!--<controls:BottomNavigationBar>
             <controls:BottomNavigationBar.Items>
-                <controls:BottomNavigationBarItem
-                    x:Name="btnFav"
-                    Command="{Binding FavoriteCommand}"
-                    Label="Favorites">
+                <controls:BottomNavigationBarItem Command="{Binding FavoriteCommand}" Label="Favorites">
                     <controls:BottomNavigationBarItem.Icon>
                         <SymbolIcon x:Name="favIcon" Symbol="Favorite">
-                            <Interactivity:Interaction.Behaviors>
+        -->
+        <!--<Interactivity:Interaction.Behaviors>
                                 <Interactions:DataTriggerBehavior
                                     Binding="{Binding IsFavoriteState}"
                                     ComparisonCondition="Equal"
@@ -956,7 +1320,8 @@
                                         TargetObject="{Binding ElementName=btnFav}"
                                         Value="Favorite" />
                                 </Interactions:DataTriggerBehavior>
-                            </Interactivity:Interaction.Behaviors>
+                            </Interactivity:Interaction.Behaviors>-->
+        <!--
                         </SymbolIcon>
                     </controls:BottomNavigationBarItem.Icon>
                 </controls:BottomNavigationBarItem>
@@ -974,9 +1339,9 @@
                     <controls:BottomNavigationBarItem.Icon>
                         <SymbolIcon Symbol="Flag" />
                     </controls:BottomNavigationBarItem.Icon>
-                    <!--<controls:BottomNavigationBarItem.Badge>
-                        <entities:BottomNavigationBarBadge IsVisible="True" Text="12" />
-                    </controls:BottomNavigationBarItem.Badge>-->
+                    <controls:BottomNavigationBarItem.Badge>
+                        <entities:BottomNavigationBarBadge IsVisible="{Binding IsNewsCountVisible}" Text="{Binding TotalNewsCount}" />
+                    </controls:BottomNavigationBarItem.Badge>
                 </controls:BottomNavigationBarItem>
                 <controls:BottomNavigationBarItem Command="{Binding ShareCommand}" Label="Share">
                     <controls:BottomNavigationBarItem.Icon>
@@ -984,7 +1349,7 @@
                     </controls:BottomNavigationBarItem.Icon>
                 </controls:BottomNavigationBarItem>
             </controls:BottomNavigationBar.Items>
-        </controls:BottomNavigationBar>
+        </controls:BottomNavigationBar>-->
         <!--<Interactivity:Interaction.Behaviors>
             <Interactions:DataTriggerBehavior
                 Binding="{Binding IsResourceVisible}"
@@ -1095,8 +1460,8 @@
                         <Setter Target="txtIndTodayTestedCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
                         <Setter Target="txtIndTodayTestedCount.FontWeight" Value="SemiBold" />
                         <Setter Target="txtIndTodayRecover.Style" Value="{StaticResource SubtitleTextBlockStyle}" />
-                        <Setter Target="txtIndTodayRecoverCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
-                        <Setter Target="txtIndTodayRecoverCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTodayRecoverCount.Height" Value="14" />
+                        <!--<Setter Target="txtIndTodayRecoverCount.FontWeight" Value="SemiBold" />-->
                         <Setter Target="txtIndToday.Style" Value="{StaticResource TitleTextBlockStyle}" />
                         <Setter Target="txtIndRatio.Style" Value="{StaticResource TitleTextBlockStyle}" />
                         <Setter Target="SetFontSize.FontSize" Value="14" />
@@ -1105,6 +1470,9 @@
                         <Setter Target="scrollIndList.(Grid.Column)" Value="0" />
                         <Setter Target="imgState.Visibility" Value="Collapsed" />
                         <Setter Target="imgWhatsapp.Height" Value="14" />
+                        <Setter Target="SetOrientation.Orientation" Value="Vertical" />
+
+                        <Setter Target="SetTitleFontSize.FontSize" Value="16" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="VisualStateNormal">
@@ -1182,8 +1550,8 @@
                         <Setter Target="txtIndTodayTestedCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
                         <Setter Target="txtIndTodayTestedCount.FontWeight" Value="SemiBold" />
                         <Setter Target="txtIndTodayRecover.Style" Value="{StaticResource TitleTextBlockStyle}" />
-                        <Setter Target="txtIndTodayRecoverCount.Style" Value="{StaticResource BodyTextBlockStyle}" />
-                        <Setter Target="txtIndTodayRecoverCount.FontWeight" Value="SemiBold" />
+                        <Setter Target="txtIndTodayRecoverCount.Height" Value="14" />
+                        <!--<Setter Target="txtIndTodayRecoverCount.FontWeight" Value="SemiBold" />-->
                         <Setter Target="txtIndToday.Style" Value="{StaticResource TitleTextBlockStyle}" />
                         <Setter Target="txtIndRatio.Style" Value="{StaticResource TitleTextBlockStyle}" />
                         <Setter Target="SetFontSize.FontSize" Value="20" />
@@ -1192,18 +1560,8 @@
                         <Setter Target="scrollIndList.(Grid.Column)" Value="0" />
                         <Setter Target="imgState.Visibility" Value="Collapsed" />
                         <Setter Target="imgWhatsapp.Height" Value="14" />
-                        <!--<Setter Target="TaskTxt.FontSize" Value="24" />
-                        <Setter Target="CurrentTimeTxt.FontSize" Value="24" />
-                        <Setter Target="SettingIcon.Width" Value="48" />
-                        <Setter Target="SettingIcon.Height" Value="48" />
-                        <Setter Target="ClockIcon.Width" Value="24" />
-                        <Setter Target="ClockIcon.Height" Value="24" />
-                        <Setter Target="RemTxt.FontSize" Value="36" />
-                        <Setter Target="TimeTxt.FontSize" Value="48" />
-                        <Setter Target="ClockBtn.Width" Value="52" />
-                        <Setter Target="ClockBtn.Height" Value="52" />
-                        <Setter Target="KeyboardBtn.Width" Value="52" />
-                        <Setter Target="KeyboardBtn.Height" Value="52" />-->
+                        <Setter Target="SetOrientation.Orientation" Value="Horizontal" />
+                        <Setter Target="SetTitleFontSize.FontSize" Value="22" />
 
 
                     </VisualState.Setters>
@@ -1218,18 +1576,8 @@
                         <Setter Target="gridCounts.(Grid.ColumnSpan)" Value="1" />
                         <Setter Target="SetFontSize.FontSize" Value="24" />
                         <Setter Target="imgState.Visibility" Value="Visible" />
-                        <!--<Setter Target="TaskTxt.FontSize" Value="32" />
-                        <Setter Target="CurrentTimeTxt.FontSize" Value="32" />
-                        <Setter Target="SettingIcon.Width" Value="52" />
-                        <Setter Target="SettingIcon.Height" Value="52" />
-                        <Setter Target="ClockIcon.Width" Value="32" />
-                        <Setter Target="ClockIcon.Height" Value="32" />
-                        <Setter Target="RemTxt.FontSize" Value="40" />
-                        <Setter Target="TimeTxt.FontSize" Value="52" />
-                        <Setter Target="ClockBtn.Width" Value="56" />
-                        <Setter Target="ClockBtn.Height" Value="56" />
-                        <Setter Target="KeyboardBtn.Width" Value="56" />
-                        <Setter Target="KeyboardBtn.Height" Value="56" />-->
+                        <Setter Target="SetOrientation.Orientation" Value="Horizontal" />
+                        <Setter Target="SetTitleFontSize.FontSize" Value="26" />
 
                     </VisualState.Setters>
                 </VisualState>

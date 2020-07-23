@@ -18,6 +18,8 @@ namespace Covidonus
     {
         public static List<StateWiseData> Menuitems { get; set; }
         public static List<Swag.Resource> AllResource;
+        public static Swag.CovidNews AllNews;
+        public static List<Swag.InfoGraphic> AllInfoGraphics;
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().

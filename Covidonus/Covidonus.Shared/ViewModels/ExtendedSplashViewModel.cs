@@ -41,6 +41,7 @@ namespace Covidonus.Shared.ViewModels
         {
             if (App.Menuitems == null)
             {
+                // if (_covidClient == null)
                 _covidClient = new CovidClient();
                 var res = await _covidClient.GetCovidCountsAsync();
                 App.Menuitems = new List<StateWiseData>(res);
