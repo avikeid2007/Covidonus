@@ -19,6 +19,9 @@
       <Version>12.0.3</Version>
     </PackageReference>
     <PackageReference Include="Uno.Core" Version="2.0.0" />
+    <PackageReference Include="Uno.Material">
+      <Version>1.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.2-uno.66</Version>
     </PackageReference>
@@ -36,7 +39,7 @@
     <AssemblyName>Covidonus</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.17763.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.18362.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -213,10 +216,6 @@
     <ProjectReference Include="..\..\Covidonus.Swag\Covidonus.Swag.csproj">
       <Project>{f9459079-9a8c-4e5b-bc15-7278e5d92d94}</Project>
       <Name>Covidonus.Swag</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\library\Uno.Material\Uno.Material.csproj">
-      <Project>{5522810b-b857-41bb-8a55-e43a04daeaad}</Project>
-      <Name>Uno.Material</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\Covidonus.Shared\Covidonus.Shared.projitems" Label="Shared" Condition="Exists('..\Covidonus.Shared\Covidonus.Shared.projitems')" />
