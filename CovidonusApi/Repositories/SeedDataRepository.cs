@@ -303,7 +303,7 @@ namespace CovidonusApi.Repositories
                                 logger.Info("RefreshCovidDataAsync: Start adding India Test data");
                                 totalCount.Tested = Convert.ToInt32(todayTestIndia.TotalSamplesTested);
                                 totalCount.TodayTested = Convert.ToInt32(todayTestIndia.SampleReportedToday);
-                                totalCount.TestPerMillion = Convert.ToInt32(todayTestIndia.TestsPerMillion);
+                                //totalCount.TestPerMillion = Convert.ToInt32(todayTestIndia.TestsPerMillion);
                                 totalCount.TestSource = todayTestIndia.Source;
                                 totalCount.TotalPositiveCases = todayTestIndia.TotalPositiveCases;
                                 logger.Info("RefreshCovidDataAsync: End adding India Test data");

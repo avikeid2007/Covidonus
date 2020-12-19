@@ -418,9 +418,18 @@ namespace Covidonus.Shared.ViewModels
         }
         private async Task GetNewsAsync()
         {
-            App.AllNews = await new CovidClient().GetNewsAsync();
-            TotalNewsCount = App.AllNews.TotalResults;
-            IsNewsCountVisible = true;
+            try
+            {
+                App.AllNews = await new CovidClient().GetNewsAsync();
+                if (App.AllNews != null)
+                {
+                    TotalNewsCount = App.AllNews.TotalResults;
+                    IsNewsCountVisible = true;
+                }
+            }
+            catch
+            { }
+
         }
         private async Task GetInfoGraphicAsync()
         {
