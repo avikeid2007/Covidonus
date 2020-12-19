@@ -340,3 +340,5 @@ ASALocalRun/
 healthchecksdb
 
 
+/CovidonusApi/appSettings.config
+/CovidonusApi/ConnectionStrings.config
