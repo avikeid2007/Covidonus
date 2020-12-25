@@ -8,6 +8,7 @@ using System.Web.Http;
 namespace CovidonusApi.Controllers
 {
     [RoutePrefix("api/Covid")]
+    //[EnableCors(origins: "http://covidonusapi.avnishkumar.co.in", headers: "*", methods: "*")]
     public class CovidController : ApiController
     {
         ICovidRepository _covidRepository;

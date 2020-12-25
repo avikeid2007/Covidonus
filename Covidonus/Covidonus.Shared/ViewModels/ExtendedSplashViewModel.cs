@@ -30,9 +30,9 @@ namespace Covidonus.Shared.ViewModels
                     await Task.WhenAll(LoadDailyCountsAsync(), LoadResourceAsync());
                     page.Frame.Navigate(typeof(MainPage));
                 }
-                catch
+                catch (Exception ex)
                 {
-                    await new MessageDialog("Something went wrong").ShowAsync();
+                    await new MessageDialog("Something went wrong" + ex.Message).ShowAsync();
                 }
             }
 
@@ -43,7 +43,9 @@ namespace Covidonus.Shared.ViewModels
             {
                 // if (_covidClient == null)
                 _covidClient = new CovidClient();
+                await new MessageDialog("Start fetch" + _covidClient.BaseUrl).ShowAsync();
                 var res = await _covidClient.GetCovidCountsAsync();
+                await new MessageDialog("End fetch").ShowAsync();
                 App.Menuitems = new List<StateWiseData>(res);
             }
         }
