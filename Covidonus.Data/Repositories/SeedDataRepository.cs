@@ -1,31 +1,32 @@
 ﻿using Covidonus.Data.Models;
 using Covidonus.Data.Models.DTOs;
+using NewsAPI;
+using NewsAPI.Constants;
+using NewsAPI.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Covidonus.Data.Repositories
 {
-    public class SeedDataRepository
+    public static class SeedDataRepository
     {
         public static IEnumerable<StateWiseData> MenuList;
         public static IEnumerable<Resource> ResourceList;
         public static CovidNews News;
-        protected static string NewsApiKey
+        private static string NewsApiKey
         {
             get
             {
-                return string.Empty;
-                //return System.Configuration.ConfigurationManager.AppSettings["NewsApiKey"];
+                return System.Configuration.ConfigurationManager.AppSettings["NewsApiKey"];
             }
         }
 
-        private async Task<List<StateWiseData>> GetStateAndDistrictDataAsync()
+        private static async Task<List<StateWiseData>> GetStateAndDistrictDataAsync()
         {
             using (var client = new HttpClient())
             {
@@ -33,7 +34,7 @@ namespace Covidonus.Data.Repositories
                 return JsonConvert.DeserializeObject<List<StateWiseData>>(response);
             }
         }
-        private async Task<List<Resource>> GetResourceListAsync()
+        private static async Task<List<Resource>> GetResourceListAsync()
         {
             using (var client = new HttpClient())
             {
@@ -261,11 +262,8 @@ namespace Covidonus.Data.Repositories
                 }
             });
         }
-        public async Task RefreshCovidDataAsync(bool isRefreshNews = true)
+        public static async Task RefreshCovidDataAsync(bool isRefreshNews = true)
         {
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            //logger.Info("RefreshCovidDataAsync: Start refresh StateWiseData" + DateTime.Now);
             try
             {
                 var stateData = await GetStateAndDistrictDataAsync();
@@ -358,33 +356,36 @@ namespace Covidonus.Data.Repositories
             {
                 //logger.Info("SeedDataRepository:RefreshCovidDataAsync=> Error occur." + ex);
             }
-            stopwatch.Stop();
-            //logger.Info("SeedDataRepository:RefreshCovidDataAsync=> Complete refresh in " + stopwatch.Elapsed);
         }
 
-        private async Task LoadResourceListAsync()
+        private static async Task LoadResourceListAsync()
         {
             ResourceList = await GetResourceListAsync();
         }
-        private async Task LoadNewsAsync()
+        private static async Task LoadNewsAsync()
         {
-            //var newsApiClient = new NewsApiClient(NewsApiKey);
-            //var articlesResponse = await newsApiClient.GetTopHeadlinesAsync(new TopHeadlinesRequest
-            //{
-            //    Q = "covid",
-            //    Page = 1,
-            //    PageSize = 40,
-            //    Country = Countries.IN,
-            //    Language = Languages.EN,
-            //});
-            //if (articlesResponse.Status == Statuses.Ok)
-            //{
-            //    News = new CovidNews()
-            //    {
-            //        Articles = articlesResponse.Articles,
-            //        TotalResults = articlesResponse.TotalResults
-            //    };
-            //}
+            try
+            {
+                var newsApiClient = new NewsApiClient(NewsApiKey);
+                var articlesResponse = await newsApiClient.GetTopHeadlinesAsync(new TopHeadlinesRequest
+                {
+                    Q = "covid",
+                    Page = 1,
+                    PageSize = 40,
+                    Country = Countries.IN,
+                    Language = Languages.EN,
+                });
+                if (articlesResponse.Status == Statuses.Ok)
+                {
+                    News = new CovidNews()
+                    {
+                        Articles = articlesResponse.Articles,
+                        TotalResults = articlesResponse.TotalResults
+                    };
+                }
+            }
+            catch
+            { }
         }
     }
 }

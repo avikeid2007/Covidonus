@@ -33,7 +33,7 @@ namespace Covidonus.Shared.ViewModels
         private Visibility _isCovidCountVisible;
         private List<string> _resourceCategoryList;
         private string _selectedResourceCategory;
-        //private ICovidClient _covidClient;
+        private CovidRepository _covidClient;
         public ICommand FavoriteCommand { get; set; }
         public ICommand ResourceCommand { get; set; }
         public ICommand ImportantCommand { get; set; }
@@ -51,7 +51,7 @@ namespace Covidonus.Shared.ViewModels
         {
             IsVisibleIndiaCounts = Visibility.Collapsed;
             IsVisibleStateCounts = Visibility.Collapsed;
-            //_covidClient = new CovidClient();
+            _covidClient = new CovidRepository();
             FavoriteCommand = new DelegateCommand(OnFavoriteCommandExecute);
             ShareCommand = new AsyncCommand(OnShareCommandExecuteAsync);
             ResourceCommand = new DelegateCommand(OnResourceCommandExecute);
@@ -60,14 +60,14 @@ namespace Covidonus.Shared.ViewModels
             ImportantCommand = new DelegateCommand(OnImportantCommandExecute);
             RefreshCountCommand = new AsyncCommand(OnRefreshCountCommandExecuteAsync);
             CovidAreaVisible();
-            _ = Task.WhenAll(GetNewsAsync(), GetInfoGraphicAsync());
+            GetNews(); GetInfoGraphic();
         }
 
         private async Task OnRefreshCountCommandExecuteAsync()
         {
             if (SelectedState != null)
             {
-                App.Menuitems = new List<StateWiseData>(await new CovidRepository().GetCovidCountsAsync(isRefresh: true));
+                App.Menuitems = new List<StateWiseData>(await _covidClient.GetCovidCountsAsync(isRefresh: true));
                 LoadCountsAndStatus(SelectedState.StateCode);
             }
 
@@ -419,18 +419,18 @@ namespace Covidonus.Shared.ViewModels
                 NewDeaths = $"+{indiaData.TodayDeaths}";
             }
         }
-        private async Task GetNewsAsync()
+        private void GetNews()
         {
-            App.AllNews = SeedDataRepository.News;
+            App.AllNews = _covidClient.GetNews();
             if (App.AllNews != null)
             {
                 TotalNewsCount = App.AllNews.TotalResults;
                 IsNewsCountVisible = true;
             }
         }
-        private async Task GetInfoGraphicAsync()
+        private void GetInfoGraphic()
         {
-            // App.AllInfoGraphics = new List<InfoGraphic>(await new CovidRepository().GetInfoGraphics());
+            App.AllInfoGraphics = new List<InfoGraphic>(_covidClient.GetInfoGraphics());
         }
         private void SetFavoriteIcon()
         {

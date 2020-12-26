@@ -8,16 +8,10 @@ namespace Covidonus.Data.Repositories
 {
     public class CovidRepository
     {
-
-        SeedDataRepository _seedDataRepository;
-        public CovidRepository()
-        {
-            _seedDataRepository = new SeedDataRepository();
-        }
         public async Task<IEnumerable<StateWiseData>> GetCovidCountsAsync(bool isRefresh = false)
         {
             if (SeedDataRepository.MenuList == null || SeedDataRepository.MenuList?.Count() <= 0 || isRefresh)
-                await _seedDataRepository.RefreshCovidDataAsync(!isRefresh);
+                await SeedDataRepository.RefreshCovidDataAsync(!isRefresh);
             return SeedDataRepository.MenuList;
 
         }
