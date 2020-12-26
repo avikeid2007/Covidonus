@@ -107,9 +107,9 @@
     <ImageAsset Include="Assets.xcassets\unologo.imageset\unoplatform.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Covidonus.Swag\Covidonus.Swag.csproj">
-      <Project>{f9459079-9a8c-4e5b-bc15-7278e5d92d94}</Project>
-      <Name>Covidonus.Swag</Name>
+    <ProjectReference Include="..\..\Covidonus.Data\Covidonus.Data.csproj">
+      <Project>{3a591022-790e-4eb9-9fcd-8a66b124db01}</Project>
+      <Name>Covidonus.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

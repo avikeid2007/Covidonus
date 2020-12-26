@@ -50,7 +50,7 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Covidonus.Swag\Covidonus.Swag.csproj" />
+    <ProjectReference Include="..\..\Covidonus.Data\Covidonus.Data.csproj" />
   </ItemGroup>
   <Import Project="..\Covidonus.Shared\Covidonus.Shared.projitems" Label="Shared" Condition="Exists('..\Covidonus.Shared\Covidonus.Shared.projitems')" />
 </Project>

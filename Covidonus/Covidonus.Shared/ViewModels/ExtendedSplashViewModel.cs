@@ -1,6 +1,8 @@
 ﻿using BasicMvvm;
 using BasicMvvm.Commands;
-using Covidonus.Swag;
+using Covidonus.Data.Models;
+using Covidonus.Data.Repositories;
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,7 +15,7 @@ namespace Covidonus.Shared.ViewModels
 {
     public class ExtendedSplashViewModel : BindableBase
     {
-        private static CovidClient _covidClient;
+        //private static CovidClient _covidClient;
 
         public ICommand LoadCommand { get; set; }
         public ExtendedSplashViewModel()
@@ -27,7 +29,7 @@ namespace Covidonus.Shared.ViewModels
             {
                 try
                 {
-                    await Task.WhenAll(LoadDailyCountsAsync(), LoadResourceAsync());
+                    await LoadDailyCountsAsync(); await LoadResourceAsync();
                     page.Frame.Navigate(typeof(MainPage));
                 }
                 catch (Exception ex)
@@ -41,21 +43,21 @@ namespace Covidonus.Shared.ViewModels
         {
             if (App.Menuitems == null)
             {
+                await new SeedDataRepository().RefreshCovidDataAsync();
                 // if (_covidClient == null)
-                _covidClient = new CovidClient();
-                await new MessageDialog("Start fetch" + _covidClient.BaseUrl).ShowAsync();
-                var res = await _covidClient.GetCovidCountsAsync();
-                await new MessageDialog("End fetch").ShowAsync();
-                App.Menuitems = new List<StateWiseData>(res);
+                //_ovidClient = new CovidClient();
+                //await new MessageDialog("Start fetch" + _covidClient.BaseUrl).ShowAsync();
+                //var res = await _covidClient.GetCovidCountsAsync();
+                //await new MessageDialog("End fetch").ShowAsync();
+                App.Menuitems = new List<StateWiseData>(SeedDataRepository.MenuList);
             }
         }
         private async Task LoadResourceAsync()
         {
             if (App.AllResource == null)
             {
-                if (_covidClient == null)
-                    _covidClient = new CovidClient();
-                var resource = await _covidClient.GetResourceAsync();
+
+                var resource = SeedDataRepository.ResourceList;
                 resource.ForEach(x => x.PhoneNumber = x.PhoneNumber.Replace("\n", ""));
                 App.AllResource = new List<Resource>(resource);
             }
