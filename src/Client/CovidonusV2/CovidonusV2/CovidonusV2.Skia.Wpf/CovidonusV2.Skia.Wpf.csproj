@@ -15,5 +15,8 @@
   <ItemGroup>
     <UpToDateCheckInput Include="..\CovidonusV2.Shared\**\*.xaml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Covidonus.Swag\Covidonus.Swag.csproj" />
+  </ItemGroup>
   <Import Project="..\CovidonusV2.Shared\CovidonusV2.Shared.projitems" Label="Shared" />
 </Project>

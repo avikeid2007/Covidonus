@@ -4,14 +4,14 @@
   "documentGenerator": {
     "fromDocument": {
       "json": "",
-      "url": "http://localhost:44312/swagger/v1/swagger.json",
+      "url": "https://localhost:44396/swagger/v1/swagger.json",
       "output": null,
       "newLineBehavior": "Auto"
     }
   },
   "codeGenerators": {
     "openApiToCSharpClient": {
-      "clientBaseClass": "Covidonus.Swag.CovidBaseClient",
+      "clientBaseClass": "CovidonusV2.Swag.CovidBaseClient",
       "configurationClass": null,
       "generateClientClasses": true,
       "generateClientInterfaces": true,
@@ -56,7 +56,7 @@
       "wrapResponseMethods": [],
       "generateResponseClasses": true,
       "responseClass": "SwaggerResponse",
-      "namespace": "CovidonusV2",
+      "namespace": "CovidonusV2.Swag",
       "requiredPropertiesMustBeDefined": true,
       "dateType": "System.DateTimeOffset",
       "jsonConverters": null,
@@ -93,7 +93,7 @@
       "enumNameGeneratorType": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "../../../../../../Covidonus.Swag/SwagRepo.cs",
+      "output": "SwagRepo.cs",
       "newLineBehavior": "Auto"
     }
   }

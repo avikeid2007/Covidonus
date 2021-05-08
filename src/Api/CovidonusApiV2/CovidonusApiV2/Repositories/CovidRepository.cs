@@ -25,10 +25,10 @@ namespace CovidonusApiV2.Repositories
         {
             return ResourceList;
         }
-        //public CovidNews GetNews()
-        //{
-        //    return News;
-        //}
+        public CovidNews GetNews()
+        {
+            return News;
+        }
         public IEnumerable<InfoGraphic> GetInfoGraphics()
         {
             return new List<InfoGraphic>

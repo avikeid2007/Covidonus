@@ -2,6 +2,9 @@
 using CovidonusApiV2.Models;
 using CovidonusApiV2.Models.DTOs;
 using CovidonusApiV2.Repositories.Abstraction;
+using NewsAPI;
+using NewsAPI.Constants;
+using NewsAPI.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -45,7 +48,7 @@ namespace CovidonusApiV2.Repositories
                 var response = await client.GetStringAsync("https://api.covid19india.org/data.json");
                 var settings = new JsonSerializerSettings();
                 settings.DateParseHandling = DateParseHandling.None;
-                settings.Converters.Add(new MultiFormatDateConverter { DateTimeFormats = new List<string> { "yyyy-MM-dd", "dd/MM/yyyy HH:mm:ss", "dd/MM/yyyy", "dd/M/yyyy HH:mm:ss" } });
+                settings.Converters.Add(new MultiFormatDateConverter { DateTimeFormats = new List<string> { "yyyy-MM-dd", "dd/MM/yyyy HH:mm:ss", "dd/MM/yyyy", "dd/M/yyyy HH:mm:ss", "d/M/yyyy HH:mm:ss" } });
                 return JsonConvert.DeserializeObject<DailyCovidUpdate>(response, settings);
             }
         }
@@ -343,8 +346,8 @@ namespace CovidonusApiV2.Repositories
                     AddBotInfo(stateData);
                     MenuList = stateData.AsEnumerable();
                     await LoadResourceListAsync();
-                    //if (isRefreshNews)
-                    //    await LoadNewsAsync();
+                    if (isRefreshNews)
+                        await LoadNewsAsync();
                 }
             }
             catch (Exception ex)
@@ -357,26 +360,26 @@ namespace CovidonusApiV2.Repositories
         {
             ResourceList = await GetResourceListAsync();
         }
-        //private async Task LoadNewsAsync()
-        //{
-        //    var newsApiClient = new NewsApiClient(NewsApiKey);
-        //    var articlesResponse = await newsApiClient.GetTopHeadlinesAsync(new TopHeadlinesRequest
-        //    {
-        //        Q = "covid",
-        //        Page = 1,
-        //        PageSize = 40,
-        //        Country = Countries.IN,
-        //        Language = Languages.EN,
-        //    });
-        //    if (articlesResponse.Status == Statuses.Ok)
-        //    {
-        //        News = new CovidNews()
-        //        {
-        //            Articles = articlesResponse.Articles,
-        //            TotalResults = articlesResponse.TotalResults
-        //        };
-        //    }
-        //}
+        private async Task LoadNewsAsync()
+        {
+            var newsApiClient = new NewsApiClient(NewsApiKey);
+            var articlesResponse = await newsApiClient.GetTopHeadlinesAsync(new TopHeadlinesRequest
+            {
+                Q = "covid",
+                Page = 1,
+                PageSize = 40,
+                Country = Countries.IN,
+                Language = Languages.EN,
+            });
+            if (articlesResponse.Status == Statuses.Ok)
+            {
+                News = new CovidNews()
+                {
+                    Articles = articlesResponse.Articles,
+                    TotalResults = articlesResponse.TotalResults
+                };
+            }
+        }
     }
 }
 

@@ -27,11 +27,11 @@ namespace CovidonusApiV2.Controllers
         {
             return _covidRepository.GetResource();
         }
-        //[HttpGet("News")]
-        //public CovidNews GetNews()
-        //{
-        //    return _covidRepository.GetNews();
-        //}
+        [HttpGet("News")]
+        public CovidNews GetNews()
+        {
+            return _covidRepository.GetNews();
+        }
         [HttpGet("InfoGraphics")]
         public IEnumerable<InfoGraphic> GetInfoGraphics()
         {

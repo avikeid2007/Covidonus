@@ -98,6 +98,12 @@
   <ItemGroup>
     <AndroidResource Include="Resources\values\Styles.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Covidonus.Swag\Covidonus.Swag.csproj">
+      <Project>{5c791157-62d7-4fa6-b366-4f5cab83c848}</Project>
+      <Name>Covidonus.Swag</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="..\CovidonusV2.Shared\CovidonusV2.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- This will force the generation of the APK when not building inside visual studio -->

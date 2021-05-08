@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CovidonusV2.Swag;
+using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -13,6 +15,10 @@ namespace CovidonusV2
     /// </summary>
     public sealed partial class App : Application
     {
+        public static List<StateWiseData> Menuitems { get; set; }
+        public static List<CovidonusV2.Swag.Resource> AllResource;
+        public static CovidonusV2.Swag.CovidNews AllNews;
+        public static List<CovidonusV2.Swag.InfoGraphic> AllInfoGraphics;
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().

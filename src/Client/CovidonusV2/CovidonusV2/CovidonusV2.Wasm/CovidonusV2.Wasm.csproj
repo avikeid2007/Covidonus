@@ -46,5 +46,8 @@
     <PackageReference Include="Uno.Wasm.Bootstrap" Version="1.3.4" />
     <PackageReference Include="Uno.Wasm.Bootstrap.DevServer" Version="1.3.4" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Covidonus.Swag\Covidonus.Swag.csproj" />
+  </ItemGroup>
   <Import Project="..\CovidonusV2.Shared\CovidonusV2.Shared.projitems" Label="Shared" Condition="Exists('..\CovidonusV2.Shared\CovidonusV2.Shared.projitems')" />
 </Project>

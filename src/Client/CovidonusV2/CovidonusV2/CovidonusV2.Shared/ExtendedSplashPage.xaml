@@ -7,16 +7,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:CovidonusV2"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:Name="splashPage" Loaded="splashPage_Loaded"
+    x:Name="splashPage"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="splashPage_Loaded"
     mc:Ignorable="d">
 
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <Image Width="100" Source="ms-appx:///Assets/Logo.png" />
-        <Interactivity:Interaction.Behaviors>
-            <Interactions:EventTriggerBehavior EventName="Loaded">
-                <Interactions:InvokeCommandAction Command="{Binding LoadCommand}" CommandParameter="{Binding ElementName=splashPage}" />
-            </Interactions:EventTriggerBehavior>
-        </Interactivity:Interaction.Behaviors>
     </StackPanel>
 </Page>

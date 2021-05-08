@@ -9,7 +9,7 @@ namespace CovidonusApiV2.Repositories.Abstraction
     {
         Task<IEnumerable<StateWiseData>> GetCovidCountsAsync(bool isRefresh = false);
         IEnumerable<Resource> GetResource();
-        //CovidNews GetNews();
+        CovidNews GetNews();
         IEnumerable<InfoGraphic> GetInfoGraphics();
     }
 }
