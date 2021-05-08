@@ -24,15 +24,14 @@ namespace CovidonusApiV2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             //services.AddCors(options =>
             //{
-            //    options.AddPolicy("Mypolicy", builder =>
-            //    {
-            //        builder
-            //            .AllowAnyOrigin()
-            //            .AllowAnyMethod()
-            //            .AllowAnyHeader();
-            //    });
+            //    options.AddDefaultPolicy(
+            //        builder =>
+            //        {
+            //            builder.WithOrigins("http://localhost:56773/");
+            //        });
             //});
             services.AddControllers();
             services.AddHangfire(c => c.UseMemoryStorage());
@@ -49,10 +48,15 @@ namespace CovidonusApiV2
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(builder =>
+            builder.WithOrigins("http://localhost:56773")
+            .AllowAnyMethod()
+            .AllowAnyHeader());
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Covidonus Api"));
             app.UseHttpsRedirection();
             app.UseRouting();
+
             app.UseAuthorization();
             app.UseHangfireServer();
             app.UseHangfireDashboard();
@@ -60,6 +64,7 @@ namespace CovidonusApiV2
             {
                 endpoints.MapControllers();
             });
+
             RecurringJob.AddOrUpdate("Covid", () => repository.RefreshCovidDataAsync(true), Cron.Hourly);
         }
     }
