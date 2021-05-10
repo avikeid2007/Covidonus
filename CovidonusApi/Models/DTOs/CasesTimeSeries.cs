@@ -15,6 +15,7 @@ namespace CovidonusApi.Models
         public int DailyRecovered { get; set; }
         [StringLength(20)]
         public string Date { get; set; }
+        public DateTime Dateymd { get; set; }
         public int TotalConfirmed { get; set; }
         public int TotalDeceased { get; set; }
         public int TotalRecovered { get; set; }

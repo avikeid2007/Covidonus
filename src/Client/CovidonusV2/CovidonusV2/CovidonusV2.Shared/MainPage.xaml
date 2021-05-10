@@ -1,0 +1,268 @@
+﻿<Page
+    x:Class="CovidonusV2.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Interactions="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="using:Uno.UI.Toolkit"
+    RequestedTheme="Light"
+    mc:Ignorable="d">
+
+    <Grid toolkit:VisibleBoundsPadding.PaddingMask="All">
+        <NavigationView
+            x:Name="NavView"
+            Margin="0,12,0,0"
+            Background="Transparent"
+            IsBackButtonVisible="Collapsed"
+            IsSettingsVisible="False"
+            IsTabStop="False"
+            PaneDisplayMode="Auto"
+            PaneTitle="Covidonus"
+            Style="{StaticResource MaterialNavigationViewStyle}">
+            <Interactivity:Interaction.Behaviors>
+                <Interactions:EventTriggerBehavior EventName="ItemInvoked">
+                    <Interactions:InvokeCommandAction Command="{Binding ItemInvokedCommand}" />
+                </Interactions:EventTriggerBehavior>
+            </Interactivity:Interaction.Behaviors>
+            <NavigationView.PaneHeader>
+                <StackPanel Orientation="Horizontal">
+                    <Image
+                        Width="30"
+                        Height="30"
+                        Margin="16,50,16,30"
+                        HorizontalAlignment="Left"
+                        Source="ms-appx:///Assets/Logo.png"
+                        Stretch="Uniform" />
+                    <TextBlock
+                        Margin="16,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Text="{Binding PaneTitle, ElementName=NavView}" />
+                </StackPanel>
+            </NavigationView.PaneHeader>
+            <NavigationView.MenuItems>
+                <NavigationViewItemHeader Content="India" />
+                <NavigationViewItem Content="All States" Tag="TT">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/Logo.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItemSeparator />
+                <NavigationViewItemHeader Content="Districts" />
+                <NavigationViewItem Content="Andaman &amp; Nicobar Islands" Tag="AN">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Andhra Pradesh" Tag="AP">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Arunachal Pradesh" Tag="AR">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Assam" Tag="AS">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Bihar" Tag="BR">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Chandigarh" Tag="CH">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Chhattisgarh" Tag="CT">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Delhi" Tag="DL">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Dadra Nagar Haveli/Daman&amp;Diu" Tag="DN">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Goa" Tag="GA">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Gujarat" Tag="GJ">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Himachal Pradesh" Tag="HP">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Haryana" Tag="HR">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Jharkhand" Tag="JH">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Jammu &amp; Kashmir" Tag="JK">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Karnataka" Tag="KA">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Kerala" Tag="KL">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Ladakh" Tag="LA">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Lakshadweep" Tag="LD">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Maharashtra" Tag="MH">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Meghalaya" Tag="ML">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Manipur" Tag="MN">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Madhya Pradesh" Tag="MP">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Mizoram" Tag="MZ">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Content="Nagaland" Tag="NL">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Odisha" Tag="OR">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Punjab" Tag="PB">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Puducherry" Tag="PY">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Rajasthan" Tag="RJ">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Sikkim" Tag="SK">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Telangana" Tag="TG">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Tamil Nadu" Tag="TN">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Content="Tripura" Tag="TR">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Uttar Pradesh" Tag="UP">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="Uttarakhand" Tag="UT">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="West Bengal" Tag="WB">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Content="State Unassigned" Tag="UN">
+                    <NavigationViewItem.Icon>
+                        <BitmapIcon UriSource="ms-appx:///Assets/UP.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+
+            <!--  NavigationView Items  -->
+            <Frame x:Name="ContentFrame">
+                <Interactivity:Interaction.Behaviors>
+                    <Interactions:EventTriggerBehavior EventName="Loaded">
+                        <Interactions:InvokeCommandAction Command="{Binding LoadCommand}" CommandParameter="{Binding ElementName=ContentFrame}" />
+                    </Interactions:EventTriggerBehavior>
+                </Interactivity:Interaction.Behaviors>
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition>
+                            <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                <EntranceNavigationTransitionInfo />
+                            </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                        </NavigationThemeTransition>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+        </NavigationView>
+        <Grid.Background>
+            <media:AcrylicBrush
+                xmlns:media="using:Windows.UI.Xaml.Media"
+                AlwaysUseFallback="False"
+                TintOpacity="0.8" />
+        </Grid.Background>
+    </Grid>
+</Page>
