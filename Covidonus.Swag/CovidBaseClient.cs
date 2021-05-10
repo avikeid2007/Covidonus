@@ -5,7 +5,7 @@
         //#if !NETFX_CORE
         //        public string BaseUrl { get; set; } = "http://covidonusapi.avnishkumar.co.in/";
         //#else
-        public string BaseUrl { get; set; } = "http://localhost:44313/";
+        public static string DefaultBaseUrl { get; set; } = "http://covidonus.avnishkumar.co.in/";
         //#endif
     }
 }

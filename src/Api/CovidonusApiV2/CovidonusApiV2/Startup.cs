@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.IO;
 
 namespace CovidonusApiV2
 {
@@ -25,14 +27,6 @@ namespace CovidonusApiV2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            //services.AddCors(options =>
-            //{
-            //    options.AddDefaultPolicy(
-            //        builder =>
-            //        {
-            //            builder.WithOrigins("http://localhost:56773/");
-            //        });
-            //});
             services.AddControllers();
             services.AddHangfire(c => c.UseMemoryStorage());
             services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "CovidonusApiV2", Version = "v1" }));
@@ -56,15 +50,24 @@ namespace CovidonusApiV2
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Covidonus Api"));
             app.UseHttpsRedirection();
             app.UseRouting();
-
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "Images")),
+                RequestPath = "/Images"
+            });
+            //Enable directory browsing
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                            Path.Combine(Directory.GetCurrentDirectory(), "Images")),
+                RequestPath = "/Images"
+            });
             app.UseAuthorization();
             app.UseHangfireServer();
             app.UseHangfireDashboard();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
             RecurringJob.AddOrUpdate("Covid", () => repository.RefreshCovidDataAsync(true), Cron.Hourly);
         }
     }

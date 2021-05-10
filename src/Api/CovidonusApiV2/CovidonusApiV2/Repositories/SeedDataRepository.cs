@@ -307,7 +307,7 @@ namespace CovidonusApiV2.Repositories
                         MapModels(updatedRecord, dbitem);
                         dbitem.RecoverRate = GetPercentage(dbitem.Confirmed, dbitem.Recovered);
                         dbitem.DeathRate = GetPercentage(dbitem.Confirmed, dbitem.Deaths);
-                        dbitem.StateLogo = $"http://CovidonusApiV2.avnishkumar.co.in/Images/{dbitem.StateCode}.png";
+                        dbitem.StateLogo = $"http://covidonus.avnishkumar.co.in/Images/{dbitem.StateCode}.png";
                         if (result?.ContainsKey(dbitem.StateCode) == true && dbitem.StateCode != "TT")
                         {
                             dbitem.Population = result[dbitem.StateCode]?.Meta?.Population;

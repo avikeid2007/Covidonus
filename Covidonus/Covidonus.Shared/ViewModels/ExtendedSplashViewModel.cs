@@ -13,7 +13,7 @@ namespace Covidonus.Shared.ViewModels
 {
     public class ExtendedSplashViewModel : BindableBase
     {
-        private static CovidClient _covidClient;
+        private static IClient _covidClient;
 
         public ICommand LoadCommand { get; set; }
         public ExtendedSplashViewModel()
@@ -42,8 +42,8 @@ namespace Covidonus.Shared.ViewModels
             if (App.Menuitems == null)
             {
                 // if (_covidClient == null)
-                _covidClient = new CovidClient();
-                var res = await _covidClient.GetCovidCountsAsync();
+                _covidClient = new Client(CovidBaseClient.DefaultBaseUrl);
+                var res = await _covidClient.CountsAsync();
                 App.Menuitems = new List<StateWiseData>(res);
             }
         }
@@ -52,8 +52,8 @@ namespace Covidonus.Shared.ViewModels
             if (App.AllResource == null)
             {
                 if (_covidClient == null)
-                    _covidClient = new CovidClient();
-                var resource = await _covidClient.GetResourceAsync();
+                    _covidClient = new Client(CovidBaseClient.DefaultBaseUrl);
+                var resource = await _covidClient.ResourceAsync();
                 resource.ForEach(x => x.PhoneNumber = x.PhoneNumber.Replace("\n", ""));
                 App.AllResource = new List<Resource>(resource);
             }

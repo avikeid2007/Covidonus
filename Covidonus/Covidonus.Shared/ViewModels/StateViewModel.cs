@@ -30,7 +30,7 @@ namespace Covidonus.Shared.ViewModels
         private Visibility _isCovidCountVisible;
         private List<string> _resourceCategoryList;
         private string _selectedResourceCategory;
-        private ICovidClient _covidClient;
+        private IClient _covidClient;
         public ICommand FavoriteCommand { get; set; }
         public ICommand ResourceCommand { get; set; }
         public ICommand ImportantCommand { get; set; }
@@ -48,7 +48,7 @@ namespace Covidonus.Shared.ViewModels
         {
             IsVisibleIndiaCounts = Visibility.Collapsed;
             IsVisibleStateCounts = Visibility.Collapsed;
-            _covidClient = new CovidClient();
+            _covidClient = new Client(CovidBaseClient.DefaultBaseUrl);
             FavoriteCommand = new DelegateCommand(OnFavoriteCommandExecute);
             ShareCommand = new AsyncCommand(OnShareCommandExecuteAsync);
             ResourceCommand = new DelegateCommand(OnResourceCommandExecute);
@@ -64,7 +64,7 @@ namespace Covidonus.Shared.ViewModels
         {
             if (SelectedState != null)
             {
-                App.Menuitems = new List<StateWiseData>(await _covidClient.GetCovidCountsAsync(isRefresh: true));
+                App.Menuitems = new List<StateWiseData>(await _covidClient.CountsAsync(isRefresh: true));
                 LoadCountsAndStatus(SelectedState.StateCode);
             }
 
@@ -418,13 +418,13 @@ namespace Covidonus.Shared.ViewModels
         }
         private async Task GetNewsAsync()
         {
-            App.AllNews = await new CovidClient().GetNewsAsync();
+            App.AllNews = await new Client(CovidBaseClient.DefaultBaseUrl).NewsAsync();
             TotalNewsCount = App.AllNews.TotalResults;
             IsNewsCountVisible = true;
         }
         private async Task GetInfoGraphicAsync()
         {
-            App.AllInfoGraphics = new List<InfoGraphic>(await new CovidClient().GetInfoGraphicsAsync());
+            App.AllInfoGraphics = new List<InfoGraphic>(await new Client(CovidBaseClient.DefaultBaseUrl).InfoGraphicsAsync());
         }
         private void SetFavoriteIcon()
         {
