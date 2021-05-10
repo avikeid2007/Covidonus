@@ -9,7 +9,7 @@
   <Identity
     Name="34488AvnishKumar.Covidonus"
     Publisher="CN=1494B4FB-4349-4083-8AFA-16D2A64B8D99"
-    Version="1.0.2.0" />
+    Version="1.0.3.0" />
 
   <mp:PhoneIdentity PhoneProductId="3722851e-9a8a-43d5-9dd1-f55c2ae3da29" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

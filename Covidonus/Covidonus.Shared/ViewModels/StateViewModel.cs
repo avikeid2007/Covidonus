@@ -1,7 +1,10 @@
 ﻿using BasicMvvm;
 using BasicMvvm.Commands;
+using Covidonus.Data.Models;
+using Covidonus.Data.Models.DTOs;
+using Covidonus.Data.Repositories;
 using Covidonus.Shared.Helpers;
-using Covidonus.Swag;
+using NewsAPI.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,11 +29,11 @@ namespace Covidonus.Shared.ViewModels
         private string _newDeaths;
         private bool _isFavoriteState;
         private Visibility _isResourceVisible;
-        private ObservableCollection<Swag.Resource> _stateResources;
+        private ObservableCollection<Data.Models.Resource> _stateResources;
         private Visibility _isCovidCountVisible;
         private List<string> _resourceCategoryList;
         private string _selectedResourceCategory;
-        private ICovidClient _covidClient;
+        private CovidRepository _covidClient;
         public ICommand FavoriteCommand { get; set; }
         public ICommand ResourceCommand { get; set; }
         public ICommand ImportantCommand { get; set; }
@@ -48,7 +51,7 @@ namespace Covidonus.Shared.ViewModels
         {
             IsVisibleIndiaCounts = Visibility.Collapsed;
             IsVisibleStateCounts = Visibility.Collapsed;
-            _covidClient = new CovidClient();
+            _covidClient = new CovidRepository();
             FavoriteCommand = new DelegateCommand(OnFavoriteCommandExecute);
             ShareCommand = new AsyncCommand(OnShareCommandExecuteAsync);
             ResourceCommand = new DelegateCommand(OnResourceCommandExecute);
@@ -57,7 +60,7 @@ namespace Covidonus.Shared.ViewModels
             ImportantCommand = new DelegateCommand(OnImportantCommandExecute);
             RefreshCountCommand = new AsyncCommand(OnRefreshCountCommandExecuteAsync);
             CovidAreaVisible();
-            _ = Task.WhenAll(GetNewsAsync(), GetInfoGraphicAsync());
+            GetNews(); GetInfoGraphic();
         }
 
         private async Task OnRefreshCountCommandExecuteAsync()
@@ -240,18 +243,18 @@ namespace Covidonus.Shared.ViewModels
                 {
                     if (value == "All")
                     {
-                        StateResources = new ObservableCollection<Swag.Resource>(App.AllResource.Where(x => x.State == SelectedState.State));
+                        StateResources = new ObservableCollection<Data.Models.Resource>(App.AllResource.Where(x => x.State == SelectedState.State));
                     }
                     else
                     {
-                        StateResources = new ObservableCollection<Swag.Resource>(App.AllResource.Where(x => x.State == SelectedState.State && x.Category == value));
+                        StateResources = new ObservableCollection<Data.Models.Resource>(App.AllResource.Where(x => x.State == SelectedState.State && x.Category == value));
                     }
                 }
                 OnPropertyChanged();
             }
         }
 
-        public ObservableCollection<Swag.Resource> StateResources
+        public ObservableCollection<Data.Models.Resource> StateResources
         {
             get { return _stateResources; }
             set
@@ -416,18 +419,18 @@ namespace Covidonus.Shared.ViewModels
                 NewDeaths = $"+{indiaData.TodayDeaths}";
             }
         }
-        private async Task GetNewsAsync()
+        private void GetNews()
         {
-            App.AllNews = await new CovidClient().GetNewsAsync();
+            App.AllNews = _covidClient.GetNews();
             if (App.AllNews != null)
             {
                 TotalNewsCount = App.AllNews.TotalResults;
                 IsNewsCountVisible = true;
             }
         }
-        private async Task GetInfoGraphicAsync()
+        private void GetInfoGraphic()
         {
-            App.AllInfoGraphics = new List<InfoGraphic>(await new CovidClient().GetInfoGraphicsAsync());
+            App.AllInfoGraphics = new List<InfoGraphic>(_covidClient.GetInfoGraphics());
         }
         private void SetFavoriteIcon()
         {

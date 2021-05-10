@@ -1,5 +1,6 @@
-﻿using Covidonus.Shared;
-using Covidonus.Swag;
+﻿using Covidonus.Data.Models;
+using Covidonus.Data.Models.DTOs;
+using Covidonus.Shared;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,9 @@ namespace Covidonus
     sealed partial class App : Application
     {
         public static List<StateWiseData> Menuitems { get; set; }
-        public static List<Swag.Resource> AllResource;
-        public static Swag.CovidNews AllNews;
-        public static List<Swag.InfoGraphic> AllInfoGraphics;
+        public static List<Resource> AllResource;
+        public static CovidNews AllNews;
+        public static List<InfoGraphic> AllInfoGraphics;
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().

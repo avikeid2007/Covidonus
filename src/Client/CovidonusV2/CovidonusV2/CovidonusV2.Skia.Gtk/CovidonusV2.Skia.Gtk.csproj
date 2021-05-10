@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType Condition="'$(Configuration)'=='Release'">WinExe</OutputType>
+    <OutputType Condition="'$(Configuration)'=='Debug'">Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup Condition="exists('..\CovidonusV2.UWP')">
+    <EmbeddedResource Include="..\CovidonusV2.UWP\Package.appxmanifest" LogicalName="Package.appxmanifest" />
+    <Content Include="..\CovidonusV2.UWP\Assets\StoreLogo.png" Link="Assets\StoreLogo.png" />
+    <Content Include="Assets\Fonts\uno-fluentui-assets.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <UpToDateCheckInput Include="..\CovidonusV2.Shared\**\*.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BasicMvvm" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="5.0.0" />
+    <PackageReference Include="Uno.Material" Version="1.0.0-dev.742" />
+    <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.Uwp.Managed" Version="2.0.3-uno.92" />
+    <PackageReference Include="Uno.UI.Skia.Gtk" Version="3.6.6" />
+    <PackageReference Include="Uno.UI.RemoteControl" Version="3.8.0-dev.130" Condition="'$(Configuration)'=='Debug'" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Covidonus.Swag\Covidonus.Swag.csproj" />
+  </ItemGroup>
+  <Import Project="..\CovidonusV2.Shared\CovidonusV2.Shared.projitems" Label="Shared" />
+</Project>

@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using CovidonusApi.Models;
 using CovidonusApi.Models.DTOs;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace CovidonusApi.Helpers
@@ -13,7 +16,7 @@ namespace CovidonusApi.Helpers
             IConfigurationProvider configuration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<CasesTimeSeries, CasesTimeSeries>()
-                .ForMember(s => s.DateFull, t => t.MapFrom(x => ConvertDate(x.Date)));
+                .ForMember(s => s.DateFull, t => t.MapFrom(x => ConvertDate(x.Dateymd)));
                 cfg.CreateMap<StateWiseData, StateWiseData>()
                  .ForMember(s => s.DistrictData, t => t.Ignore())
                 .ForMember(s => s.Id, t => t.Ignore());
@@ -41,15 +44,115 @@ namespace CovidonusApi.Helpers
             return Convert.ToString(Math.Round(per, 2));
         }
 
-        private static DateTime ConvertDate(string date)
+        private static DateTime ConvertDate(DateTime date)
         {
-            var da = $"{date}{DateTime.Now.Year}";
-            CultureInfo provider = CultureInfo.InvariantCulture;
-            if (!string.IsNullOrEmpty(date) && DateTime.TryParseExact(da, "dd MMMM yyyy", provider, DateTimeStyles.None, out DateTime newdate))
+            return date;
+        }
+    }
+    internal class MultiFormatDateConverter : DateTimeConverterBase
+    {
+        public IList<string> DateTimeFormats { get; set; } = new[] { "yyyy-MM-dd" };
+
+        public DateTimeStyles DateTimeStyles { get; set; }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            var val = IsNullableType(objectType);
+            if (reader.TokenType == JsonToken.Null)
             {
-                return newdate;
+                if (!val)
+                {
+                    throw new JsonSerializationException(
+                        string.Format(CultureInfo.InvariantCulture, "Cannot convert null value to {0}.", objectType));
+                }
             }
-            return default(DateTime);
+
+            Type underlyingObjectType;
+            if (val)
+            {
+                underlyingObjectType = Nullable.GetUnderlyingType(objectType)!;
+            }
+            else
+            {
+                underlyingObjectType = objectType;
+            }
+
+            if (reader.TokenType == JsonToken.Date)
+            {
+                if (underlyingObjectType == typeof(DateTimeOffset))
+                {
+                    if (!(reader.Value is DateTimeOffset))
+                    {
+                        return new DateTimeOffset((DateTime)reader.Value);
+                    }
+
+                    return reader.Value;
+                }
+
+                if (reader.Value is DateTimeOffset)
+                {
+                    return ((DateTimeOffset)reader.Value).DateTime;
+                }
+
+                return reader.Value;
+            }
+
+            if (reader.TokenType != JsonToken.String)
+            {
+                var errorMessage = string.Format(
+                    CultureInfo.InvariantCulture,
+                    "Unexpected token parsing date. Expected String, got {0}.",
+                    reader.TokenType);
+                throw new JsonSerializationException(errorMessage);
+            }
+
+            var dateString = (string)reader.Value;
+            if (underlyingObjectType == typeof(DateTimeOffset))
+            {
+                foreach (var format in this.DateTimeFormats)
+                {
+                    // adjust this as necessary to fit your needs
+                    if (DateTimeOffset.TryParseExact(dateString, format, CultureInfo.InvariantCulture, this.DateTimeStyles, out var date))
+                    {
+                        return date;
+                    }
+                }
+            }
+
+            if (underlyingObjectType == typeof(DateTime))
+            {
+
+                foreach (var format in this.DateTimeFormats)
+                {
+                    // adjust this as necessary to fit your needs
+                    if (DateTime.TryParseExact(dateString, format, CultureInfo.InvariantCulture, this.DateTimeStyles, out var date))
+                    {
+                        return date;
+                    }
+                }
+            }
+
+            throw new JsonException("Unable to parse \"" + dateString + "\" as a date.");
+        }
+
+        public override bool CanWrite
+        {
+            get { return false; }
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool IsNullableType(Type t)
+        {
+            if (t.IsGenericTypeDefinition || t.IsGenericType)
+            {
+                return t.GetGenericTypeDefinition() == typeof(Nullable<>);
+            }
+
+            return false;
         }
     }
 }

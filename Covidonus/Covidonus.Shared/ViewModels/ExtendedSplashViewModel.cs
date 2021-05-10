@@ -1,6 +1,8 @@
 ﻿using BasicMvvm;
 using BasicMvvm.Commands;
-using Covidonus.Swag;
+using Covidonus.Data.Models;
+using Covidonus.Data.Repositories;
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,11 +15,11 @@ namespace Covidonus.Shared.ViewModels
 {
     public class ExtendedSplashViewModel : BindableBase
     {
-        private static CovidClient _covidClient;
-
+        private readonly CovidRepository _covidClient;
         public ICommand LoadCommand { get; set; }
         public ExtendedSplashViewModel()
         {
+            _covidClient = new CovidRepository();
             LoadCommand = new AsyncCommand<object>(OnLoadCommandExecuteAsync);
         }
 
@@ -27,33 +29,34 @@ namespace Covidonus.Shared.ViewModels
             {
                 try
                 {
-                    await Task.WhenAll(LoadDailyCountsAsync(), LoadResourceAsync());
+                    Console.WriteLine("start fetching covid data");
+                    await LoadDailyCountsAsync();
+                    Console.WriteLine("end fetch covid data");
+                    Console.WriteLine("covid data count" + App.Menuitems.Count);
+                    Console.WriteLine("start fetching resource data");
+                    LoadResource();
+                    Console.WriteLine("end fetching resource data");
                     page.Frame.Navigate(typeof(MainPage));
                 }
-                catch
+                catch (Exception ex)
                 {
-                    await new MessageDialog("Something went wrong").ShowAsync();
+                    await new MessageDialog("Something went wrong" + ex.Message).ShowAsync();
                 }
             }
 
         }
-        private static async Task LoadDailyCountsAsync()
+        private async Task LoadDailyCountsAsync()
         {
             if (App.Menuitems == null)
             {
-                // if (_covidClient == null)
-                _covidClient = new CovidClient();
-                var res = await _covidClient.GetCovidCountsAsync();
-                App.Menuitems = new List<StateWiseData>(res);
+                App.Menuitems = new List<StateWiseData>(await _covidClient.GetCovidCountsAsync());
             }
         }
-        private async Task LoadResourceAsync()
+        private void LoadResource()
         {
             if (App.AllResource == null)
             {
-                if (_covidClient == null)
-                    _covidClient = new CovidClient();
-                var resource = await _covidClient.GetResourceAsync();
+                var resource = _covidClient.GetResource();
                 resource.ForEach(x => x.PhoneNumber = x.PhoneNumber.Replace("\n", ""));
                 App.AllResource = new List<Resource>(resource);
             }
