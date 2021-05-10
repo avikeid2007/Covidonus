@@ -73,7 +73,7 @@
       "classStyle": "Inpc",
       "jsonLibrary": "NewtonsoftJson",
       "generateDefaultValues": true,
-      "generateDataAnnotations": false,
+      "generateDataAnnotations": true,
       "excludedTypeNames": [],
       "excludedParameterNames": [],
       "handleReferences": false,

@@ -20,7 +20,7 @@
     <PackageReference Include="Uno.Material" Version="1.0.0-dev.742" />
     <PackageReference Include="Uno.Microsoft.Xaml.Behaviors.Uwp.Managed" Version="2.0.3-uno.92" />
     <PackageReference Include="Uno.UI.Skia.Gtk" Version="3.6.6" />
-    <PackageReference Include="Uno.UI.RemoteControl" Version="3.6.6" Condition="'$(Configuration)'=='Debug'" />
+    <PackageReference Include="Uno.UI.RemoteControl" Version="3.8.0-dev.130" Condition="'$(Configuration)'=='Debug'" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Covidonus.Swag\Covidonus.Swag.csproj" />
